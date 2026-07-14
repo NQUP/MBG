@@ -9,6 +9,125 @@
 </div>
 
 @if(auth()->user()->isAdmin())
+{{-- ========== ADMIN DASHBOARD ========== --}}
+<div class="row g-3 mb-4">
+    <div class="col">
+        <div class="card stat-card">
+            <div class="card-body d-flex align-items-center gap-3">
+                <div class="stat-icon"><i class="bi bi-box-seam"></i></div>
+                <div>
+                    <div class="text-muted" style="font-size:0.8rem;">Total Bahan Baku</div>
+                    <div class="fw-bold fs-4">{{ $data['total_bahan'] }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card stat-card" style="border-left-color:#fd7e14;">
+            <div class="card-body d-flex align-items-center gap-3">
+                <div class="stat-icon" style="color:#fd7e14;"><i class="bi bi-journal-richtext"></i></div>
+                <div>
+                    <div class="text-muted" style="font-size:0.8rem;">Menu Aktif</div>
+                    <div class="fw-bold fs-4">{{ $data['total_menu'] }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card stat-card" style="border-left-color:#0d6efd;">
+            <div class="card-body d-flex align-items-center gap-3">
+                <div class="stat-icon" style="color:#0d6efd;"><i class="bi bi-people"></i></div>
+                <div>
+                    <div class="text-muted" style="font-size:0.8rem;">Pengguna</div>
+                    <div class="fw-bold fs-4">{{ $data['total_user'] }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card stat-card" style="border-left-color:#20c997;">
+            <div class="card-body d-flex align-items-center gap-3">
+                <div class="stat-icon" style="color:#20c997;"><i class="bi bi-fire"></i></div>
+                <div>
+                    <div class="text-muted" style="font-size:0.8rem;">Total Siswa Bulan Ini</div>
+                    <div class="fw-bold fs-4">{{ number_format($data['total_siswa']) }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card stat-card" style="border-left-color:{{ $data['stok_minimum'] > 0 ? '#dc3545' : '#1a7f5a' }};">
+            <div class="card-body d-flex align-items-center gap-3">
+                <div class="stat-icon" style="color:{{ $data['stok_minimum'] > 0 ? '#dc3545' : '#1a7f5a' }};"><i class="bi bi-exclamation-triangle"></i></div>
+                <div>
+                    <div class="text-muted" style="font-size:0.8rem;">Stok Minimum</div>
+                    <div class="fw-bold fs-4 {{ $data['stok_minimum'] > 0 ? 'text-danger' : '' }}">{{ $data['stok_minimum'] }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3 mb-3">
+    <div class="col-md-8">
+        <div class="card h-100">
+            <div class="card-header bg-white fw-semibold"><i class="bi bi-graph-up me-2 text-success"></i>Produksi Harian Bulan {{ now()->isoFormat('MMMM Y') }}</div>
+            <div class="card-body">
+                @if($data['produksi_bulanan']->isEmpty())
+                    <p class="text-muted text-center py-4">Belum ada data produksi bulan ini.</p>
+                @else
+                    <canvas id="chartProduksiAdmin" height="100"></canvas>
+                @endif
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-header bg-white fw-semibold"><i class="bi bi-cart-plus me-2 text-success"></i>Status Permintaan Pembelian</div>
+            <div class="card-body d-flex align-items-center justify-content-center">
+                <canvas id="chartPrAdmin" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3 mb-3">
+    <div class="col-md-7">
+        <div class="card h-100">
+            <div class="card-header bg-white fw-semibold"><i class="bi bi-bar-chart me-2 text-primary"></i>Stok Bahan Baku vs Minimum</div>
+            <div class="card-body">
+                <canvas id="chartStokAdmin" height="120"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="card h-100">
+            <div class="card-header bg-white fw-semibold"><i class="bi bi-clock-history me-2 text-warning"></i>Permintaan Pembelian Terbaru</div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead><tr><th>Nomor</th><th>Oleh</th><th>Status</th><th>Tanggal</th></tr></thead>
+                        <tbody>
+                        @forelse($data['pr_recent'] as $pr)
+                            <tr>
+                                <td><code>{{ $pr->nomor_permintaan }}</code></td>
+                                <td>{{ $pr->user->name ?? '-' }}</td>
+                                <td>{!! \App\Models\PermintaanPembelian::statusBadge($pr->status) !!}</td>
+                                <td>{{ $pr->created_at->format('d/m H:i') }}</td>
+                            </tr>
+                        @empty
+                            <tr><td colspan="4" class="text-center text-muted py-3">Belum ada data.</td></tr>
+                        @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@elseif($user->isPetugasGudang())
+{{-- ========== GUDANG DASHBOARD ========== --}}
 <div class="row g-3 mb-4">
     <div class="col-md-3">
         <div class="card stat-card">
@@ -22,35 +141,58 @@
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card" style="border-left:4px solid #fd7e14;">
+        <div class="card stat-card" style="border-left-color:{{ $data['stok_minimum_count'] > 0 ? '#dc3545' : '#1a7f5a' }};">
             <div class="card-body d-flex align-items-center gap-3">
-                <div style="font-size:2rem;color:#fd7e14;"><i class="bi bi-journal-richtext"></i></div>
+                <div class="stat-icon" style="color:{{ $data['stok_minimum_count'] > 0 ? '#dc3545' : '#1a7f5a' }};"><i class="bi bi-exclamation-triangle"></i></div>
                 <div>
-                    <div class="text-muted" style="font-size:0.8rem;">Total Menu Aktif</div>
-                    <div class="fw-bold fs-4">{{ $data['total_menu'] }}</div>
+                    <div class="text-muted" style="font-size:0.8rem;">Stok Minimum</div>
+                    <div class="fw-bold fs-4 {{ $data['stok_minimum_count'] > 0 ? 'text-danger' : '' }}">{{ $data['stok_minimum_count'] }}</div>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card" style="border-left:4px solid #0d6efd;">
+        <div class="card stat-card" style="border-left-color:#fd7e14;">
             <div class="card-body d-flex align-items-center gap-3">
-                <div style="font-size:2rem;color:#0d6efd;"><i class="bi bi-people"></i></div>
+                <div class="stat-icon" style="color:#fd7e14;"><i class="bi bi-arrow-down-circle"></i></div>
                 <div>
-                    <div class="text-muted" style="font-size:0.8rem;">Pengguna Aktif</div>
-                    <div class="fw-bold fs-4">{{ $data['total_user'] }}</div>
+                    <div class="text-muted" style="font-size:0.8rem;">Barang Masuk Hari Ini</div>
+                    <div class="fw-bold fs-4">{{ $data['barang_masuk_hari_ini'] }}</div>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card" style="border-left:4px solid {{ $data['stok_minimum'] > 0 ? '#dc3545' : '#1a7f5a' }};">
+        <div class="card stat-card" style="border-left-color:#0d6efd;">
             <div class="card-body d-flex align-items-center gap-3">
-                <div style="font-size:2rem;color:{{ $data['stok_minimum'] > 0 ? '#dc3545' : '#1a7f5a' }};"><i class="bi bi-exclamation-triangle"></i></div>
+                <div class="stat-icon" style="color:#0d6efd;"><i class="bi bi-calendar-arrow-down"></i></div>
                 <div>
-                    <div class="text-muted" style="font-size:0.8rem;">Stok di Bawah Minimum</div>
-                    <div class="fw-bold fs-4 {{ $data['stok_minimum'] > 0 ? 'text-danger' : '' }}">{{ $data['stok_minimum'] }}</div>
+                    <div class="text-muted" style="font-size:0.8rem;">Barang Masuk Bulan Ini</div>
+                    <div class="fw-bold fs-4">{{ $data['barang_masuk_bulan'] }}</div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3 mb-3">
+    <div class="col-md-7">
+        <div class="card h-100">
+            <div class="card-header bg-white fw-semibold"><i class="bi bi-bar-chart me-2 text-primary"></i>Stok Bahan Baku Saat Ini</div>
+            <div class="card-body">
+                <canvas id="chartStokGudang" height="130"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="card h-100">
+            <div class="card-header bg-white fw-semibold"><i class="bi bi-arrow-down-circle me-2 text-warning"></i>Barang Masuk 6 Bulan Terakhir</div>
+            <div class="card-body">
+                @if($data['barang_masuk_chart']->isEmpty())
+                    <p class="text-muted text-center py-4">Belum ada data.</p>
+                @else
+                    <canvas id="chartBmGudang" height="180"></canvas>
+                @endif
             </div>
         </div>
     </div>
@@ -60,63 +202,190 @@
     <div class="col-md-6">
         <div class="card h-100">
             <div class="card-header bg-white fw-semibold">
-                <i class="bi bi-cart-plus me-2 text-success"></i>Permintaan Pembelian
+                <i class="bi bi-cart-plus me-2 text-success"></i>Permintaan Menunggu Persetujuan
+                @if($data['pr_stats']['Diajukan'] > 0)
+                    <span class="badge bg-warning text-dark ms-1">{{ $data['pr_stats']['Diajukan'] }}</span>
+                @endif
             </div>
-            <div class="card-body">
-                <div class="row g-2 text-center">
-                    <div class="col-4">
-                        <div class="p-3 bg-light rounded">
-                            <div class="fs-2 fw-bold text-secondary">{{ $data['pr_draft'] }}</div>
-                            <div class="text-muted small">Draft</div>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="p-3 bg-warning bg-opacity-10 rounded">
-                            <div class="fs-2 fw-bold text-warning">{{ $data['pr_diajukan'] }}</div>
-                            <div class="text-muted small">Menunggu</div>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="p-3 bg-success bg-opacity-10 rounded">
-                            <div class="fs-2 fw-bold text-success">{{ $data['pr_selesai'] }}</div>
-                            <div class="text-muted small">Selesai/Bln</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-3">
-                    <a href="{{ route('permintaan-pembelian.index') }}" class="btn btn-sm btn-outline-success w-100">
-                        <i class="bi bi-eye me-1"></i>Lihat Semua PR
-                    </a>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead><tr><th>Nomor</th><th>Oleh</th><th>Tanggal</th><th>Aksi</th></tr></thead>
+                        <tbody>
+                        @forelse($data['pr_recent'] as $pr)
+                            <tr>
+                                <td><code>{{ $pr->nomor_permintaan }}</code></td>
+                                <td>{{ $pr->user->name ?? '-' }}</td>
+                                <td>{{ $pr->created_at->format('d/m H:i') }}</td>
+                                <td>
+                                    <a href="{{ route('permintaan-pembelian.show', $pr) }}" class="btn btn-sm btn-outline-primary btn-action"><i class="bi bi-eye"></i></a>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr><td colspan="4" class="text-center text-muted py-3">Tidak ada permintaan aktif.</td></tr>
+                        @endforelse
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-md-6">
-        <div class="card">
-            <div class="card-header bg-white fw-semibold">
-                <i class="bi bi-graph-up me-2 text-success"></i>Produksi Siswa Bulan {{ now()->isoFormat('MMMM Y') }}
-            </div>
+        <div class="card h-100">
+            <div class="card-header bg-white fw-semibold"><i class="bi bi-graph-up me-2 text-success"></i>Riwayat Stok 7 Hari</div>
             <div class="card-body">
-                @if($data['produksi_bulanan']->isEmpty())
-                    <p class="text-muted text-center py-4">Belum ada data produksi bulan ini.</p>
-                @else
-                    <canvas id="chartProduksi" height="80"></canvas>
-                @endif
+                <canvas id="chartRiwayatStok" height="180"></canvas>
             </div>
         </div>
     </div>
 </div>
 
-<div class="row g-3">
+@if($data['stok_minimum']->isNotEmpty())
+<div class="card mb-3">
+    <div class="card-header bg-danger text-white fw-semibold"><i class="bi bi-exclamation-triangle-fill me-2"></i>Bahan Baku Stok Minimum</div>
+    <div class="table-responsive">
+        <table class="table table-hover mb-0">
+            <thead><tr><th>Kode</th><th>Nama Bahan</th><th>Stok Saat Ini</th><th>Stok Minimum</th><th>Satuan</th></tr></thead>
+            <tbody>
+            @foreach($data['stok_minimum'] as $bahan)
+                <tr>
+                    <td><code>{{ $bahan->kode_bahan }}</code></td>
+                    <td class="fw-semibold">{{ $bahan->nama_bahan }}</td>
+                    <td class="text-danger fw-bold">{{ number_format($bahan->stok_saat_ini, 2) }}</td>
+                    <td>{{ number_format($bahan->stok_minimum, 2) }}</td>
+                    <td>{{ $bahan->satuan->singkatan }}</td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+@endif
+
+<div class="d-flex gap-2">
+    <a href="{{ route('gudang.barang-masuk.create') }}" class="btn btn-success"><i class="bi bi-plus-circle me-1"></i>Input Barang Masuk</a>
+    <a href="{{ route('gudang.stock-opname.create') }}" class="btn btn-outline-primary"><i class="bi bi-clipboard-check me-1"></i>Buat Stock Opname</a>
+</div>
+
+@elseif($user->isPetugasDapur())
+{{-- ========== DAPUR DASHBOARD ========== --}}
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card stat-card">
+            <div class="card-body d-flex align-items-center gap-3">
+                <div class="stat-icon"><i class="bi bi-fire"></i></div>
+                <div>
+                    <div class="text-muted" style="font-size:0.8rem;">Sesi Produksi Hari Ini</div>
+                    <div class="fw-bold fs-4">{{ $data['produksi_hari_ini']->count() }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card stat-card" style="border-left-color:#fd7e14;">
+            <div class="card-body d-flex align-items-center gap-3">
+                <div class="stat-icon" style="color:#fd7e14;"><i class="bi bi-people"></i></div>
+                <div>
+                    <div class="text-muted" style="font-size:0.8rem;">Siswa Minggu Ini</div>
+                    <div class="fw-bold fs-4">{{ number_format($data['produksi_minggu']) }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card stat-card" style="border-left-color:#0d6efd;">
+            <div class="card-body d-flex align-items-center gap-3">
+                <div class="stat-icon" style="color:#0d6efd;"><i class="bi bi-calendar-check"></i></div>
+                <div>
+                    <div class="text-muted" style="font-size:0.8rem;">Siswa Bulan Ini</div>
+                    <div class="fw-bold fs-4">{{ number_format($data['total_siswa_bulan']) }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card stat-card" style="border-left-color:#20c997;">
+            <div class="card-body d-flex align-items-center gap-3">
+                <div class="stat-icon" style="color:#20c997;"><i class="bi bi-journal-check"></i></div>
+                <div>
+                    <div class="text-muted" style="font-size:0.8rem;">Sesi Bulan Ini</div>
+                    <div class="fw-bold fs-4">{{ $data['total_sesi_bulan'] }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3 mb-3">
+    <div class="col-md-8">
+        <div class="card h-100">
+            <div class="card-header bg-white fw-semibold"><i class="bi bi-graph-up me-2 text-success"></i>Produksi 7 Hari Terakhir</div>
+            <div class="card-body">
+                <canvas id="chartProduksiDapur" height="100"></canvas>
+            </div>
+        </div>
+    </div>
     <div class="col-md-4">
         <div class="card h-100">
-            <div class="card-header bg-white fw-semibold"><i class="bi bi-info-circle me-2 text-primary"></i>Ringkasan Bulan Ini</div>
-            <div class="card-body">
-                <div class="d-flex justify-content-between py-2 border-bottom"><span class="text-muted">Total Produksi</span><strong>{{ $data['total_produksi'] }} sesi</strong></div>
-                <div class="d-flex justify-content-between py-2 border-bottom"><span class="text-muted">Total Siswa</span><strong>{{ $data['produksi_bulanan']->sum('total') }} porsi</strong></div>
-                <div class="mt-3">
-                    <a href="{{ route('admin.bahan-baku.index') }}" class="btn btn-sm btn-outline-success w-100 mb-2"><i class="bi bi-box-seam me-1"></i>Lihat Bahan Baku</a>
-                    <a href="{{ route('laporan.produksi') }}" class="btn btn-sm btn-outline-primary w-100"><i class="bi bi-graph-up me-1"></i>Laporan Produksi</a>
+            <div class="card-header bg-white fw-semibold"><i class="bi bi-pie-chart me-2 text-warning"></i>Distribusi Menu Bulan Ini</div>
+            <div class="card-body d-flex align-items-center justify-content-center">
+                <canvas id="chartMenuDapur" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3 mb-3">
+    <div class="col-md-7">
+        <div class="card h-100">
+            <div class="card-header bg-white fw-semibold d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-fire me-2 text-danger"></i>Produksi Hari Ini</span>
+                <a href="{{ route('dapur.produksi.create') }}" class="btn btn-sm btn-success"><i class="bi bi-plus-circle me-1"></i>Input Produksi</a>
+            </div>
+            @if($data['produksi_hari_ini']->isEmpty())
+            <div class="card-body text-center text-muted py-5">
+                <i class="bi bi-clipboard-x fs-1 d-block mb-2"></i>Belum ada produksi hari ini.
+                <div class="mt-3"><a href="{{ route('dapur.produksi.create') }}" class="btn btn-success"><i class="bi bi-plus-circle me-1"></i>Input Produksi Sekarang</a></div>
+            </div>
+            @else
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead><tr><th>Makanan</th><th>Minuman</th><th>Buah</th><th>Jumlah Siswa</th><th>Status</th></tr></thead>
+                    <tbody>
+                    @foreach($data['produksi_hari_ini'] as $p)
+                        <tr>
+                            <td>{{ $p->menuMakanan->nama_menu }}</td>
+                            <td>{{ $p->menuMinuman->nama_menu }}</td>
+                            <td>{{ $p->menuBuah->nama_menu }}</td>
+                            <td><strong>{{ number_format($p->jumlah_siswa) }} siswa</strong></td>
+                            <td>@if($p->status === 'dikonfirmasi')<span class="badge bg-success">Dikonfirmasi</span>@else<span class="badge bg-warning text-dark">Draft</span>@endif</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+            @endif
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="card h-100">
+            <div class="card-header bg-white fw-semibold"><i class="bi bi-clock-history me-2 text-warning"></i>Riwayat Produksi Terbaru</div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead><tr><th>Tanggal</th><th>Makanan</th><th>Siswa</th></tr></thead>
+                        <tbody>
+                        @forelse($data['produksi_recent'] as $p)
+                            <tr>
+                                <td>{{ $p->tanggal_produksi->format('d/m') }}</td>
+                                <td>{{ $p->menuMakanan->nama_menu }}</td>
+                                <td><strong>{{ number_format($p->jumlah_siswa) }}</strong></td>
+                            </tr>
+                        @empty
+                            <tr><td colspan="3" class="text-center text-muted py-3">Belum ada data.</td></tr>
+                        @endforelse
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -124,76 +393,173 @@
 </div>
 @endif
 
-@if(auth()->user()->isPetugasGudang())
-@if($data['stok_minimum']->isNotEmpty())
-<div class="alert alert-danger d-flex align-items-center mb-4">
-    <i class="bi bi-exclamation-triangle-fill me-3 fs-4"></i>
-    <div><strong>Peringatan Stok Minimum!</strong> Terdapat {{ $data['stok_minimum']->count() }} bahan baku yang stoknya di bawah batas minimum.<a href="{{ route('gudang.stok.index') }}" class="alert-link ms-2">Lihat detail &rarr;</a></div>
-</div>
-@endif
-<div class="row g-3 mb-4">
-    <div class="col-md-4"><div class="card stat-card"><div class="card-body d-flex align-items-center gap-3"><div class="stat-icon"><i class="bi bi-box-seam"></i></div><div><div class="text-muted" style="font-size:0.8rem;">Total Jenis Bahan</div><div class="fw-bold fs-4">{{ $data['stok_bahan']->count() }}</div></div></div></div></div>
-    <div class="col-md-4"><div class="card" style="border-left:4px solid #dc3545;"><div class="card-body d-flex align-items-center gap-3"><div style="font-size:2rem;color:#dc3545;"><i class="bi bi-exclamation-triangle"></i></div><div><div class="text-muted" style="font-size:0.8rem;">Stok Minimum</div><div class="fw-bold fs-4 text-danger">{{ $data['stok_minimum']->count() }}</div></div></div></div></div>
-    <div class="col-md-4"><div class="card" style="border-left:4px solid #fd7e14;"><div class="card-body d-flex align-items-center gap-3"><div style="font-size:2rem;color:#fd7e14;"><i class="bi bi-arrow-down-circle"></i></div><div><div class="text-muted" style="font-size:0.8rem;">Barang Masuk Bulan Ini</div><div class="fw-bold fs-4">{{ $data['barang_masuk_bulan'] }}</div></div></div></div></div>
-</div>
-@if($data['stok_minimum']->isNotEmpty())
-<div class="card mb-4"><div class="card-header bg-danger text-white fw-semibold"><i class="bi bi-exclamation-triangle-fill me-2"></i>Bahan Baku Stok Minimum</div><div class="table-responsive"><table class="table table-hover mb-0"><thead><tr><th>Kode</th><th>Nama Bahan</th><th>Kategori</th><th>Stok Saat Ini</th><th>Stok Minimum</th><th>Satuan</th></tr></thead><tbody>@foreach($data['stok_minimum'] as $bahan)<tr><td><code>{{ $bahan->kode_bahan }}</code></td><td class="fw-semibold">{{ $bahan->nama_bahan }}</td><td>{{ $bahan->kategori->nama_kategori }}</td><td class="stok-warning">{{ number_format($bahan->stok_saat_ini,2) }}</td><td>{{ number_format($bahan->stok_minimum,2) }}</td><td>{{ $bahan->satuan->singkatan }}</td></tr>@endforeach</tbody></table></div></div>
-@endif
-<div class="d-flex gap-2"><a href="{{ route('gudang.barang-masuk.create') }}" class="btn btn-success"><i class="bi bi-plus-circle me-1"></i>Input Barang Masuk</a><a href="{{ route('gudang.stock-opname.create') }}" class="btn btn-outline-primary"><i class="bi bi-clipboard-check me-1"></i>Buat Stock Opname</a></div>
-@endif
-
-@if(auth()->user()->isPetugasDapur())
-<div class="row g-3 mb-4">
-    <div class="col-md-4"><div class="card stat-card"><div class="card-body d-flex align-items-center gap-3"><div class="stat-icon"><i class="bi bi-fire"></i></div><div><div class="text-muted" style="font-size:0.8rem;">Produksi Hari Ini</div><div class="fw-bold fs-4">{{ $data['produksi_hari_ini']->count() }} sesi</div></div></div></div></div>
-    <div class="col-md-4"><div class="card" style="border-left:4px solid #fd7e14;"><div class="card-body d-flex align-items-center gap-3"><div style="font-size:2rem;color:#fd7e14;"><i class="bi bi-people"></i></div><div><div class="text-muted" style="font-size:0.8rem;">Siswa Minggu Ini</div><div class="fw-bold fs-4">{{ number_format($data['produksi_minggu']) }}</div></div></div></div></div>
-    <div class="col-md-4"><div class="card" style="border-left:4px solid #0d6efd;"><div class="card-body d-flex align-items-center gap-3"><div style="font-size:2rem;color:#0d6efd;"><i class="bi bi-calendar3"></i></div><div><div class="text-muted" style="font-size:0.8rem;">Total Siswa Bulan Ini</div><div class="fw-bold fs-4">{{ number_format($data['total_siswa_bulan']) }}</div></div></div></div></div>
-</div>
-<div class="card mb-4">
-    <div class="card-header bg-white fw-semibold d-flex justify-content-between align-items-center">
-        <span><i class="bi bi-fire me-2 text-danger"></i>Produksi Hari Ini &mdash; {{ now()->isoFormat('dddd, D MMMM Y') }}</span>
-        <a href="{{ route('dapur.produksi.create') }}" class="btn btn-sm btn-success"><i class="bi bi-plus-circle me-1"></i>Input Produksi</a>
-    </div>
-    @if($data['produksi_hari_ini']->isEmpty())
-    <div class="card-body text-center text-muted py-5">
-        <i class="bi bi-clipboard-x fs-1 d-block mb-2"></i>Belum ada produksi hari ini.
-        <div class="mt-3"><a href="{{ route('dapur.produksi.create') }}" class="btn btn-success"><i class="bi bi-plus-circle me-1"></i>Input Produksi Sekarang</a></div>
-    </div>
-    @else
-    <div class="table-responsive">
-        <table class="table table-hover mb-0">
-            <thead><tr><th>Makanan</th><th>Minuman</th><th>Buah</th><th>Jumlah Siswa</th><th>Status</th></tr></thead>
-            <tbody>
-                @foreach($data['produksi_hari_ini'] as $p)
-                <tr><td>{{ $p->menuMakanan->nama_menu }}</td><td>{{ $p->menuMinuman->nama_menu }}</td><td>{{ $p->menuBuah->nama_menu }}</td><td><strong>{{ number_format($p->jumlah_siswa) }} siswa</strong></td><td>@if($p->status === 'dikonfirmasi')<span class="badge bg-success">Dikonfirmasi</span>@else<span class="badge bg-warning text-dark">Draft</span>@endif</td></tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-    @endif
-</div>
-@endif
 @endsection
 
+@push('styles')
+<style>
+    .stat-card { border-left: 4px solid var(--primary); }
+    .stat-icon { font-size: 2rem; color: var(--primary); opacity: 0.8; }
+    .card { border: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); border-radius: 10px; }
+    .card-header { border-radius: 10px 10px 0 0 !important; }
+</style>
+@endpush
+
 @push('scripts')
-@if(auth()->user()->isAdmin() && !empty($data['produksi_bulanan']) && $data['produksi_bulanan']->isNotEmpty())
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-const ctx = document.getElementById('chartProduksi').getContext('2d');
-new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: {!! $data['produksi_bulanan']->pluck('tanggal')->map(fn($t) => \Carbon\Carbon::parse($t)->format('d M'))->toJson() !!},
-        datasets: [{
-            label: 'Jumlah Siswa',
-            data: {!! $data['produksi_bulanan']->pluck('total')->toJson() !!},
-            backgroundColor: 'rgba(26, 127, 90, 0.7)',
-            borderColor: '#1a7f5a',
-            borderWidth: 1,
-            borderRadius: 4,
-        }]
-    },
-    options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+document.addEventListener('DOMContentLoaded', function() {
+    const green = '#1a7f5a';
+    const greenLight = 'rgba(26,127,90,0.15)';
+    const orange = '#fd7e14';
+    const blue = '#0d6efd';
+    const red = '#dc3545';
+    const yellow = '#ffc107';
+
+    // ===== ADMIN CHARTS =====
+    @if(auth()->user()->isAdmin())
+    // Produksi Bulanan
+    if (document.getElementById('chartProduksiAdmin')) {
+        new Chart(document.getElementById('chartProduksiAdmin'), {
+            type: 'bar',
+            data: {
+                labels: {!! $data['produksi_bulanan']->pluck('tanggal')->map(fn($t) => \Carbon\Carbon::parse($t)->format('d M'))->toJson() !!},
+                datasets: [{
+                    label: 'Jumlah Siswa',
+                    data: {!! $data['produksi_bulanan']->pluck('total')->toJson() !!},
+                    backgroundColor: greenLight,
+                    borderColor: green,
+                    borderWidth: 1,
+                    borderRadius: 4,
+                }]
+            },
+            options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+        });
+    }
+
+    // PR Status Doughnut
+    if (document.getElementById('chartPrAdmin')) {
+        new Chart(document.getElementById('chartPrAdmin'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Draft','Diajukan','Disetujui','Selesai','Ditolak'],
+                datasets: [{
+                    data: [{!! json_encode(array_values($data['pr_stats'])) !!}],
+                    backgroundColor: ['#6c757d',yellow,green,blue,red],
+                    borderWidth: 0,
+                }]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, padding: 10 } } } }
+        });
+    }
+
+    // Stok vs Minimum
+    if (document.getElementById('chartStokAdmin')) {
+        new Chart(document.getElementById('chartStokAdmin'), {
+            type: 'bar',
+            data: {
+                labels: {!! $data['stok_chart']->pluck('nama_bahan')->toJson() !!},
+                datasets: [
+                    { label: 'Stok Saat Ini', data: {!! $data['stok_chart']->pluck('stok_saat_ini')->toJson() !!}, backgroundColor: greenLight, borderColor: green, borderWidth: 1, borderRadius: 4 },
+                    { label: 'Stok Minimum', data: {!! $data['stok_chart']->pluck('stok_minimum')->toJson() !!}, backgroundColor: 'rgba(220,53,69,0.15)', borderColor: red, borderWidth: 1, borderRadius: 4 }
+                ]
+            },
+            options: { indexAxis: 'y', responsive: true, plugins: { legend: { position: 'top' } }, scales: { x: { beginAtZero: true } } }
+        });
+    }
+    @endif
+
+    // ===== GUDANG CHARTS =====
+    @if($user->isPetugasGudang())
+    // Stok Bahan Baku
+    if (document.getElementById('chartStokGudang')) {
+        var stokLabels = {!! $data['stok_chart']->pluck('nama_bahan')->toJson() !!};
+        var stokData = {!! $data['stok_chart']->pluck('stok_saat_ini')->toJson() !!};
+        var stokMinData = {!! $data['stok_chart']->pluck('stok_minimum')->toJson() !!};
+        var barColors = stokData.map((v, i) => v <= stokMinData[i] ? red : green);
+        new Chart(document.getElementById('chartStokGudang'), {
+            type: 'bar',
+            data: {
+                labels: stokLabels,
+                datasets: [
+                    { label: 'Stok Saat Ini', data: stokData, backgroundColor: barColors.map(c => c === red ? 'rgba(220,53,69,0.3)' : greenLight), borderColor: barColors, borderWidth: 1, borderRadius: 4 },
+                    { label: 'Batas Minimum', data: stokMinData, backgroundColor: 'rgba(255,193,7,0.3)', borderColor: yellow, borderWidth: 1, borderRadius: 4 }
+                ]
+            },
+            options: { indexAxis: 'y', responsive: true, plugins: { legend: { position: 'top' } }, scales: { x: { beginAtZero: true } } }
+        });
+    }
+
+    // Barang Masuk Bulanan
+    if (document.getElementById('chartBmGudang')) {
+        new Chart(document.getElementById('chartBmGudang'), {
+            type: 'bar',
+            data: {
+                labels: {!! $data['barang_masuk_chart']->pluck('bulan')->toJson() !!},
+                datasets: [{
+                    label: 'Jumlah Transaksi',
+                    data: {!! $data['barang_masuk_chart']->pluck('jumlah')->toJson() !!},
+                    backgroundColor: 'rgba(253,126,20,0.2)',
+                    borderColor: orange,
+                    borderWidth: 1,
+                    borderRadius: 4,
+                }]
+            },
+            options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+        });
+    }
+
+    // Riwayat Stok
+    if (document.getElementById('chartRiwayatStok')) {
+        new Chart(document.getElementById('chartRiwayatStok'), {
+            type: 'line',
+            data: {
+                labels: {!! json_encode($data['riwayat_labels']) !!},
+                datasets: [
+                    { label: 'Masuk', data: {!! json_encode($data['riwayat_masuk']) !!}, borderColor: green, backgroundColor: greenLight, fill: true, tension: 0.3 },
+                    { label: 'Keluar', data: {!! json_encode($data['riwayat_keluar']) !!}, borderColor: red, backgroundColor: 'rgba(220,53,69,0.1)', fill: true, tension: 0.3 }
+                ]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'top' } }, scales: { y: { beginAtZero: true } } }
+        });
+    }
+    @endif
+
+    // ===== DAPUR CHARTS =====
+    @if($user->isPetugasDapur())
+    // Produksi 7 Hari
+    if (document.getElementById('chartProduksiDapur')) {
+        new Chart(document.getElementById('chartProduksiDapur'), {
+            type: 'bar',
+            data: {
+                labels: {!! $data['produksi_mingguan']->pluck('tanggal')->map(fn($t) => \Carbon\Carbon::parse($t)->locale('id')->isoFormat('dddd, D MMM'))->toJson() !!},
+                datasets: [{
+                    label: 'Jumlah Siswa',
+                    data: {!! $data['produksi_mingguan']->pluck('total')->toJson() !!},
+                    backgroundColor: greenLight,
+                    borderColor: green,
+                    borderWidth: 1,
+                    borderRadius: 4,
+                }]
+            },
+            options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+        });
+    }
+
+    // Distribusi Menu
+    if (document.getElementById('chartMenuDapur')) {
+        var menuLabels = {!! $data['menu_stats']->pluck('menuMakanan.nama_menu')->map(fn($n) => $n ?? 'N/A')->toJson() !!};
+        var menuData = {!! $data['menu_stats']->pluck('total_siswa')->toJson() !!};
+        var menuColors = ['#1a7f5a','#fd7e14','#0d6efd','#dc3545','#ffc107','#20c997','#6f42c1','#20c997'];
+        new Chart(document.getElementById('chartMenuDapur'), {
+            type: 'doughnut',
+            data: {
+                labels: menuLabels,
+                datasets: [{ data: menuData, backgroundColor: menuColors.slice(0, menuLabels.length), borderWidth: 0 }]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, padding: 8, font: { size: 11 } } } } }
+        });
+    }
+    @endif
 });
 </script>
-@endif
 @endpush
