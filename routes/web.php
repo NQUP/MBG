@@ -50,9 +50,26 @@ Route::middleware('auth')->group(function () {
 
     // LAPORAN (admin)
     Route::middleware('role:admin')->prefix('laporan')->name('laporan.')->group(function () {
+        Route::get('dashboard', [LaporanController::class, 'dashboard'])->name('dashboard');
         Route::get('stok', [LaporanController::class, 'stok'])->name('stok');
-        Route::get('produksi', [LaporanController::class, 'produksi'])->name('produksi');
+        Route::get('stok/pdf', [LaporanController::class, 'stokPdf'])->name('stok.pdf');
+        Route::get('stok/excel', [LaporanController::class, 'stokExcel'])->name('stok.excel');
+
+        Route::get('permintaan-bahan', [LaporanController::class, 'permintaanBahan'])->name('permintaan-bahan');
+        Route::get('permintaan-bahan/pdf', [LaporanController::class, 'permintaanBahanPdf'])->name('permintaan-bahan.pdf');
+        Route::get('permintaan-bahan/excel', [LaporanController::class, 'permintaanBahanExcel'])->name('permintaan-bahan.excel');
+
+        Route::get('permintaan-pembelian', [LaporanController::class, 'permintaanPembelian'])->name('permintaan-pembelian');
+        Route::get('permintaan-pembelian/pdf', [LaporanController::class, 'permintaanPembelianPdf'])->name('permintaan-pembelian.pdf');
+        Route::get('permintaan-pembelian/excel', [LaporanController::class, 'permintaanPembelianExcel'])->name('permintaan-pembelian.excel');
+
         Route::get('barang-masuk', [LaporanController::class, 'barangMasuk'])->name('barang-masuk');
+        Route::get('barang-masuk/pdf', [LaporanController::class, 'barangMasukPdf'])->name('barang-masuk.pdf');
+        Route::get('barang-masuk/excel', [LaporanController::class, 'barangMasukExcel'])->name('barang-masuk.excel');
+
+        Route::get('penggunaan-bahan', [LaporanController::class, 'penggunaanBahan'])->name('penggunaan-bahan');
+        Route::get('penggunaan-bahan/pdf', [LaporanController::class, 'penggunaanBahanPdf'])->name('penggunaan-bahan.pdf');
+        Route::get('penggunaan-bahan/excel', [LaporanController::class, 'penggunaanBahanExcel'])->name('penggunaan-bahan.excel');
     });
 
     // GUDANG
@@ -75,18 +92,17 @@ Route::middleware('auth')->group(function () {
     // PERMINTAAN PEMBELIAN (admin & gudang: kelola)
     Route::middleware('role:admin,petugas_gudang')->prefix('permintaan-pembelian')->name('permintaan-pembelian.')->group(function () {
         Route::get('/', [PermintaanPembelianController::class, 'index'])->name('index');
+        Route::middleware('role:petugas_gudang')->group(function () {
+            Route::get('create', [PermintaanPembelianController::class, 'create'])->name('create');
+            Route::post('/', [PermintaanPembelianController::class, 'store'])->name('store');
+            Route::get('{permintaanPembelian}/edit', [PermintaanPembelianController::class, 'edit'])->name('edit');
+            Route::put('{permintaanPembelian}', [PermintaanPembelianController::class, 'update'])->name('update');
+            Route::delete('{permintaanPembelian}', [PermintaanPembelianController::class, 'destroy'])->name('destroy');
+        });
         Route::get('{permintaanPembelian}', [PermintaanPembelianController::class, 'show'])->name('show');
-        Route::get('{permintaanPembelian}/edit', [PermintaanPembelianController::class, 'edit'])->name('edit');
-        Route::put('{permintaanPembelian}', [PermintaanPembelianController::class, 'update'])->name('update');
-        Route::delete('{permintaanPembelian}', [PermintaanPembelianController::class, 'destroy'])->name('destroy');
         Route::post('{permintaanPembelian}/ubah-status', [PermintaanPembelianController::class, 'ubahStatus'])->name('ubah-status');
     });
 
-    // PERMINTAAN PEMBELIAN (gudang & dapur: buat baru)
-    Route::middleware('role:petugas_gudang,petugas_dapur')->prefix('permintaan-pembelian')->name('permintaan-pembelian.')->group(function () {
-        Route::get('create', [PermintaanPembelianController::class, 'create'])->name('create');
-        Route::post('/', [PermintaanPembelianController::class, 'store'])->name('store');
-    });
 
     // API routes (any auth user)
     Route::get('api/permintaan-pembelian/bahan-info', [PermintaanPembelianController::class, 'getBahanInfo'])->name('permintaan-pembelian.bahan-info');

@@ -38,11 +38,12 @@ class PermintaanPembelian extends Model
     public function canTransitionTo(string $targetStatus): bool
     {
         $allowed = [
-            'Draft'     => ['Diajukan'],
-            'Diajukan'  => ['Disetujui', 'Ditolak'],
-            'Disetujui' => ['Selesai'],
-            'Selesai'   => [],
-            'Ditolak'   => ['Draft'],
+            'Draft'          => ['Diajukan'],
+            'Diajukan'       => ['Disetujui', 'Ditolak'],
+            'Disetujui'      => ['Barang Diterima'],
+            'Barang Diterima' => ['Selesai'],
+            'Selesai'        => [],
+            'Ditolak'        => ['Draft'],
         ];
         return in_array($targetStatus, $allowed[$this->status] ?? []);
     }
@@ -58,12 +59,13 @@ class PermintaanPembelian extends Model
     public static function statusBadge(string $status): string
     {
         return match ($status) {
-            'Draft'     => '<span class="badge bg-secondary">Draft</span>',
-            'Diajukan'  => '<span class="badge bg-warning text-dark">Diajukan</span>',
-            'Disetujui' => '<span class="badge bg-success">Disetujui</span>',
-            'Selesai'   => '<span class="badge bg-info text-dark">Selesai</span>',
-            'Ditolak'   => '<span class="badge bg-danger">Ditolak</span>',
-            default     => '<span class="badge bg-secondary">' . $status . '</span>',
+            'Draft'          => '<span class="badge bg-secondary">Draft</span>',
+            'Diajukan'       => '<span class="badge bg-warning text-dark">Diajukan</span>',
+            'Disetujui'      => '<span class="badge bg-success">Disetujui</span>',
+            'Barang Diterima' => '<span class="badge bg-primary">Barang Diterima</span>',
+            'Selesai'        => '<span class="badge bg-info text-dark">Selesai</span>',
+            'Ditolak'        => '<span class="badge bg-danger">Ditolak</span>',
+            default          => '<span class="badge bg-secondary">' . $status . '</span>',
         };
     }
 }

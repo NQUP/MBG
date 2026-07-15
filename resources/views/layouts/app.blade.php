@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 
 <head>
@@ -616,7 +616,14 @@
                     </a>
                 </li>
                 <li>
+                    <di                <li>
                     <div class="sidebar-section">Laporan</div>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('laporan.dashboard') }}"
+                        class="nav-link {{ request()->routeIs('laporan.dashboard') ? 'active' : '' }}">
+                        <i class="bi bi-speedometer2"></i> Dashboard Laporan
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('laporan.stok') }}"
@@ -625,9 +632,15 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('laporan.produksi') }}"
-                        class="nav-link {{ request()->routeIs('laporan.produksi') ? 'active' : '' }}">
-                        <i class="bi bi-graph-up"></i> Laporan Produksi
+                    <a href="{{ route('laporan.permintaan-bahan') }}"
+                        class="nav-link {{ request()->routeIs('laporan.permintaan-bahan') ? 'active' : '' }}">
+                        <i class="bi bi-graph-up"></i> Laporan Permintaan Bahan
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('laporan.permintaan-pembelian') }}"
+                        class="nav-link {{ request()->routeIs('laporan.permintaan-pembelian') ? 'active' : '' }}">
+                        <i class="bi bi-cart"></i> Laporan Permintaan Pembelian
                     </a>
                 </li>
                 <li class="nav-item">
@@ -636,7 +649,12 @@
                         <i class="bi bi-arrow-down-circle"></i> Laporan Barang Masuk
                     </a>
                 </li>
-            @endif
+                <li class="nav-item">
+                    <a href="{{ route('laporan.penggunaan-bahan') }}"
+                        class="nav-link {{ request()->routeIs('laporan.penggunaan-bahan') ? 'active' : '' }}">
+                        <i class="bi bi-gear"></i> Laporan Penggunaan Bahan
+                    </a>
+                </li>@endif
             @if (auth()->user()->isPetugasGudang())
                 <li>
                     <div class="sidebar-section">Gudang</div>
@@ -829,13 +847,6 @@
 </body>
 
 </html>
-
-
-
-
-
-
-
 
 
 

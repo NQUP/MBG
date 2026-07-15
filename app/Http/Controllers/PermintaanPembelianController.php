@@ -161,33 +161,39 @@ class PermintaanPembelianController extends Controller
     public function ubahStatus(Request $request, PermintaanPembelian $permintaanPembelian)
     {
         $request->validate([
-            'status_baru' => 'required|in:Draft,Diajukan,Disetujui,Selesai,Ditolak',
+            'status_baru' => 'required|in:Draft,Diajukan,Disetujui,Barang Diterima,Selesai,Ditolak',
         ]);
 
         $statusBaru = $request->status_baru;
+        $role = auth()->user()->role;
 
-        // Validasi workflow
-        if ($permintaanPembelian->status === 'Draft' && $statusBaru !== 'Diajukan') {
-            return back()->with('error', 'Draft hanya dapat diajukan (Diajukan).');
+        // Petugas Gudang: Draft?Diajukan, Disetujui?Barang Diterima, Barang Diterima?Selesai, Ditolak?Draft
+        if ($role === 'petugas_gudang') {
+            if ($permintaanPembelian->status === 'Draft' && $statusBaru !== 'Diajukan') {
+                return back()->with('error', 'Draft hanya dapat diajukan ke Admin.');
+            }
+            if ($permintaanPembelian->status === 'Disetujui' && $statusBaru !== 'Barang Diterima') {
+                return back()->with('error', 'Permintaan disetujui harus menunggu barang diterima.');
+            }
+            if ($permintaanPembelian->status === 'Barang Diterima' && $statusBaru !== 'Selesai') {
+                return back()->with('error', 'Barang sudah diterima, silakan selesaikan permintaan.');
+            }
+            if ($permintaanPembelian->status === 'Ditolak' && $statusBaru !== 'Draft') {
+                return back()->with('error', 'Permintaan ditolak hanya dapat diajukan ulang.');
+            }
         }
-        if ($permintaanPembelian->status === 'Diajukan' && !in_array($statusBaru, ['Disetujui', 'Ditolak'])) {
-            return back()->with('error', 'Permintaan yang diajukan hanya dapat disetujui atau ditolak.');
-        }
-        if ($permintaanPembelian->status === 'Disetujui' && $statusBaru !== 'Selesai') {
-            return back()->with('error', 'Permintaan disetujui hanya dapat diselesaikan.');
-        }
-        if ($permintaanPembelian->status === 'Selesai') {
-            return back()->with('error', 'Permintaan selesai tidak dapat diubah.');
-        }
-        if ($permintaanPembelian->status === 'Ditolak' && $statusBaru !== 'Draft') {
-            return back()->with('error', 'Permintaan ditolak hanya dapat dikembalikan ke Draft.');
+
+        // Admin: Diajukan?Disetujui, Diajukan?Ditolak
+        if ($role === 'admin') {
+            if ($permintaanPembelian->status === 'Diajukan' && !in_array($statusBaru, ['Disetujui', 'Ditolak'])) {
+                return back()->with('error', 'Admin hanya dapat menyetujui atau menolak permintaan yang diajukan.');
+            }
         }
 
         $permintaanPembelian->update(['status' => $statusBaru]);
 
-        $label = $statusBaru;
         return redirect()->route('permintaan-pembelian.index')
-            ->with('success', 'Status berubah menjadi <strong>' . $label . '</strong>.');
+            ->with('success', 'Status berubah menjadi <strong>' . $statusBaru . '</strong>.');
     }
 
     public function getBahanInfo(Request $request)
