@@ -10,23 +10,48 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link href="/vendor/sweetalert2/theme-bootstrap-4.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --sidebar-width: 260px;
-            --primary: #1a7f5a;
-            --primary-dark: #145e43;
-            --primary-light: #e8f5f0;
+            --forest: #16382b;
+            --forest-deep: #0d271e;
+            --leaf: #5fa876;
+            --leaf-bright: #86c99a;
+            --leaf-tint: rgba(95, 168, 118, 0.14);
+            --turmeric: #d9822b;
+            --turmeric-tint: rgba(217, 130, 43, 0.14);
+            --sky: #4a7a8c;
+            --danger: #c0503c;
+            --danger-tint: rgba(192, 80, 60, 0.12);
+            --rice: #faf6ec;
+            --rice-dim: #f0ead8;
+            --ink: #22291f;
+            --muted: #6b7563;
+            --sage-line: #dfe3d2;
+            /* kept for any legacy references */
+            --primary: var(--forest);
+            --primary-dark: var(--forest-deep);
+            --primary-light: var(--leaf-tint);
         }
 
         body {
-            background: #f4f7f6;
-            font-family: 'Segoe UI', sans-serif;
+            background: var(--rice);
+            font-family: 'Inter', sans-serif;
+            color: var(--ink);
         }
 
+        /* ---------------- Sidebar ---------------- */
         #sidebar {
             width: var(--sidebar-width);
             min-height: 100vh;
-            background: linear-gradient(180deg, #1a7f5a 0%, #145e43 100%);
+            background:
+                radial-gradient(circle at 15% 0%, rgba(134, 201, 154, 0.14), transparent 45%),
+                linear-gradient(180deg, var(--forest) 0%, var(--forest-deep) 100%);
             position: fixed;
             top: 0;
             left: 0;
@@ -37,51 +62,122 @@
         }
 
         #sidebar .sidebar-brand {
-            padding: 20px 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 22px 18px 18px;
+            border-bottom: 1px solid rgba(250, 246, 236, 0.15);
+        }
+
+        #sidebar .sidebar-brand .brand-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 11px;
+            background: rgba(250, 246, 236, 0.08);
+            border: 1px solid rgba(250, 246, 236, 0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.35rem;
+            flex: none;
         }
 
         #sidebar .sidebar-brand h5 {
+            font-family: 'Fraunces', serif;
             color: #fff;
-            font-weight: 700;
-            font-size: 0.95rem;
-            margin-bottom: 2px;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 1px;
         }
 
         #sidebar .sidebar-brand small {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--leaf-bright);
+            font-size: 0.68rem;
+            letter-spacing: 0.03em;
         }
 
         #sidebar .nav-link {
-            color: rgba(255, 255, 255, 0.85);
-            padding: 10px 20px;
+            position: relative;
+            color: rgba(250, 246, 236, 0.78);
+            padding: 10px 20px 10px 24px;
             border-radius: 0;
-            font-size: 0.875rem;
-            transition: all 0.2s;
-        }
-
-        #sidebar .nav-link:hover,
-        #sidebar .nav-link.active {
-            background: rgba(255, 255, 255, 0.18);
-            color: #fff;
-            padding-left: 25px;
+            font-size: 0.87rem;
+            transition: all 0.15s;
         }
 
         #sidebar .nav-link i {
             width: 20px;
             margin-right: 8px;
+            color: rgba(250, 246, 236, 0.55);
         }
 
-        #sidebar .sidebar-section {
-            padding: 10px 20px 5px;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: rgba(255, 255, 255, 0.5);
+        #sidebar .nav-link:hover {
+            background: rgba(250, 246, 236, 0.08);
+            color: #fff;
+        }
+
+        #sidebar .nav-link.active {
+            background: rgba(250, 246, 236, 0.1);
+            color: #fff;
             font-weight: 600;
         }
 
+        #sidebar .nav-link.active::before,
+        #sidebar .nav-link:hover::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 8px;
+            bottom: 8px;
+            width: 3px;
+            border-radius: 0 3px 3px 0;
+            background: var(--leaf-bright);
+        }
+
+        #sidebar .nav-link.active i {
+            color: var(--leaf-bright);
+        }
+
+        #sidebar .sidebar-section {
+            padding: 16px 20px 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.66rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: rgba(250, 246, 236, 0.4);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        #sidebar .sidebar-section::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: rgba(250, 246, 236, 0.12);
+        }
+
+        #sidebar .sidebar-user {
+            background: rgba(250, 246, 236, 0.08);
+            border: 1px solid rgba(250, 246, 236, 0.12);
+            border-radius: 10px;
+        }
+
+        #sidebar .sidebar-user .avatar {
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            border-radius: 50%;
+            background: var(--rice);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #sidebar .sidebar-user .avatar i {
+            color: var(--forest);
+        }
+
+        /* ---------------- Content / topbar ---------------- */
         #content {
             margin-left: var(--sidebar-width);
             min-height: 100vh;
@@ -89,8 +185,16 @@
 
         .navbar-top {
             background: #fff;
-            border-bottom: 1px solid #e9ecef;
-            padding: 12px 24px;
+            border-bottom: 1px solid var(--sage-line);
+            padding: 14px 24px;
+        }
+
+        .navbar-top h6 {
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.72rem !important;
+            color: var(--muted) !important;
         }
 
         .page-header {
@@ -98,35 +202,59 @@
         }
 
         .page-header h4 {
-            font-weight: 700;
-            color: #1a7f5a;
+            font-family: 'Fraunces', serif;
+            font-weight: 600;
+            color: var(--forest);
             margin: 0;
         }
 
+        /* ---------------- Shared components ---------------- */
         .card {
-            border: none;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--sage-line);
+            box-shadow: none;
             border-radius: 10px;
         }
 
         .card-header {
+            background: var(--rice-dim);
+            border-bottom: 1px solid var(--sage-line);
             border-radius: 10px 10px 0 0 !important;
+            font-weight: 600;
+            color: var(--forest);
         }
 
         .stat-card {
-            border-left: 4px solid var(--primary);
+            border-left: 4px solid var(--forest);
         }
 
         .stat-card .stat-icon {
             font-size: 2rem;
-            color: var(--primary);
-            opacity: 0.8;
+            color: var(--forest);
+            opacity: 0.85;
         }
 
         .table th {
+            font-family: 'JetBrains Mono', monospace;
             font-weight: 600;
-            font-size: 0.85rem;
-            background: #f8f9fa;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--muted);
+            background: var(--rice-dim);
+            border-color: var(--sage-line);
+        }
+
+        .table td {
+            border-color: var(--sage-line);
+        }
+
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--rice-dim);
+            color: var(--forest);
+            padding: 2px 6px;
+            border-radius: 5px;
+            font-size: 0.82rem;
         }
 
         .btn-action {
@@ -135,12 +263,75 @@
         }
 
         .stok-warning {
-            color: #dc3545;
+            color: var(--danger);
             font-weight: 600;
         }
 
         .stok-ok {
-            color: #1a7f5a;
+            color: var(--forest);
+        }
+
+        .btn-success {
+            background: var(--forest);
+            border-color: var(--forest);
+        }
+
+        .btn-success:hover {
+            background: #1e4634;
+            border-color: #1e4634;
+        }
+
+        .btn-outline-primary {
+            color: var(--forest);
+            border-color: var(--forest);
+        }
+
+        .btn-outline-primary:hover {
+            background: var(--forest);
+            border-color: var(--forest);
+        }
+
+        .btn-outline-danger {
+            color: var(--danger);
+            border-color: var(--danger);
+        }
+
+        .btn-outline-danger:hover {
+            background: var(--danger);
+            border-color: var(--danger);
+        }
+
+        .badge.bg-success {
+            background: var(--leaf) !important;
+        }
+
+        .badge.bg-warning {
+            background: var(--turmeric) !important;
+            color: #fff !important;
+        }
+
+        .badge.bg-danger {
+            background: var(--danger) !important;
+        }
+
+        .badge.bg-primary {
+            background: var(--sky) !important;
+        }
+
+        .text-success {
+            color: var(--leaf) !important;
+        }
+
+        .text-primary {
+            color: var(--sky) !important;
+        }
+
+        .text-warning {
+            color: var(--turmeric) !important;
+        }
+
+        .text-danger {
+            color: var(--danger) !important;
         }
 
         @media (max-width: 768px) {
@@ -156,6 +347,7 @@
         .swal2-popup {
             font-size: 14px;
             border-radius: 12px;
+            font-family: 'Inter', sans-serif;
         }
 
         .swal2-title {
@@ -169,7 +361,7 @@
     <nav id="sidebar">
         <div class="sidebar-brand">
             <div class="d-flex align-items-center gap-2 mb-1">
-                <span style="font-size:1.8rem;">&#x1F957;</span>
+                <div class="brand-icon">&#x1F957;</div>
                 <div>
                     <h5 class="mb-0">Inventory MBG</h5>
                     <small>SPPG Sumber Jaya 03</small>
@@ -302,16 +494,14 @@
             @endif
         </ul>
         <div class="mt-auto p-3" style="position:absolute;bottom:0;width:100%;">
-            <div class="d-flex align-items-center gap-2 p-2"
-                style="background:rgba(255,255,255,0.1);border-radius:8px;">
-                <div class="rounded-circle bg-white d-flex align-items-center justify-content-center"
-                    style="width:36px;height:36px;min-width:36px;">
-                    <i class="bi bi-person-fill text-success"></i>
+            <div class="d-flex align-items-center gap-2 p-2 sidebar-user">
+                <div class="avatar">
+                    <i class="bi bi-person-fill"></i>
                 </div>
                 <div class="overflow-hidden">
                     <div class="text-white fw-semibold text-truncate" style="font-size:0.8rem;">
                         {{ auth()->user()->name }}</div>
-                    <div style="font-size:0.7rem;color:rgba(255,255,255,0.7);">
+                    <div style="font-size:0.7rem;color:rgba(250,246,236,0.6);">
                         {{ str_replace('_', ' ', ucfirst(auth()->user()->role)) }}</div>
                 </div>
             </div>
@@ -376,7 +566,7 @@
                                 origin: {
                                     y: 0.6
                                 },
-                                colors: ['#1a7f5a', '#145e43', '#f59e0b']
+                                colors: ['#16382b', '#5fa876', '#d9822b']
                             });
                         }, 300);
                     }
@@ -394,8 +584,8 @@
                 html: 'Data yang dihapus <b>tidak bisa</b> dikembalikan.',
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#6c757d',
+                confirmButtonColor: '#c0503c',
+                cancelButtonColor: '#8a9480',
                 confirmButtonText: 'Ya, hapus!',
                 cancelButtonText: 'Batal',
                 reverseButtons: true,
@@ -412,8 +602,8 @@
                 html: form.dataset.confirm || 'Yakin melanjutkan?',
                 icon: 'question',
                 showCancelButton: true,
-                confirmButtonColor: '#1a7f5a',
-                cancelButtonColor: '#6c757d',
+                confirmButtonColor: '#16382b',
+                cancelButtonColor: '#8a9480',
                 confirmButtonText: 'Ya, lanjutkan',
                 cancelButtonText: 'Batal',
                 reverseButtons: true,
@@ -430,8 +620,8 @@
                 html: btn.dataset.confirm || 'Yakin melanjutkan?',
                 icon: 'question',
                 showCancelButton: true,
-                confirmButtonColor: '#1a7f5a',
-                cancelButtonColor: '#6c757d',
+                confirmButtonColor: '#16382b',
+                cancelButtonColor: '#8a9480',
                 confirmButtonText: 'Ya, lanjutkan',
                 cancelButtonText: 'Batal',
                 reverseButtons: true,
