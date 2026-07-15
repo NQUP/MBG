@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 @section('title', 'Detail PR - ' . $permintaanPembelian->nomor_permintaan)
 @section('page_title', 'Detail Permintaan Pembelian')
 
@@ -30,7 +30,7 @@
             </form>
         @endif
         @if($permintaanPembelian->status === 'Disetujui')
-            <span class="badge bg-success fs-6 align-self-center"><i class="bi bi-check-circle me-1"></i>Disetujui – Siap Barang Masuk</span>
+            <span class="badge bg-success fs-6 align-self-center"><i class="bi bi-check-circle me-1"></i>Disetujui â€“ Siap Barang Masuk</span>
         @endif
         @if($permintaanPembelian->status === 'Ditolak')
             <form method="POST" action="{{ route('permintaan-pembelian.ubah-status', $permintaanPembelian) }}" data-confirm="Kembalikan permintaan ini ke status Draft?">
@@ -40,7 +40,7 @@
             </form>
         @endif
         @if($permintaanPembelian->status === 'Selesai')
-            <span class="badge bg-info text-dark fs-6 align-self-center"><i class="bi bi-bag-check me-1"></i>Selesai – Semua Item Diterima</span>
+            <span class="badge bg-info text-dark fs-6 align-self-center"><i class="bi bi-bag-check me-1"></i>Selesai â€“ Semua Item Diterima</span>
         @endif
         <a href="{{ route('permintaan-pembelian.index') }}" class="btn btn-outline-secondary btn-sm align-self-center"><i class="bi bi-arrow-left me-1"></i>Kembali</a>
     </div>
@@ -185,3 +185,5 @@
     </div>
 </div>
 @endsection
+
+

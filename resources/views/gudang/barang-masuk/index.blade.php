@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 @section('title', 'Barang Masuk')
 @section('page_title', 'Barang Masuk')
 
@@ -11,9 +11,9 @@
 <div class="card mb-3">
     <div class="card-body py-2">
         <form method="GET" class="row g-2 align-items-end">
-            <div class="col-md-4"><label class="form-label small mb-1">Dari</label><input type="date" name="tanggal_dari" class="form-control form-control-sm" value="{{ request('tanggal_dari') }}"></div>
-            <div class="col-md-4"><label class="form-label small mb-1">Sampai</label><input type="date" name="tanggal_sampai" class="form-control form-control-sm" value="{{ request('tanggal_sampai') }}"></div>
-            <div class="col-md-4"><button type="submit" class="btn btn-sm btn-primary w-100 mt-3">Filter</button></div>
+            <div class="col-md-4"><label class="form-label mb-1">Dari</label><input type="date" name="tanggal_dari" class="form-control" value="{{ request('tanggal_dari') }}"></div>
+            <div class="col-md-4"><label class="form-label mb-1">Sampai</label><input type="date" name="tanggal_sampai" class="form-control" value="{{ request('tanggal_sampai') }}"></div>
+            <div class="col-md-4"><button type="submit" class="btn btn-primary w-100 mt-3">Filter</button></div>
         </form>
     </div>
 </div>
@@ -44,3 +44,6 @@
     @if($barangMasuks->hasPages())<div class="card-footer">{{ $barangMasuks->links() }}</div>@endif
 </div>
 @endsection
+
+
+

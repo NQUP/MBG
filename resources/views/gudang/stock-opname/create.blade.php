@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 @section('title', 'Buat Stock Opname')
 @section('page_title', 'Buat Stock Opname')
 
@@ -29,3 +29,4 @@
     </div>
 </div>
 @endsection
+

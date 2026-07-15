@@ -1,11 +1,11 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 @section('title', 'Buat Permintaan Pembelian')
 @section('page_title', 'Buat Permintaan Pembelian')
 
 @section('content')
 <div class="page-header d-flex justify-content-between align-items-center">
     <h4><i class="bi bi-cart-plus-fill me-2"></i>Buat Permintaan Pembelian</h4>
-    <a href="{{ route('permintaan-pembelian.index') }}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left me-1"></i>Kembali</a>
+    <a href="{{ route('permintaan-pembelian.index') }}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i>Kembali</a>
 </div>
 
 <form method="POST" action="{{ route('permintaan-pembelian.store') }}" id="formPR">
@@ -36,7 +36,7 @@
                             <tbody id="detailBody">
                                 <tr id="baris-0">
                                     <td>
-                                        <select name="items[0][bahan_baku_id]" class="form-select form-select-sm bahan-select" required onchange="pilihBahan(this, 0)">
+                                        <select name="items[0][bahan_baku_id]" class="form-select bahan-select" required onchange="pilihBahan(this, 0)">
                                             <option value="">-- Pilih Bahan --</option>
                                             @foreach($bahanBakus as $b)
                                                 <option value="{{ $b->id }}"
@@ -52,15 +52,15 @@
                                     </td>
                                     <td><span id="stok-0" class="fw-semibold text-muted">-</span></td>
                                     <td><span id="min-0" class="fw-semibold text-muted">-</span></td>
-                                    <td><input type="number" name="items[0][jumlah]" class="form-control form-control-sm" step="0.01" min="0.01" required></td>
+                                    <td><input type="number" name="items[0][jumlah]" class="form-control" step="0.01" min="0.01" required></td>
                                     <td>
-                                        <select name="items[0][satuan_id]" id="satuan-0" class="form-select form-select-sm satuan-select" required>
+                                        <select name="items[0][satuan_id]" id="satuan-0" class="form-select satuan-select" required>
                                             @foreach($satuans as $s)
                                                 <option value="{{ $s->id }}">{{ $s->singkatan }}</option>
                                             @endforeach
                                         </select>
                                     </td>
-                                    <td><input type="text" name="items[0][catatan]" class="form-control form-control-sm" placeholder="opsional"></td>
+                                    <td><input type="text" name="items[0][catatan]" class="form-control" placeholder="opsional"></td>
                                     <td></td>
                                 </tr>
                             </tbody>
@@ -122,16 +122,16 @@ function tambahBaris() {
     tr.id = 'baris-' + i;
     tr.innerHTML = `
         <td>
-            <select name="items[${i}][bahan_baku_id]" class="form-select form-select-sm bahan-select" required onchange="pilihBahan(this, ${i})">
+            <select name="items[${i}][bahan_baku_id]" class="form-select bahan-select" required onchange="pilihBahan(this, ${i})">
                 ${getBahanOpts()}
             </select>
             <div id="badge-${i}" class="mt-1"></div>
         </td>
         <td><span id="stok-${i}" class="fw-semibold text-muted">-</span></td>
         <td><span id="min-${i}" class="fw-semibold text-muted">-</span></td>
-        <td><input type="number" name="items[${i}][jumlah]" class="form-control form-control-sm" step="0.01" min="0.01" required></td>
-        <td><select name="items[${i}][satuan_id]" id="satuan-${i}" class="form-select form-select-sm satuan-select" required>${getSatuanOpts()}</select></td>
-        <td><input type="text" name="items[${i}][catatan]" class="form-control form-control-sm" placeholder="opsional"></td>
+        <td><input type="number" name="items[${i}][jumlah]" class="form-control" step="0.01" min="0.01" required></td>
+        <td><select name="items[${i}][satuan_id]" id="satuan-${i}" class="form-select satuan-select" required>${getSatuanOpts()}</select></td>
+        <td><input type="text" name="items[${i}][catatan]" class="form-control" placeholder="opsional"></td>
         <td><button type="button" class="btn btn-sm btn-outline-danger" onclick="hapusBaris(${i})"><i class="bi bi-trash"></i></button></td>
     `;
     document.getElementById('detailBody').appendChild(tr);
@@ -194,3 +194,6 @@ document.getElementById('formPR').addEventListener('submit', function(e) {
 });
 </script>
 @endpush
+
+
+

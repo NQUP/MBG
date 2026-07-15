@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 @section('title', 'Kelola User')
 @section('page_title', 'Kelola User')
 
@@ -72,3 +72,5 @@
     @endif
 </div>
 @endsection
+
+

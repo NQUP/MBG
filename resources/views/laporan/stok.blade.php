@@ -1,8 +1,10 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 @section('title', 'Laporan Stok')
 @section('page_title', 'Laporan Stok')
 @section('content')
 <div class="page-header"><h4><i class="bi bi-bar-chart me-2"></i>Laporan Stok Bahan Baku</h4></div>
-<div class="card mb-3"><div class="card-body py-2"><form method="GET" class="row g-2"><div class="col-md-9"><select name="kategori" class="form-select form-select-sm"><option value="">-- Semua Kategori --</option>@foreach($kategoris as $k)<option value="{{ $k->id }}" {{ request('kategori') == $k->id ? 'selected' : '' }}>{{ $k->nama_kategori }}</option>@endforeach</select></div><div class="col-md-3"><button class="btn btn-sm btn-primary w-100">Filter</button></div></form></div></div>
+<div class="card mb-3"><div class="card-body py-2"><form method="GET" class="row g-2"><div class="col-md-9"><select name="kategori" class="form-select"><option value="">-- Semua Kategori --</option>@foreach($kategoris as $k)<option value="{{ $k->id }}" {{ request('kategori') == $k->id ? 'selected' : '' }}>{{ $k->nama_kategori }}</option>@endforeach</select></div><div class="col-md-3"><button class="btn btn-primary w-100">Filter</button></div></form></div></div>
 <div class="card"><div class="table-responsive"><table class="table table-hover mb-0"><thead><tr><th>Kode</th><th>Bahan</th><th>Kategori</th><th>Stok</th><th>Minimum</th><th>Satuan</th><th>Status</th></tr></thead><tbody>@foreach($bahanBakus as $b)<tr><td><code>{{ $b->kode_bahan }}</code></td><td class="fw-semibold">{{ $b->nama_bahan }}</td><td>{{ $b->kategori->nama_kategori }}</td><td>{{ number_format($b->stok_saat_ini,2) }}</td><td>{{ number_format($b->stok_minimum,2) }}</td><td>{{ $b->satuan->singkatan }}</td><td>@if($b->stok_saat_ini <= $b->stok_minimum)<span class="badge bg-danger">Minimum</span>@else<span class="badge bg-success">Aman</span>@endif</td></tr>@endforeach</tbody></table></div></div>
 @endsection
+
+

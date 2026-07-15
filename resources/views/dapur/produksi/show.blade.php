@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 @section('title', 'Detail Produksi')
 @section('page_title', 'Detail Produksi')
 
@@ -83,24 +83,7 @@
 
 @push('styles')
     <style>
-        .page-eyebrow {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.68rem;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            color: var(--leaf);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 6px;
-        }
 
-        .page-eyebrow::before {
-            content: "";
-            width: 20px;
-            height: 1px;
-            background: var(--leaf);
-        }
 
         .btn-outline-secondary {
             color: var(--muted);
@@ -140,3 +123,6 @@
         }
     </style>
 @endpush
+
+
+

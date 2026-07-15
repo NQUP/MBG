@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 @section('title', 'Stock Opname Detail')
 @section('page_title', 'Detail Stock Opname')
 
@@ -16,9 +16,9 @@
             <button type="submit" class="btn btn-success"><i class="bi bi-check-circle me-1"></i>Selesaikan & Update Stok</button>
         </form>
         @else
-        <span class="badge bg-success fs-6 py-2">✓ Selesai</span>
+        <span class="badge bg-success fs-6 py-2">âœ“ Selesai</span>
         @endif
-        <a href="{{ route('gudang.stock-opname.index') }}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left me-1"></i>Kembali</a>
+        <a href="{{ route('gudang.stock-opname.index') }}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i>Kembali</a>
     </div>
 </div>
 
@@ -42,7 +42,7 @@
                         <td>{{ $d->bahanBaku->satuan->singkatan }}</td>
                         <td>{{ number_format($d->stok_sistem, 2) }}</td>
                         <td style="width:140px">
-                            <input type="number" name="details[{{ $i }}][stok_fisik]" class="form-control form-control-sm stok-fisik"
+                            <input type="number" name="details[{{ $i }}][stok_fisik]" class="form-control stok-fisik"
                                    step="0.01" min="0" value="{{ $d->stok_fisik }}"
                                    data-sistem="{{ $d->stok_sistem }}"
                                    onchange="hitungSelisih(this, {{ $i }})" required>
@@ -96,3 +96,5 @@ function hitungSelisih(input, i) {
 }
 </script>
 @endpush
+
+

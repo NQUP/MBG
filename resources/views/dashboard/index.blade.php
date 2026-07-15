@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 @section('title', 'Dashboard')
 @section('page_title', 'Dashboard')
 
@@ -6,7 +6,7 @@
     <div class="page-header">
         <div class="page-eyebrow">Ringkasan Operasional</div>
         <h4><i class="bi bi-speedometer2 me-2"></i>Dashboard</h4>
-        <small class="text-muted">Selamat datang, {{ auth()->user()->name }}</small>
+        <span class="text-muted"><i class="bi bi-person-circle me-1"></i>Selamat datang, {{ auth()->user()->name }}</span>
     </div>
 
     @if (auth()->user()->isAdmin())
@@ -502,24 +502,7 @@
             margin-bottom: 24px;
         }
 
-        .page-eyebrow {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.68rem;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            color: var(--leaf);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 6px;
-        }
 
-        .page-eyebrow::before {
-            content: "";
-            width: 20px;
-            height: 1px;
-            background: var(--leaf);
-        }
 
         .page-header h4 {
             font-family: 'Fraunces', serif;
@@ -1000,3 +983,7 @@
         });
     </script>
 @endpush
+
+
+
+

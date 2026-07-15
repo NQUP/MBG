@@ -1,11 +1,11 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 @section('title', 'Input Barang Masuk')
 @section('page_title', 'Input Barang Masuk')
 
 @section('content')
 <div class="page-header d-flex justify-content-between align-items-center">
     <h4><i class="bi bi-arrow-down-circle-fill me-2"></i>Input Barang Masuk</h4>
-    <a href="{{ route('gudang.barang-masuk.index') }}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left me-1"></i>Kembali</a>
+    <a href="{{ route('gudang.barang-masuk.index') }}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i>Kembali</a>
 </div>
 
 <form method="POST" action="{{ route('gudang.barang-masuk.store') }}" id="formBarangMasuk">
@@ -37,7 +37,7 @@
                                 <option value="">-- Tanpa PR (Manual) --</option>
                                 @foreach($prList as $pr)
                                     <option value="{{ $pr->id }}" {{ old('permintaan_pembelian_id') == $pr->id ? 'selected' : '' }}>
-                                        {{ $pr->nomor_permintaan }} – {{ $pr->tanggal->format('d/m/Y') }} ({{ $pr->detail->count() }} item)
+                                        {{ $pr->nomor_permintaan }} â€“ {{ $pr->tanggal->format('d/m/Y') }} ({{ $pr->detail->count() }} item)
                                     </option>
                                 @endforeach
                             </select>
@@ -77,22 +77,22 @@
                             <tbody id="detailBody">
                                 <tr id="baris-0">
                                     <td>
-                                        <select name="items[0][bahan_baku_id]" class="form-select form-select-sm bahan-select" required>
+                                        <select name="items[0][bahan_baku_id]" class="form-select bahan-select" required>
                                             <option value="">-- Pilih Bahan --</option>
                                             @foreach($bahanBakus as $b)
                                                 <option value="{{ $b->id }}">{{ $b->nama_bahan }} ({{ $b->satuan->singkatan ?? '' }})</option>
                                             @endforeach
                                         </select>
                                     </td>
-                                    <td><input type="number" name="items[0][jumlah]" class="form-control form-control-sm" step="0.01" min="0.01" required></td>
+                                    <td><input type="number" name="items[0][jumlah]" class="form-control" step="0.01" min="0.01" required></td>
                                     <td>
-                                        <select name="items[0][satuan_id]" class="form-select form-select-sm" required>
+                                        <select name="items[0][satuan_id]" class="form-select" required>
                                             @foreach($satuans as $s)
                                                 <option value="{{ $s->id }}">{{ $s->singkatan }}</option>
                                             @endforeach
                                         </select>
                                     </td>
-                                    <td><input type="number" name="items[0][harga_satuan]" class="form-control form-control-sm" step="0.01" min="0" value="0"></td>
+                                    <td><input type="number" name="items[0][harga_satuan]" class="form-control" step="0.01" min="0" value="0"></td>
                                     <td></td>
                                 </tr>
                             </tbody>
@@ -147,12 +147,12 @@ function tambahBaris(bahan_baku_id = '', jumlah = '', satuan_id = '', nama = '')
     const i = barisIndex++;
     const bahanOpts = `<option value="">-- Pilih Bahan --</option>${bahanOptions}`;
     const tr = `<tr id="baris-${i}">
-        <td><select name="items[${i}][bahan_baku_id]" class="form-select form-select-sm bahan-select" required>
+        <td><select name="items[${i}][bahan_baku_id]" class="form-select bahan-select" required>
             ${bahanOpts}
         </select></td>
-        <td><input type="number" name="items[${i}][jumlah]" class="form-control form-control-sm" step="0.01" min="0.01" value="${jumlah}" required></td>
-        <td><select name="items[${i}][satuan_id]" class="form-select form-select-sm" required>${getSatuanOpts(satuan_id)}</select></td>
-        <td><input type="number" name="items[${i}][harga_satuan]" class="form-control form-control-sm" step="0.01" min="0" value="0"></td>
+        <td><input type="number" name="items[${i}][jumlah]" class="form-control" step="0.01" min="0.01" value="${jumlah}" required></td>
+        <td><select name="items[${i}][satuan_id]" class="form-select" required>${getSatuanOpts(satuan_id)}</select></td>
+        <td><input type="number" name="items[${i}][harga_satuan]" class="form-control" step="0.01" min="0" value="0"></td>
         <td><button type="button" class="btn btn-sm btn-outline-danger" onclick="hapusBaris(${i})"><i class="bi bi-trash"></i></button></td>
     </tr>`;
     document.getElementById('detailBody').insertAdjacentHTML('beforeend', tr);
@@ -200,3 +200,5 @@ function updateTotal() {
 }
 </script>
 @endpush
+
+

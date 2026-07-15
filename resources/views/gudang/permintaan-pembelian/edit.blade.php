@@ -1,11 +1,11 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 @section('title', 'Edit Permintaan Pembelian')
 @section('page_title', 'Edit Permintaan Pembelian')
 
 @section('content')
 <div class="page-header d-flex justify-content-between align-items-center">
     <h4><i class="bi bi-pencil-square me-2"></i>Edit: {{ $permintaanPembelian->nomor_permintaan }}</h4>
-    <a href="{{ route('permintaan-pembelian.index') }}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left me-1"></i>Kembali</a>
+    <a href="{{ route('permintaan-pembelian.index') }}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i>Kembali</a>
 </div>
 
 <form method="POST" action="{{ route('permintaan-pembelian.update', $permintaanPembelian) }}" id="formPR">
@@ -39,7 +39,7 @@
                                 <tr id="baris-{{ $idx }}">
                                     <input type="hidden" name="items[{{ $idx }}][id]" value="{{ $detail->id }}">
                                     <td>
-                                        <select name="items[{{ $idx }}][bahan_baku_id]" class="form-select form-select-sm bahan-select" required onchange="pilihBahan(this, {{ $idx }})">
+                                        <select name="items[{{ $idx }}][bahan_baku_id]" class="form-select bahan-select" required onchange="pilihBahan(this, {{ $idx }})">
                                             <option value="">-- Pilih Bahan --</option>
                                             @foreach($bahanBakus as $b)
                                                 <option value="{{ $b->id }}"
@@ -56,15 +56,15 @@
                                     </td>
                                     <td><span id="stok-{{ $idx }}" class="fw-semibold text-muted">-</span></td>
                                     <td><span id="min-{{ $idx }}" class="fw-semibold text-muted">-</span></td>
-                                    <td><input type="number" name="items[{{ $idx }}][jumlah]" class="form-control form-control-sm" step="0.01" min="0.01" value="{{ $detail->jumlah }}" required></td>
+                                    <td><input type="number" name="items[{{ $idx }}][jumlah]" class="form-control" step="0.01" min="0.01" value="{{ $detail->jumlah }}" required></td>
                                     <td>
-                                        <select name="items[{{ $idx }}][satuan_id]" id="satuan-{{ $idx }}" class="form-select form-select-sm satuan-select" required>
+                                        <select name="items[{{ $idx }}][satuan_id]" id="satuan-{{ $idx }}" class="form-select satuan-select" required>
                                             @foreach($satuans as $s)
                                                 <option value="{{ $s->id }}" {{ $detail->satuan_id === $s->id ? 'selected' : '' }}>{{ $s->singkatan }}</option>
                                             @endforeach
                                         </select>
                                     </td>
-                                    <td><input type="text" name="items[{{ $idx }}][catatan]" class="form-control form-control-sm" value="{{ $detail->catatan }}"></td>
+                                    <td><input type="text" name="items[{{ $idx }}][catatan]" class="form-control" value="{{ $detail->catatan }}"></td>
                                     <td><button type="button" class="btn btn-sm btn-outline-danger" onclick="hapusBaris('{{ $idx }}')"><i class="bi bi-trash"></i></button></td>
                                 </tr>
                                 @php $idx++; @endphp
@@ -129,16 +129,16 @@ function tambahBaris() {
     tr.innerHTML = `
         <td>
             <input type="hidden" name="items[${i}][id]">
-            <select name="items[${i}][bahan_baku_id]" class="form-select form-select-sm bahan-select" required onchange="pilihBahan(this, ${i})">
+            <select name="items[${i}][bahan_baku_id]" class="form-select bahan-select" required onchange="pilihBahan(this, ${i})">
                 ${getBahanOpts()}
             </select>
             <div id="badge-${i}" class="mt-1"></div>
         </td>
         <td><span id="stok-${i}" class="fw-semibold text-muted">-</span></td>
         <td><span id="min-${i}" class="fw-semibold text-muted">-</span></td>
-        <td><input type="number" name="items[${i}][jumlah]" class="form-control form-control-sm" step="0.01" min="0.01" required></td>
-        <td><select name="items[${i}][satuan_id]" id="satuan-${i}" class="form-select form-select-sm satuan-select" required>${getSatuanOpts()}</select></td>
-        <td><input type="text" name="items[${i}][catatan]" class="form-control form-control-sm"></td>
+        <td><input type="number" name="items[${i}][jumlah]" class="form-control" step="0.01" min="0.01" required></td>
+        <td><select name="items[${i}][satuan_id]" id="satuan-${i}" class="form-select satuan-select" required>${getSatuanOpts()}</select></td>
+        <td><input type="text" name="items[${i}][catatan]" class="form-control"></td>
         <td><button type="button" class="btn btn-sm btn-outline-danger" onclick="hapusBaris(${i})"><i class="bi bi-trash"></i></button></td>
     `;
     document.getElementById('detailBody').appendChild(tr);
@@ -188,3 +188,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 @endpush
+
+
+

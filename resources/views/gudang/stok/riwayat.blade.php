@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 @section('title', 'Riwayat Stok')
 @section('page_title', 'Riwayat Stok')
 
@@ -8,15 +8,15 @@
         <h4><i class="bi bi-clock-history me-2"></i>Riwayat Stok: {{ $bahanBaku->nama_bahan }}</h4>
         <small class="text-muted">Stok saat ini: <strong>{{ number_format($bahanBaku->stok_saat_ini, 2) }} {{ $bahanBaku->satuan->singkatan }}</strong></small>
     </div>
-    <a href="{{ route('gudang.stok.index') }}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left me-1"></i>Kembali</a>
+    <a href="{{ route('gudang.stok.index') }}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i>Kembali</a>
 </div>
 
 <div class="card mb-3">
     <div class="card-body py-2">
         <form method="GET" class="row g-2 align-items-end">
-            <div class="col-md-4"><label class="form-label small mb-1">Dari Tanggal</label><input type="date" name="tanggal_dari" class="form-control form-control-sm" value="{{ request('tanggal_dari') }}"></div>
-            <div class="col-md-4"><label class="form-label small mb-1">Sampai Tanggal</label><input type="date" name="tanggal_sampai" class="form-control form-control-sm" value="{{ request('tanggal_sampai') }}"></div>
-            <div class="col-md-4"><button type="submit" class="btn btn-sm btn-primary w-100 mt-3">Filter</button></div>
+            <div class="col-md-4"><label class="form-label mb-1">Dari Tanggal</label><input type="date" name="tanggal_dari" class="form-control" value="{{ request('tanggal_dari') }}"></div>
+            <div class="col-md-4"><label class="form-label mb-1">Sampai Tanggal</label><input type="date" name="tanggal_sampai" class="form-control" value="{{ request('tanggal_sampai') }}"></div>
+            <div class="col-md-4"><button type="submit" class="btn btn-primary w-100 mt-3">Filter</button></div>
         </form>
     </div>
 </div>
@@ -57,3 +57,7 @@
     @if($riwayat->hasPages())<div class="card-footer">{{ $riwayat->links() }}</div>@endif
 </div>
 @endsection
+
+
+
+

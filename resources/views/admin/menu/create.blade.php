@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 @section('title', 'Tambah Menu')
 @section('page_title', 'Tambah Menu')
 @section('content')
@@ -73,3 +73,4 @@ function toggleStokFields() {
 }
 </script>
 @endpush
+

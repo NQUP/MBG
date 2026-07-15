@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 @section('title', 'Permintaan Pembelian')
 @section('page_title', 'Permintaan Pembelian')
 
@@ -59,3 +59,6 @@
     @if($data->hasPages())<div class="card-footer">{{ $data->links() }}</div>@endif
 </div>
 @endsection
+
+
+

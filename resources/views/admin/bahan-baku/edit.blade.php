@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 @section('title', 'Edit Bahan Baku')
 @section('page_title', 'Edit Bahan Baku')
 @section('content')
@@ -67,3 +67,4 @@
     </form>
 </div></div>
 @endsection
+

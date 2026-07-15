@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 @section('title', 'Resep (BOM)')
 @section('page_title', 'Kelola Resep')
 
@@ -45,3 +45,4 @@
     @endforelse
 </div>
 @endsection
+

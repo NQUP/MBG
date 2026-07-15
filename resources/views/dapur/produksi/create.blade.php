@@ -1,11 +1,11 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 @section('title', 'Input Produksi Harian')
 @section('page_title', 'Input Produksi Harian')
 
 @section('content')
 <div class="page-header d-flex justify-content-between align-items-center">
     <h4><i class="bi bi-fire me-2"></i>Input Produksi Harian</h4>
-    <a href="{{ route('dapur.produksi.index') }}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left me-1"></i>Kembali</a>
+    <a href="{{ route('dapur.produksi.index') }}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i>Kembali</a>
 </div>
 
 <form method="POST" action="{{ route('dapur.produksi.store') }}" id="formProduksi">
@@ -304,3 +304,5 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 @endif
 @endpush
+
+

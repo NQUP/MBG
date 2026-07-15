@@ -14,10 +14,10 @@
     <div class="card-body py-2">
         <form method="GET" class="row g-2 align-items-end">
             <div class="col-md-5">
-                <input type="text" name="search" class="form-control form-control-sm" placeholder="Cari kode / nama bahan..." value="{{ request('search') }}">
+                <input type="text" name="search" class="form-control" placeholder="Cari kode / nama bahan..." value="{{ request('search') }}">
             </div>
             <div class="col-md-4">
-                <select name="kategori" class="form-select form-select-sm">
+                <select name="kategori" class="form-select">
                     <option value="">-- Semua Kategori --</option>
                     @foreach($kategoris as $k)
                         <option value="{{ $k->id }}" {{ request('kategori') == $k->id ? 'selected' : '' }}>{{ $k->nama_kategori }}</option>
@@ -25,7 +25,7 @@
                 </select>
             </div>
             <div class="col-md-3">
-                <button type="submit" class="btn btn-sm btn-primary w-100"><i class="bi bi-search me-1"></i>Cari</button>
+                <button type="submit" class="btn btn-primary w-100"><i class="bi bi-search me-1"></i>Cari</button>
             </div>
         </form>
     </div>
@@ -68,3 +68,6 @@
     @if($bahanBakus->hasPages())<div class="card-footer">{{ $bahanBakus->links() }}</div>@endif
 </div>
 @endsection
+
+
+

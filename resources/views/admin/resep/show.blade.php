@@ -8,7 +8,7 @@
         <h4><i class="bi bi-card-list me-2"></i>Resep: {{ $menu->nama_menu }}</h4>
         <small class="text-muted">Kode: {{ $menu->kode_menu }}</small>
     </div>
-    <a href="{{ route('admin.resep.index') }}" class="btn btn-outline-secondary btn-sm">
+    <a href="{{ route('admin.resep.index') }}" class="btn btn-outline-secondary">
         <i class="bi bi-arrow-left me-1"></i>Kembali
     </a>
 </div>
@@ -31,9 +31,9 @@
                             <td>
                                 <form method="POST" action="{{ route('admin.resep.update', $r) }}" class="d-flex gap-2 align-items-center">
                                     @csrf @method('PUT')
-                                    <input type="number" name="jumlah_per_porsi" class="form-control form-control-sm" style="width:90px"
+                                    <input type="number" name="jumlah_per_porsi" class="form-control" style="width:90px"
                                            value="{{ $r->jumlah_per_porsi }}" step="0.001" min="0.001" required>
-                                    <select name="satuan_id" class="form-select form-select-sm" style="width:80px">
+                                    <select name="satuan_id" class="form-select" style="width:80px">
                                         @foreach($satuans as $s)
                                             <option value="{{ $s->id }}" {{ $r->satuan_id == $s->id ? 'selected' : '' }}>{{ $s->singkatan }}</option>
                                         @endforeach
@@ -134,3 +134,6 @@ slider.addEventListener('input', function() {
 });
 </script>
 @endpush
+
+
+

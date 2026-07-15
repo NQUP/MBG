@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 @section('title', 'Stock Opname')
 @section('page_title', 'Stock Opname')
 
@@ -36,3 +36,6 @@
     @if($opnames->hasPages())<div class="card-footer">{{ $opnames->links() }}</div>@endif
 </div>
 @endsection
+
+
+

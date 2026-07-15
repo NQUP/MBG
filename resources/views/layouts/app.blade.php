@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 
 <head>
@@ -33,7 +33,6 @@
             --ink: #22291f;
             --muted: #6b7563;
             --sage-line: #dfe3d2;
-            /* kept for any legacy references */
             --primary: var(--forest);
             --primary-dark: var(--forest-deep);
             --primary-light: var(--leaf-tint);
@@ -43,9 +42,10 @@
             background: var(--rice);
             font-family: 'Inter', sans-serif;
             color: var(--ink);
+            font-size: 1rem;
+            line-height: 1.6;
         }
 
-        /* ---------------- Sidebar ---------------- */
         #sidebar {
             width: var(--sidebar-width);
             min-height: 100vh;
@@ -57,8 +57,24 @@
             left: 0;
             bottom: 0;
             z-index: 1000;
-            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
             transition: all 0.3s;
+        }
+
+        #sidebar .nav-scroll {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        #sidebar .nav-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        #sidebar .nav-scroll::-webkit-scrollbar-thumb {
+            background: rgba(250, 246, 236, 0.2);
+            border-radius: 4px;
         }
 
         #sidebar .sidebar-brand {
@@ -67,15 +83,15 @@
         }
 
         #sidebar .sidebar-brand .brand-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: 11px;
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
             background: rgba(250, 246, 236, 0.08);
             border: 1px solid rgba(250, 246, 236, 0.18);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.35rem;
+            font-size: 1.5rem;
             flex: none;
         }
 
@@ -83,29 +99,30 @@
             font-family: 'Fraunces', serif;
             color: #fff;
             font-weight: 600;
-            font-size: 1rem;
-            margin-bottom: 1px;
+            font-size: 1.15rem;
+            margin-bottom: 2px;
         }
 
         #sidebar .sidebar-brand small {
             font-family: 'JetBrains Mono', monospace;
             color: var(--leaf-bright);
-            font-size: 0.68rem;
+            font-size: 0.78rem;
             letter-spacing: 0.03em;
         }
 
         #sidebar .nav-link {
             position: relative;
             color: rgba(250, 246, 236, 0.78);
-            padding: 10px 20px 10px 24px;
+            padding: 12px 20px 12px 24px;
             border-radius: 0;
-            font-size: 0.87rem;
+            font-size: 0.95rem;
             transition: all 0.15s;
         }
 
         #sidebar .nav-link i {
-            width: 20px;
-            margin-right: 8px;
+            width: 22px;
+            margin-right: 10px;
+            font-size: 1.05rem;
             color: rgba(250, 246, 236, 0.55);
         }
 
@@ -137,9 +154,9 @@
         }
 
         #sidebar .sidebar-section {
-            padding: 16px 20px 6px;
+            padding: 18px 20px 8px;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.66rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.12em;
             color: rgba(250, 246, 236, 0.4);
@@ -177,7 +194,6 @@
             color: var(--forest);
         }
 
-        /* ---------------- Content / topbar ---------------- */
         #content {
             margin-left: var(--sidebar-width);
             min-height: 100vh;
@@ -186,14 +202,14 @@
         .navbar-top {
             background: #fff;
             border-bottom: 1px solid var(--sage-line);
-            padding: 14px 24px;
+            padding: 14px 28px;
         }
 
         .navbar-top h6 {
             font-family: 'JetBrains Mono', monospace;
             letter-spacing: 0.06em;
             text-transform: uppercase;
-            font-size: 0.72rem !important;
+            font-size: 0.8rem !important;
             color: var(--muted) !important;
         }
 
@@ -201,26 +217,69 @@
             margin-bottom: 24px;
         }
 
+        .page-header .text-muted {
+            font-size: 0.9rem;
+            display: block;
+            margin-top: 4px;
+        }
+
         .page-header h4 {
             font-family: 'Fraunces', serif;
             font-weight: 600;
             color: var(--forest);
             margin: 0;
+            font-size: 1.5rem;
         }
 
-        /* ---------------- Shared components ---------------- */
+        .page-eyebrow {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--leaf);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .page-eyebrow::before {
+            content: '';
+            width: 20px;
+            height: 1px;
+            background: var(--leaf);
+        }
+
         .card {
             border: 1px solid var(--sage-line);
-            box-shadow: none;
-            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border-radius: 12px;
+            transition: box-shadow 0.2s;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.07);
         }
 
         .card-header {
             background: var(--rice-dim);
             border-bottom: 1px solid var(--sage-line);
-            border-radius: 10px 10px 0 0 !important;
+            border-radius: 12px 12px 0 0 !important;
             font-weight: 600;
             color: var(--forest);
+            font-size: 0.95rem;
+            padding: 14px 20px;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-footer {
+            background: var(--rice-dim);
+            border-top: 1px solid var(--sage-line);
+            border-radius: 0 0 12px 12px !important;
+            padding: 12px 20px;
         }
 
         .stat-card {
@@ -228,38 +287,63 @@
         }
 
         .stat-card .stat-icon {
-            font-size: 2rem;
+            font-size: 2.2rem;
             color: var(--forest);
             opacity: 0.85;
+        }
+
+        .stat-card .stat-label {
+            font-size: 0.85rem;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .stat-card .stat-value {
+            font-size: 1.65rem;
+            font-weight: 700;
+            color: var(--ink);
+            font-family: 'Fraunces', serif;
+        }
+
+        .table {
+            font-size: 0.9rem;
         }
 
         .table th {
             font-family: 'JetBrains Mono', monospace;
             font-weight: 600;
-            font-size: 0.72rem;
+            font-size: 0.78rem;
             text-transform: uppercase;
             letter-spacing: 0.04em;
             color: var(--muted);
             background: var(--rice-dim);
             border-color: var(--sage-line);
+            padding: 12px 14px;
         }
 
         .table td {
             border-color: var(--sage-line);
+            padding: 12px 14px;
+            vertical-align: middle;
+        }
+
+        .table tbody tr:hover {
+            background: rgba(95, 168, 118, 0.04);
         }
 
         code {
             font-family: 'JetBrains Mono', monospace;
             background: var(--rice-dim);
             color: var(--forest);
-            padding: 2px 6px;
+            padding: 3px 8px;
             border-radius: 5px;
-            font-size: 0.82rem;
+            font-size: 0.88rem;
         }
 
         .btn-action {
-            padding: 4px 10px;
-            font-size: 0.8rem;
+            padding: 6px 14px;
+            font-size: 0.88rem;
+            border-radius: 8px;
         }
 
         .stok-warning {
@@ -269,6 +353,25 @@
 
         .stok-ok {
             color: var(--forest);
+        }
+
+        .btn {
+            font-size: 0.9rem;
+            padding: 8px 18px;
+            border-radius: 8px;
+            transition: all 0.15s;
+        }
+
+        .btn-sm {
+            font-size: 0.82rem;
+            padding: 5px 12px;
+            border-radius: 6px;
+        }
+
+        .btn-lg {
+            font-size: 1rem;
+            padding: 10px 24px;
+            border-radius: 10px;
         }
 
         .btn-success {
@@ -301,6 +404,49 @@
             border-color: var(--danger);
         }
 
+        .btn-outline-secondary {
+            color: var(--muted);
+            border-color: var(--sage-line);
+        }
+
+        .btn-outline-secondary:hover {
+            background: var(--rice-dim);
+            border-color: var(--muted);
+            color: var(--ink);
+        }
+
+        .form-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--ink);
+            margin-bottom: 6px;
+        }
+
+        .form-control, .form-select {
+            font-size: 0.92rem;
+            padding: 8px 14px;
+            border-radius: 8px;
+            border-color: var(--sage-line);
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--leaf);
+            box-shadow: 0 0 0 3px var(--leaf-tint);
+        }
+
+        .form-control-sm, .form-select-sm {
+            font-size: 0.85rem;
+            padding: 5px 10px;
+            border-radius: 6px;
+        }
+
+        .badge {
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 5px 10px;
+            border-radius: 6px;
+        }
+
         .badge.bg-success {
             background: var(--leaf) !important;
         }
@@ -316,6 +462,10 @@
 
         .badge.bg-primary {
             background: var(--sky) !important;
+        }
+
+        .badge.bg-secondary {
+            background: #9ba893 !important;
         }
 
         .text-success {
@@ -334,6 +484,14 @@
             color: var(--danger) !important;
         }
 
+        .text-muted {
+            color: var(--muted) !important;
+        }
+
+        .small, small {
+            font-size: 0.82rem;
+        }
+
         @media (max-width: 768px) {
             #sidebar {
                 margin-left: calc(-1 * var(--sidebar-width));
@@ -344,8 +502,40 @@
             }
         }
 
+        .pagination {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+
+        .page-link {
+            color: var(--forest);
+            border-color: var(--sage-line);
+            padding: 8px 16px;
+        }
+
+        .page-link:hover {
+            background: var(--leaf-tint);
+            border-color: var(--leaf);
+            color: var(--forest);
+        }
+
+        .page-item.active .page-link {
+            background: var(--forest);
+            border-color: var(--forest);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            border-color: var(--danger);
+        }
+
+        .btn-danger:hover {
+            background: #a8422e;
+            border-color: #a8422e;
+        }
+
         .swal2-popup {
-            font-size: 14px;
+            font-size: 15px;
             border-radius: 12px;
             font-family: 'Inter', sans-serif;
         }
@@ -353,7 +543,7 @@
         .swal2-title {
             font-weight: 700;
         }
-    </style>
+        </style>
     @stack('styles')
 </head>
 
@@ -368,7 +558,8 @@
                 </div>
             </div>
         </div>
-        <ul class="nav flex-column mt-2">
+        <div class="nav-scroll">
+        <ul class="nav flex-column">
             <li class="nav-item">
                 <a href="{{ route('dashboard') }}"
                     class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
@@ -493,15 +684,16 @@
                 </li>
             @endif
         </ul>
-        <div class="mt-auto p-3" style="position:absolute;bottom:0;width:100%;">
+        </div>
+        <div class="p-3" style="border-top:1px solid rgba(250,246,236,0.12);">
             <div class="d-flex align-items-center gap-2 p-2 sidebar-user">
                 <div class="avatar">
                     <i class="bi bi-person-fill"></i>
                 </div>
                 <div class="overflow-hidden">
-                    <div class="text-white fw-semibold text-truncate" style="font-size:0.8rem;">
+                    <div class="text-white fw-semibold text-truncate" >
                         {{ auth()->user()->name }}</div>
-                    <div style="font-size:0.7rem;color:rgba(250,246,236,0.6);">
+                    <div style="font-size:0.78rem;color:rgba(250,246,236,0.6);">
                         {{ str_replace('_', ' ', ucfirst(auth()->user()->role)) }}</div>
                 </div>
             </div>
@@ -637,3 +829,13 @@
 </body>
 
 </html>
+
+
+
+
+
+
+
+
+
+
