@@ -35,19 +35,19 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Minuman *</label>
-                            <select name="menu_minuman_id" class="form-select" required>
+                            <select name="menu_minuman_id" id="menuMinuman" class="form-select" required onchange="updatePreview()">
                                 <option value="">-- Pilih Minuman --</option>
                                 @foreach($menuMinuman as $m)
-                                    <option value="{{ $m->id }}">{{ $m->nama_menu }}</option>
+                                    <option value="{{ $m->id }}" data-stok="{{ $m->stok_saat_ini }}" data-satuan="{{ $m->satuan->singkatan ?? '' }}" data-nama="{{ $m->nama_menu }}">{{ $m->nama_menu }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Buah *</label>
-                            <select name="menu_buah_id" class="form-select" required>
+                            <select name="menu_buah_id" id="menuBuah" class="form-select" required onchange="updatePreview()">
                                 <option value="">-- Pilih Buah --</option>
                                 @foreach($menuBuah as $m)
-                                    <option value="{{ $m->id }}">{{ $m->nama_menu }}</option>
+                                    <option value="{{ $m->id }}" data-stok="{{ $m->stok_saat_ini }}" data-satuan="{{ $m->satuan->singkatan ?? '' }}" data-nama="{{ $m->nama_menu }}">{{ $m->nama_menu }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -80,7 +80,7 @@
                         <i class="bi bi-exclamation-triangle me-1"></i>Masih terdapat bahan baku yang tidak mencukupi.
                     </div>
                     <div class="mt-3 p-2 bg-light rounded">
-                        <small class="text-muted"><i class="bi bi-info-circle me-1"></i>Sistem akan mengambil resep (BOM), menghitung kebutuhan = jumlah per porsi × jumlah siswa, lalu mengurangi stok otomatis.</small>
+                        <small class="text-muted"><i class="bi bi-info-circle me-1"></i>Sistem akan mengambil resep (BOM), menghitung kebutuhan = jumlah per porsi * jumlah siswa, lalu mengurangi stok otomatis.</small>
                     </div>
                 </div>
             </div>
@@ -109,48 +109,103 @@ function loadResep() {
         });
 }
 
+function getSelectedOption(selectId) {
+    const sel = document.getElementById(selectId);
+    return sel.options[sel.selectedIndex];
+}
+
 function updatePreview() {
     const siswa = parseInt(document.getElementById('jumlahSiswa').value) || 0;
     const preview = document.getElementById('previewResep');
     const peringatan = document.getElementById('peringatanStok');
+    let adaKurang = false;
+    let html = '';
 
-    if (resepData.length === 0) {
-        preview.innerHTML = `<div class="text-center text-muted py-4"><i class="bi bi-journal-text fs-1 d-block mb-2"></i>Belum ada data resep untuk menu ini.</div>`;
-        if (peringatan) peringatan.classList.add('d-none');
-        return;
+    // Bagian Makanan (resep)
+    let htmlMakanan = '';
+    if (resepData.length > 0) {
+        htmlMakanan += '<div class="fw-semibold small text-success mb-1"><i class="bi bi-egg-fried me-1"></i>Bahan Makanan</div>';
+        resepData.forEach(item => {
+            const kebutuhan = item.jumlah_per_porsi * siswa;
+            const kurang = item.stok < kebutuhan;
+            if (kurang) adaKurang = true;
+            htmlMakanan += `<div class="list-group-item px-0 d-flex justify-content-between align-items-start ${kurang ? 'text-danger' : ''}" style="border-bottom:1px solid #f0f0f0;">
+                <div>
+                    <div class="fw-semibold" style="font-size:0.9rem;">${item.nama_bahan}</div>
+                    <small class="text-muted">${item.jumlah_per_porsi} ${item.satuan}/porsi * ${siswa}</small>
+                    ${kurang ? '<small class="d-block text-danger"><i class="bi bi-exclamation-triangle"></i> Stok tidak cukup</small>' : ''}
+                </div>
+                <div class="text-end">
+                    <strong>${kebutuhan.toFixed(2)} ${item.satuan}</strong><br>
+                    <small class="text-muted">Stok: ${parseFloat(item.stok).toFixed(2)}</small>
+                </div>
+            </div>`;
+        });
     }
 
-    let html = `<div class="mb-2 text-muted small">Jumlah siswa: <strong>${siswa}</strong></div>`;
-    html += '<div class="list-group list-group-flush">';
-    let adaKurang = false;
-
-    resepData.forEach(item => {
-        const kebutuhan = item.jumlah_per_porsi * siswa;
-        const kurang = item.stok < kebutuhan;
+    // Bagian Minuman
+    let htmlMinuman = '';
+    const optMinum = getSelectedOption('menuMinuman');
+    if (optMinum.value && siswa > 0) {
+        const stok = parseFloat(optMinum.dataset.stok) || 0;
+        const satuan = optMinum.dataset.satuan || '';
+        const nama = optMinum.dataset.nama || 'Minuman';
+        const kurang = stok < siswa;
         if (kurang) adaKurang = true;
-        html += `<div class="list-group-item px-0 d-flex justify-content-between align-items-start ${kurang ? 'text-danger' : ''}">
+        htmlMinuman += '<div class="fw-semibold small text-warning mt-2 mb-1"><i class="bi bi-cup-straw me-1"></i>Minuman</div>';
+        htmlMinuman += `<div class="list-group-item px-0 d-flex justify-content-between align-items-start ${kurang ? 'text-danger' : ''}" style="border-bottom:1px solid #f0f0f0;">
             <div>
-                <div class="fw-semibold">${item.nama_bahan}</div>
-                <small class="text-muted">${item.jumlah_per_porsi} ${item.satuan}/porsi * ${siswa}</small>
+                <div class="fw-semibold" style="font-size:0.9rem;">${nama}</div>
+                <small class="text-muted">1 ${satuan}/siswa * ${siswa}</small>
                 ${kurang ? '<small class="d-block text-danger"><i class="bi bi-exclamation-triangle"></i> Stok tidak cukup</small>' : ''}
             </div>
             <div class="text-end">
-                <strong>${kebutuhan.toFixed(2)} ${item.satuan}</strong><br>
-                <small class="text-muted">Stok: ${parseFloat(item.stok).toFixed(2)}</small>
+                <strong>${siswa} ${satuan}</strong><br>
+                <small class="text-muted">Stok: ${stok.toFixed(2)}</small>
             </div>
         </div>`;
-    });
+    }
 
-    html += '</div>';
+    // Bagian Buah
+    let htmlBuah = '';
+    const optBuah = getSelectedOption('menuBuah');
+    if (optBuah.value && siswa > 0) {
+        const stok = parseFloat(optBuah.dataset.stok) || 0;
+        const satuan = optBuah.dataset.satuan || '';
+        const nama = optBuah.dataset.nama || 'Buah';
+        const kurang = stok < siswa;
+        if (kurang) adaKurang = true;
+        htmlBuah += '<div class="fw-semibold small text-danger mt-2 mb-1"><i class="bi bi-apple me-1"></i>Buah</div>';
+        htmlBuah += `<div class="list-group-item px-0 d-flex justify-content-between align-items-start ${kurang ? 'text-danger' : ''}" style="border-bottom:1px solid #f0f0f0;">
+            <div>
+                <div class="fw-semibold" style="font-size:0.9rem;">${nama}</div>
+                <small class="text-muted">1 ${satuan}/siswa * ${siswa}</small>
+                ${kurang ? '<small class="d-block text-danger"><i class="bi bi-exclamation-triangle"></i> Stok tidak cukup</small>' : ''}
+            </div>
+            <div class="text-end">
+                <strong>${siswa} ${satuan}</strong><br>
+                <small class="text-muted">Stok: ${stok.toFixed(2)}</small>
+            </div>
+        </div>`;
+    }
+
+    if (!resepData.length && !htmlMinuman && !htmlBuah) {
+        preview.innerHTML = `<div class="text-center text-muted py-4"><i class="bi bi-journal-text fs-1 d-block mb-2"></i>Pilih menu makanan/minuman/buah dan isi jumlah siswa untuk melihat kebutuhan.</div>`;
+        peringatan.classList.add('d-none');
+        return;
+    }
+
+    html += `<div class="mb-2 text-muted small">Jumlah siswa: <strong>${siswa}</strong></div>`;
+    html += htmlMakanan + htmlMinuman + htmlBuah;
     preview.innerHTML = html;
 
-    // Tampilkan/sembunyikan peringatan stok
     if (adaKurang && siswa > 0) {
         peringatan.classList.remove('d-none');
     } else {
         peringatan.classList.add('d-none');
     }
-}</script>
+}
+</script>
 
 {{-- SweetAlert2 popup untuk error stok --}}
 @if(session('error_stok'))
@@ -185,8 +240,6 @@ document.addEventListener('DOMContentLoaded', function() {
         reverseButtons: true,
     }).then(function(result) {
         if (result.isConfirmed) {
-            // Kirim permintaan pembelian via AJAX
-            // Map ke format yang diharapkan backend
             var items = kekurangan.map(function(item) {
                 return {
                     bahan_baku_id: item.bahan_baku_id,

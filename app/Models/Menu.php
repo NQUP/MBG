@@ -8,13 +8,22 @@ class Menu extends Model
 {
     protected $table = 'menu';
 
-    protected $fillable = ['kode_menu', 'nama_menu', 'jenis_menu', 'deskripsi', 'is_active'];
+    protected $fillable = ['kode_menu', 'nama_menu', 'jenis_menu', 'deskripsi', 'stok_saat_ini', 'stok_minimum', 'satuan_id', 'is_active'];
 
-    protected $casts = ['is_active' => 'boolean'];
+    protected $casts = [
+        'is_active' => 'boolean',
+        'stok_saat_ini' => 'decimal:2',
+        'stok_minimum' => 'decimal:2',
+    ];
 
     public function resep()
     {
         return $this->hasMany(Resep::class);
+    }
+
+    public function satuan()
+    {
+        return $this->belongsTo(Satuan::class);
     }
 
     public function produksiSebagaiMakanan()

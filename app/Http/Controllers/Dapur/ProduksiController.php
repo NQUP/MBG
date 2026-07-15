@@ -35,8 +35,8 @@ class ProduksiController extends Controller
     public function create()
     {
         $menuMakanan = Menu::where('jenis_menu', 'makanan')->where('is_active', true)->orderBy('nama_menu')->get();
-        $menuMinuman = Menu::where('jenis_menu', 'minuman')->where('is_active', true)->orderBy('nama_menu')->get();
-        $menuBuah    = Menu::where('jenis_menu', 'buah')->where('is_active', true)->orderBy('nama_menu')->get();
+        $menuMinuman = Menu::with('satuan')->where('jenis_menu', 'minuman')->where('is_active', true)->orderBy('nama_menu')->get();
+        $menuBuah    = Menu::with('satuan')->where('jenis_menu', 'buah')->where('is_active', true)->orderBy('nama_menu')->get();
 
         return view('dapur.produksi.create', compact('menuMakanan', 'menuMinuman', 'menuBuah'));
     }
@@ -53,13 +53,44 @@ class ProduksiController extends Controller
         ]);
 
         $jumlahSiswa  = $request->jumlah_siswa;
-        $menuMakanan  = Menu::with('resep.bahanBaku')->find($request->menu_makanan_id);
-        $menuMinuman  = Menu::find($request->menu_minuman_id);
-        $menuBuah     = Menu::find($request->menu_buah_id);
+        $menuMakanan  = Menu::with('resep.bahanBaku.satuan')->find($request->menu_makanan_id);
+        $menuMinuman  = Menu::with('satuan')->find($request->menu_minuman_id);
+        $menuBuah     = Menu::with('satuan')->find($request->menu_buah_id);
 
         // Validasi ketersediaan stok
         $kekurangan = [];
 
+        // Cek stok minuman (1 unit per siswa)
+        if ($menuMinuman && $menuMinuman->satuan_id && $menuMinuman->stok_saat_ini < $jumlahSiswa) {
+            $kekurangan[] = [
+                'bahan_baku_id' => null,
+                'satuan_id'     => $menuMinuman->satuan_id,
+                'nama_bahan'    => $menuMinuman->nama_menu . ' (Minuman)',
+                'kebutuhan'     => (float) $jumlahSiswa,
+                'stok'          => (float) $menuMinuman->stok_saat_ini,
+                'kekurangan'    => (float) ($jumlahSiswa - $menuMinuman->stok_saat_ini),
+                'satuan'        => $menuMinuman->satuan->singkatan ?? '',
+                'tipe'          => 'menu',
+                'menu_id'       => $menuMinuman->id,
+            ];
+        }
+
+        // Cek stok buah (1 unit per siswa)
+        if ($menuBuah && $menuBuah->satuan_id && $menuBuah->stok_saat_ini < $jumlahSiswa) {
+            $kekurangan[] = [
+                'bahan_baku_id' => null,
+                'satuan_id'     => $menuBuah->satuan_id,
+                'nama_bahan'    => $menuBuah->nama_menu . ' (Buah)',
+                'kebutuhan'     => (float) $jumlahSiswa,
+                'stok'          => (float) $menuBuah->stok_saat_ini,
+                'kekurangan'    => (float) ($jumlahSiswa - $menuBuah->stok_saat_ini),
+                'satuan'        => $menuBuah->satuan->singkatan ?? '',
+                'tipe'          => 'menu',
+                'menu_id'       => $menuBuah->id,
+            ];
+        }
+
+        // Cek stok bahan baku makanan
         foreach ($menuMakanan->resep as $resep) {
             $kebutuhan = $resep->jumlah_per_porsi * $jumlahSiswa;
             $stokTersedia = $resep->bahanBaku->stok_saat_ini;
@@ -72,6 +103,8 @@ class ProduksiController extends Controller
                     'stok'          => (float) $stokTersedia,
                     'kekurangan'    => (float) ($kebutuhan - $stokTersedia),
                     'satuan'        => $resep->bahanBaku->satuan->singkatan,
+                    'tipe'          => 'bahan_baku',
+                    'menu_id'       => null,
                 ];
             }
         }
@@ -93,6 +126,30 @@ class ProduksiController extends Controller
                 'status'           => 'dikonfirmasi',
                 'keterangan'       => $request->keterangan,
             ]);
+
+            // Potong stok minuman (1 unit per siswa)
+            if ($menuMinuman && $menuMinuman->satuan_id) {
+                $stokSebelum = $menuMinuman->stok_saat_ini;
+                $stokSesudah = $stokSebelum - $jumlahSiswa;
+                $menuMinuman->update(['stok_saat_ini' => $stokSesudah]);
+                RiwayatStok::catat(
+                    $menuMinuman->id, 'keluar_produksi', $produksi->id, 'menu',
+                    $jumlahSiswa, $stokSebelum, $stokSesudah,
+                    'Produksi minuman: ' . $menuMinuman->nama_menu . ' untuk ' . $jumlahSiswa . ' siswa'
+                );
+            }
+
+            // Potong stok buah (1 unit per siswa)
+            if ($menuBuah && $menuBuah->satuan_id) {
+                $stokSebelum = $menuBuah->stok_saat_ini;
+                $stokSesudah = $stokSebelum - $jumlahSiswa;
+                $menuBuah->update(['stok_saat_ini' => $stokSesudah]);
+                RiwayatStok::catat(
+                    $menuBuah->id, 'keluar_produksi', $produksi->id, 'menu',
+                    $jumlahSiswa, $stokSebelum, $stokSesudah,
+                    'Produksi buah: ' . $menuBuah->nama_menu . ' untuk ' . $jumlahSiswa . ' siswa'
+                );
+            }
 
             // Potong stok bahan baku dari resep makanan
             foreach ($menuMakanan->resep as $resep) {
@@ -129,7 +186,13 @@ class ProduksiController extends Controller
 
     public function show(ProduksiHarian $produksi)
     {
-        $produksi->load(['menuMakanan.resep.bahanBaku.satuan', 'menuMinuman', 'menuBuah', 'detail.bahanBaku.satuan', 'user']);
+        $produksi->load([
+            'menuMakanan.resep.bahanBaku.satuan',
+            'menuMinuman',
+            'menuBuah',
+            'detail.bahanBaku.satuan',
+            'user',
+        ]);
         return view('dapur.produksi.show', compact('produksi'));
     }
 
@@ -150,7 +213,7 @@ class ProduksiController extends Controller
     {
         $request->validate([
             'items'                   => 'required|array|min:1',
-            'items.*.bahan_baku_id'   => 'required|exists:bahan_baku,id',
+            'items.*.bahan_baku_id'   => 'nullable|exists:bahan_baku,id',
             'items.*.jumlah'          => 'required|numeric|min:0.01',
             'items.*.satuan_id'       => 'required|exists:satuan,id',
         ]);
@@ -165,9 +228,11 @@ class ProduksiController extends Controller
             ]);
 
             foreach ($request->items as $item) {
+                $bahanId = $item['bahan_baku_id'] ?? null;
+                if (!$bahanId) continue;
                 PermintaanPembelianDetail::create([
                     'permintaan_pembelian_id' => $pr->id,
-                    'bahan_baku_id'           => $item['bahan_baku_id'],
+                    'bahan_baku_id'           => $bahanId,
                     'jumlah'                  => $item['jumlah'],
                     'satuan_id'               => $item['satuan_id'],
                     'catatan'                 => 'Kekurangan stok produksi',
