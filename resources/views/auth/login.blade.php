@@ -12,7 +12,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
         rel="stylesheet">
-        <link href="/css/login.css" rel="stylesheet">
+    <link href="/css/login.css" rel="stylesheet">
 </head>
 
 <body>
@@ -22,7 +22,9 @@
             <div class="crate-mark">Rantai Pasok Dapur</div>
 
             <div class="brand-mid">
-                <div class="brand-icon">ðŸ¥—</div>
+                <div class="brand-icon">
+                    <i class="bi bi-house-fill"></i>
+                </div>
                 <h1>Inventory MBG</h1>
                 <p>Pantau stok bahan pangan, distribusi, dan penerimaan gudang dari satu dapur ke ribuan porsi makan
                     bergizi.</p>
@@ -97,9 +99,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/vendor/sweetalert2/sweetalert2.min.js"></script>
-        <script src="/js/login.js"></script>
+    <script src="/js/login.js"></script>
 </body>
 
 </html>
-
-

@@ -44,7 +44,9 @@
                             <td>{{ $r->satuan->singkatan }}</td>
                             <td>{{ $r->keterangan ?? '-' }}</td>
                             <td>
-                                <form method="POST" action="{{ route('admin.resep.destroy', $r) }}" class="d-inline"
+                                <form method="POST" action="{{ route('admin.resep.destroy', $r) }}" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-outline-danger btn-action btn-hapus"><i class="bi bi-trash"></i></button>
                                 </form>
                             </td>

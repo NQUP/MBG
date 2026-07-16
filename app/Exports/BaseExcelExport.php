@@ -45,7 +45,7 @@ abstract class BaseExcelExport
         $headings   = $this->headings();
         $rows       = $this->collection();
         $allStrings = array_unique(array_merge($headings, ...array_map('array_values', $rows)));
-        $strMap     = array_flip(array_values($allStrings));
+        $strMap     = array_flip(array_values(array_map('strval', $allStrings)));
 
         $zip = new ZipArchive;
         if ($zip->open($path, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== true) {

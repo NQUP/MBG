@@ -5,7 +5,7 @@
 @section('content')
 <div class="page-header"><h4><i class="bi bi-speedometer2 me-2"></i>Dashboard Laporan</h4></div>
 
-<div class="card mb-3"><div class="card-body py-2">
+<div class="card mb-3"><div class="card-body py-3">
 <form method="GET" class="row g-2 align-items-end">
     <div class="col-md-3">
         <label class="form-label">Periode</label>
@@ -37,14 +37,14 @@
         </div></div>
     </div>
     <div class="col-md-3">
-        <div class="card stat-card" style="border-left-color:#0f6cbf;"><div class="card-body d-flex align-items-center gap-3">
-            <div class="stat-icon" style="color:#0f6cbf;"><i class="bi bi-arrow-down-circle"></i></div>
+<div class="card stat-card" style="border-left-color:#4a7a8c;"><div class="card-body d-flex align-items-center gap-3">
+            <div class="stat-icon" style="color:#4a7a8c;"><i class="bi bi-arrow-down-circle"></i></div>
             <div><div class="stat-label">Barang Masuk</div><div class="stat-value">{{ number_format($total_barang_masuk) }}</div><small class="text-muted">transaksi</small></div>
         </div></div>
     </div>
     <div class="col-md-3">
-        <div class="card stat-card" style="border-left-color:#8b5cf6;"><div class="card-body d-flex align-items-center gap-3">
-            <div class="stat-icon" style="color:#8b5cf6;"><i class="bi bi-gear"></i></div>
+        <div class="card stat-card" style="border-left-color:#5fa876;"><div class="card-body d-flex align-items-center gap-3">
+            <div class="stat-icon" style="color:#5fa876;"><i class="bi bi-gear"></i></div>
             <div><div class="stat-label">Penggunaan Bahan</div><div class="stat-value">{{ number_format($total_penggunaan_bahan, 2) }}</div><small class="text-muted">total unit</small></div>
         </div></div>
     </div>

@@ -93,3 +93,32 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         });
+
+        (function() {
+            var sidebar = document.getElementById('sidebar');
+            var overlay = document.getElementById('sidebarOverlay');
+            var toggle = document.getElementById('mobileToggle');
+            if (!sidebar || !overlay || !toggle) return;
+
+            function open() {
+                sidebar.classList.add('mobile-open');
+                overlay.classList.add('show');
+            }
+
+            function close() {
+                sidebar.classList.remove('mobile-open');
+                overlay.classList.remove('show');
+            }
+
+            toggle.addEventListener('click', function() {
+                sidebar.classList.contains('mobile-open') ? close() : open();
+            });
+
+            overlay.addEventListener('click', close);
+
+            sidebar.querySelectorAll('.nav-link').forEach(function(link) {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) close();
+                });
+            });
+        })();

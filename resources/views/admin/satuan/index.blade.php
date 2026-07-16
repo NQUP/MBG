@@ -25,7 +25,9 @@
                         <button class="btn btn-sm btn-outline-primary btn-action" onclick="editSatuan({{ $s->toJson() }})">
                             <i class="bi bi-pencil"></i>
                         </button>
-                        <form method="POST" action="{{ route('admin.satuan.destroy', $s) }}" class="d-inline"
+                        <form method="POST" action="{{ route('admin.satuan.destroy', $s) }}" class="d-inline">
+                            @csrf
+                            @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-outline-danger btn-action btn-hapus"><i class="bi bi-trash"></i></button>
                         </form>
                     </td>

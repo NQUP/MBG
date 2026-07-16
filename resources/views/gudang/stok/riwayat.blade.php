@@ -12,7 +12,7 @@
 </div>
 
 <div class="card mb-3">
-    <div class="card-body py-2">
+    <div class="card-body py-3">
         <form method="GET" class="row g-2 align-items-end">
             <div class="col-md-4"><label class="form-label mb-1">Dari Tanggal</label><input type="date" name="tanggal_dari" class="form-control" value="{{ request('tanggal_dari') }}"></div>
             <div class="col-md-4"><label class="form-label mb-1">Sampai Tanggal</label><input type="date" name="tanggal_sampai" class="form-control" value="{{ request('tanggal_sampai') }}"></div>

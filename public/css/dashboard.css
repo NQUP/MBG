@@ -48,7 +48,7 @@
             border-bottom: 1px solid var(--sage-line);
             border-radius: 10px;
             background: #fff;
-            box-shadow: none;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
         }
 
         .stat-icon {
@@ -192,7 +192,13 @@
             border-color: var(--forest);
         }
 
-        .btn-outline-primary:hover {
+        .btn-primary {
             background: var(--forest);
             border-color: var(--forest);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #1e4634;
+            border-color: #1e4634;
         }

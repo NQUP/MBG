@@ -11,7 +11,7 @@
 </div>
 
 <div class="card mb-3">
-    <div class="card-body py-2">
+    <div class="card-body py-3">
         <form method="GET" class="row g-2 align-items-end">
             <div class="col-md-6"><input type="text" name="search" class="form-control" placeholder="Cari nama / kode bahan..." value="{{ request('search') }}"></div>
             <div class="col-md-3">

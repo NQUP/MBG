@@ -1,4 +1,4 @@
-﻿@extends('layouts.app')
+@extends('layouts.app')
 @section('title', 'Dashboard')
 @section('page_title', 'Dashboard')
 
@@ -12,43 +12,41 @@
     @if (auth()->user()->isAdmin())
         {{-- ========== ADMIN DASHBOARD ========== --}}
         <div class="row g-3 mb-4">
-            <div class="col">
+            {{-- Total Bahan Baku --}}
+            <div class="col-md-3">
                 <div class="card stat-card">
                     <div class="card-body d-flex align-items-center gap-3">
-                        <div class="stat-icon"><i class="bi bi-box-seam"></i></div>
+                        <div class="stat-icon">
+                            <i class="bi bi-box-seam"></i>
+                        </div>
                         <div>
                             <div class="stat-label">Total Bahan Baku</div>
-                            <div class="stat-value">{{ $data['total_bahan'] }}</div>
+                            <div class="stat-value">{{ number_format($data['total_bahan']) }}</div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col">
+            {{-- Menu Aktif --}}
+            <div class="col-md-3">
                 <div class="card stat-card" style="border-left-color:#d9822b;">
                     <div class="card-body d-flex align-items-center gap-3">
-                        <div class="stat-icon" style="color:#d9822b;"><i class="bi bi-journal-richtext"></i></div>
+                        <div class="stat-icon" style="color:#d9822b;">
+                            <i class="bi bi-journal-richtext"></i>
+                        </div>
                         <div>
                             <div class="stat-label">Menu Aktif</div>
-                            <div class="stat-value">{{ $data['total_menu'] }}</div>
+                            <div class="stat-value">{{ number_format($data['total_menu']) }}</div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card stat-card" style="border-left-color:#4a7a8c;">
-                    <div class="card-body d-flex align-items-center gap-3">
-                        <div class="stat-icon" style="color:#4a7a8c;"><i class="bi bi-people"></i></div>
-                        <div>
-                            <div class="stat-label">Pengguna</div>
-                            <div class="stat-value">{{ $data['total_user'] }}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
+            {{-- Total Siswa --}}
+            <div class="col-md-3">
                 <div class="card stat-card" style="border-left-color:#5fa876;">
                     <div class="card-body d-flex align-items-center gap-3">
-                        <div class="stat-icon" style="color:#5fa876;"><i class="bi bi-fire"></i></div>
+                        <div class="stat-icon" style="color:#5fa876;">
+                            <i class="bi bi-people"></i>
+                        </div>
                         <div>
                             <div class="stat-label">Total Siswa Bulan Ini</div>
                             <div class="stat-value">{{ number_format($data['total_siswa']) }}</div>
@@ -56,16 +54,19 @@
                     </div>
                 </div>
             </div>
-            <div class="col">
+            {{-- Stok Minimum --}}
+            <div class="col-md-3">
                 <div class="card stat-card"
                     style="border-left-color:{{ $data['stok_minimum'] > 0 ? '#c0503c' : '#16382b' }};">
                     <div class="card-body d-flex align-items-center gap-3">
-                        <div class="stat-icon" style="color:{{ $data['stok_minimum'] > 0 ? '#c0503c' : '#16382b' }};"><i
-                                class="bi bi-exclamation-triangle"></i></div>
+                        <div class="stat-icon" style="color:{{ $data['stok_minimum'] > 0 ? '#c0503c' : '#16382b' }};">
+                            <i class="bi bi-exclamation-triangle"></i>
+                        </div>
                         <div>
                             <div class="stat-label">Stok Minimum</div>
                             <div class="stat-value {{ $data['stok_minimum'] > 0 ? 'text-danger' : '' }}">
-                                {{ $data['stok_minimum'] }}</div>
+                                {{ number_format($data['stok_minimum']) }}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -472,12 +473,12 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
         rel="stylesheet">
-        <link href="/css/dashboard.css" rel="stylesheet">
+    <link href="/css/dashboard.css" rel="stylesheet">
 @endpush
 
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script src="/js/dashboard.js"></script>
+    <script src="/js/dashboard.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // ===== ADMIN CHARTS =====
@@ -485,9 +486,19 @@
                 // Produksi Bulanan
                 if (document.getElementById('chartProduksiAdmin')) {
                     createBarChart('chartProduksiAdmin',
-                        {!! ['produksi_bulanan']->pluck('tanggal')->map(fn() => \Carbon\Carbon::parse()->format('d M'))->toJson() !!},
-                        [{ label: 'Jumlah Siswa', data: {!! ['produksi_bulanan']->pluck('total')->toJson() !!}, backgroundColor: DASHBOARD_COLORS.leafLight, borderColor: DASHBOARD_COLORS.leaf }],
-                        { plugins: { legend: { display: false } } }
+                        {!! $data['produksi_bulanan']->pluck('tanggal')->map(fn($t) => \Carbon\Carbon::parse($t)->format('d M'))->toJson() !!},
+                        [{
+                            label: 'Jumlah Siswa',
+                            data: {!! $data['produksi_bulanan']->pluck('total')->toJson() !!},
+                            backgroundColor: DASHBOARD_COLORS.leafLight,
+                            borderColor: DASHBOARD_COLORS.leaf
+                        }], {
+                            plugins: {
+                                legend: {
+                                    display: false
+                                }
+                            }
+                        }
                     );
                 }
 
@@ -495,78 +506,171 @@
                 if (document.getElementById('chartPrAdmin')) {
                     createDoughnutChart('chartPrAdmin',
                         ['Draft', 'Diajukan', 'Disetujui', 'Selesai', 'Ditolak'],
-                        [{!! json_encode(array_values(['pr_stats'])) !!}],
-                        ['#8a9480', DASHBOARD_COLORS.yellow, DASHBOARD_COLORS.leaf, DASHBOARD_COLORS.blue, DASHBOARD_COLORS.red]
+                        [{!! json_encode(array_values($data['pr_stats'])) !!}],
+                        ['#8a9480', DASHBOARD_COLORS.yellow, DASHBOARD_COLORS.leaf, DASHBOARD_COLORS.blue,
+                            DASHBOARD_COLORS.red
+                        ]
                     );
                 }
 
                 // Stok vs Minimum
                 if (document.getElementById('chartStokAdmin')) {
                     createBarChart('chartStokAdmin',
-                        {!! ['stok_chart']->pluck('nama_bahan')->toJson() !!},
-                        [
-                            { label: 'Stok Saat Ini', data: {!! ['stok_chart']->pluck('stok_saat_ini')->toJson() !!}, backgroundColor: DASHBOARD_COLORS.leafLight, borderColor: DASHBOARD_COLORS.leaf },
-                            { label: 'Stok Minimum', data: {!! ['stok_chart']->pluck('stok_minimum')->toJson() !!}, backgroundColor: 'rgba(192,80,60,0.14)', borderColor: DASHBOARD_COLORS.red }
-                        ],
-                        { indexAxis: 'y', plugins: { legend: { position: 'top' } } }
-                    );
-                }
-
-                // Riwayat Permintaan Pembelian
-                if (document.getElementById('chartPrRiwayat')) {
-                    createBarChart('chartPrRiwayat',
-                        {!! ['pr_riwayat']->pluck('bulan')->toJson() !!},
-                        [{ label: 'Jumlah PR', data: {!! ['pr_riwayat']->pluck('total')->toJson() !!}, backgroundColor: DASHBOARD_COLORS.greenLight, borderColor: DASHBOARD_COLORS.green }],
-                        { plugins: { legend: { display: false } } }
-                    );
-                }
-
-                // Barang Masuk 7 Hari
-                if (document.getElementById('chartBarangMasuk')) {
-                    createBarChart('chartBarangMasuk',
-                        {!! ['barang_masuk_minggu']->pluck('tanggal')->map(fn() => \Carbon\Carbon::parse()->format('d M'))->toJson() !!},
-                        [{ label: 'Item Masuk', data: {!! ['barang_masuk_minggu']->pluck('total')->toJson() !!}, backgroundColor: DASHBOARD_COLORS.greenLight, borderColor: DASHBOARD_COLORS.green }],
-                        { plugins: { legend: { display: false } } }
+                        {!! $data['stok_chart']->pluck('nama_bahan')->toJson() !!},
+                        [{
+                                label: 'Stok Saat Ini',
+                                data: {!! $data['stok_chart']->pluck('stok_saat_ini')->toJson() !!},
+                                backgroundColor: DASHBOARD_COLORS.leafLight,
+                                borderColor: DASHBOARD_COLORS.leaf
+                            },
+                            {
+                                label: 'Stok Minimum',
+                                data: {!! $data['stok_chart']->pluck('stok_minimum')->toJson() !!},
+                                backgroundColor: 'rgba(192,80,60,0.14)',
+                                borderColor: DASHBOARD_COLORS.red
+                            }
+                        ], {
+                            indexAxis: 'y',
+                            plugins: {
+                                legend: {
+                                    position: 'top'
+                                }
+                            }
+                        }
                     );
                 }
             @endif
 
             // ===== GUDANG CHARTS =====
-            @if (->isPetugasGudang())
+            @if ($user->isPetugasGudang())
+                // Stok Bahan Baku
+                if (document.getElementById('chartStokGudang')) {
+                    var stokLabels = {!! $data['stok_chart']->pluck('nama_bahan')->toJson() !!};
+                    var stokData = {!! $data['stok_chart']->pluck('stok_saat_ini')->toJson() !!};
+                    var stokMinData = {!! $data['stok_chart']->pluck('stok_minimum')->toJson() !!};
+                    var barColors = stokData.map((v, i) => v <= stokMinData[i] ? DASHBOARD_COLORS.red :
+                        DASHBOARD_COLORS.leaf);
+                    new Chart(document.getElementById('chartStokGudang'), {
+                        type: 'bar',
+                        data: {
+                            labels: stokLabels,
+                            datasets: [{
+                                    label: 'Stok Saat Ini',
+                                    data: stokData,
+                                    backgroundColor: barColors.map(c => c === DASHBOARD_COLORS.red ?
+                                        'rgba(192,80,60,0.22)' : DASHBOARD_COLORS.leafLight),
+                                    borderColor: barColors,
+                                    borderWidth: 1,
+                                    borderRadius: 4
+                                },
+                                {
+                                    label: 'Batas Minimum',
+                                    data: stokMinData,
+                                    backgroundColor: 'rgba(226,168,63,0.22)',
+                                    borderColor: DASHBOARD_COLORS.yellow,
+                                    borderWidth: 1,
+                                    borderRadius: 4
+                                }
+                            ]
+                        },
+                        options: {
+                            indexAxis: 'y',
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'top'
+                                }
+                            },
+                            scales: {
+                                x: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                }
+
+                // Barang Masuk Bulanan
+                if (document.getElementById('chartBmGudang')) {
+                    createBarChart('chartBmGudang',
+                        {!! $data['barang_masuk_chart']->pluck('bulan')->toJson() !!},
+                        [{
+                            label: 'Jumlah Transaksi',
+                            data: {!! $data['barang_masuk_chart']->pluck('jumlah')->toJson() !!},
+                            backgroundColor: 'rgba(217,130,43,0.18)',
+                            borderColor: DASHBOARD_COLORS.orange
+                        }], {
+                            plugins: {
+                                legend: {
+                                    display: false
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        stepSize: 1
+                                    }
+                                }
+                            }
+                        }
+                    );
+                }
+
                 if (document.getElementById('chartRiwayatStok')) {
                     createLineChart('chartRiwayatStok',
-                        {!! json_encode(['riwayat_labels']) !!},
-                        [
-                            { label: 'Masuk', data: {!! json_encode(['riwayat_masuk']) !!}, borderColor: DASHBOARD_COLORS.leaf, backgroundColor: DASHBOARD_COLORS.leafLight, fill: true, tension: 0.3 },
-                            { label: 'Keluar', data: {!! json_encode(['riwayat_keluar']) !!}, borderColor: DASHBOARD_COLORS.red, backgroundColor: 'rgba(192,80,60,0.1)', fill: true, tension: 0.3 }
+                        {!! json_encode($data['riwayat_labels']) !!},
+                        [{
+                                label: 'Masuk',
+                                data: {!! json_encode($data['riwayat_masuk']) !!},
+                                borderColor: DASHBOARD_COLORS.leaf,
+                                backgroundColor: DASHBOARD_COLORS.leafLight,
+                                fill: true,
+                                tension: 0.3
+                            },
+                            {
+                                label: 'Keluar',
+                                data: {!! json_encode($data['riwayat_keluar']) !!},
+                                borderColor: DASHBOARD_COLORS.red,
+                                backgroundColor: 'rgba(192,80,60,0.1)',
+                                fill: true,
+                                tension: 0.3
+                            }
                         ]
                     );
                 }
             @endif
 
             // ===== DAPUR CHARTS =====
-            @if (->isPetugasDapur())
+            @if ($user->isPetugasDapur())
                 if (document.getElementById('chartProduksiDapur')) {
                     createBarChart('chartProduksiDapur',
-                        {!! ['produksi_mingguan']->pluck('tanggal')->map(fn() => \Carbon\Carbon::parse()->locale('id')->isoFormat('dddd, D MMM'))->toJson() !!},
-                        [{ label: 'Jumlah Siswa', data: {!! ['produksi_mingguan']->pluck('total')->toJson() !!}, backgroundColor: DASHBOARD_COLORS.leafLight, borderColor: DASHBOARD_COLORS.leaf }],
-                        { plugins: { legend: { display: false } } }
+                        {!! $data['produksi_mingguan']->pluck('tanggal')->map(fn($t) => \Carbon\Carbon::parse($t)->locale('id')->isoFormat('dddd, D MMM'))->toJson() !!},
+                        [{
+                            label: 'Jumlah Siswa',
+                            data: {!! $data['produksi_mingguan']->pluck('total')->toJson() !!},
+                            backgroundColor: DASHBOARD_COLORS.leafLight,
+                            borderColor: DASHBOARD_COLORS.leaf
+                        }], {
+                            plugins: {
+                                legend: {
+                                    display: false
+                                }
+                            }
+                        }
                     );
                 }
 
                 if (document.getElementById('chartMenuDapur')) {
-                    var menuLabels = {!! ['menu_stats']->pluck('menuMakanan.nama_menu')->map(fn() =>  ?? 'N/A')->toJson() !!};
-                    var menuData = {!! ['menu_stats']->pluck('total_siswa')->toJson() !!};
-                    var menuColors = ['#16382b', '#d9822b', '#4a7a8c', '#c0503c', '#e2a83f', '#5fa876', '#7c6a9c', '#86c99a'];
-                    createDoughnutChart('chartMenuDapur', menuLabels, menuData, menuColors.slice(0, menuLabels.length));
+                    var menuLabels = {!! $data['menu_stats']->pluck('menuMakanan.nama_menu')->map(fn($n) => $n ?? 'N/A')->toJson() !!};
+                    var menuData = {!! $data['menu_stats']->pluck('total_siswa')->toJson() !!};
+                    var menuColors = ['#16382b', '#d9822b', '#4a7a8c', '#c0503c', '#e2a83f', '#5fa876', '#7c6a9c',
+                        '#86c99a'
+                    ];
+                    createDoughnutChart('chartMenuDapur', menuLabels, menuData, menuColors.slice(0, menuLabels
+                        .length));
                 }
             @endif
         });
     </script>
 @endpush
-
-
-
-
-
-

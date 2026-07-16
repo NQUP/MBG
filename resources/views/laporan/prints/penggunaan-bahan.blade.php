@@ -29,5 +29,5 @@
         @endforeach
         </tbody>
     </table>
-    <div class="footer">Halaman <span class="pageNumber"></span></div>
+    <div class="footer">Dicetak dari Sistem Inventory MBG - {{ now()->format('d/m/Y H:i') }}</div>
 </body></html>

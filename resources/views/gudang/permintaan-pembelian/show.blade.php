@@ -83,7 +83,7 @@
         {{-- Workflow timeline --}}
         <div class="card mt-3">
             <div class="card-header bg-white fw-semibold"><i class="bi bi-diagram-3 me-2 text-primary"></i>Alur Status</div>
-            <div class="card-body py-2">
+            <div class="card-body py-3">
                 @php
                     $statuses = ['Draft', 'Diajukan', 'Disetujui', 'Selesai'];
                     $statusNow = $permintaanPembelian->status;

@@ -60,7 +60,10 @@
                             <td>
                                 <a href="{{ route('admin.menu.edit', $m) }}"
                                     class="btn btn-sm btn-outline-primary btn-action"><i class="bi bi-pencil"></i></a>
-                                <form method="POST" action="{{ route('admin.menu.destroy', $m) }}" class="d-inline" <button
+                                <form method="POST" action="{{ route('admin.menu.destroy', $m) }}" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button
                                     type="submit" class="btn btn-sm btn-outline-danger btn-action btn-hapus"><i
                                         class="bi bi-trash"></i></button>
                                 </form>

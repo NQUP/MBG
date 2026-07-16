@@ -31,5 +31,5 @@
         </tbody>
         <tfoot><tr><th colspan="4">Total Siswa</th><th>{{ number_format($totalSiswa) }}</th><th></th></tr></tfoot>
     </table>
-    <div class="footer">Halaman <span class="pageNumber"></span></div>
+    <div class="footer">Dicetak dari Sistem Inventory MBG - {{ now()->format('d/m/Y H:i') }}</div>
 </body></html>

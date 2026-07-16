@@ -20,10 +20,13 @@
 </head>
 
 <body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
     <nav id="sidebar">
         <div class="sidebar-brand">
             <div class="d-flex align-items-center gap-2 mb-1">
-                <div class="brand-icon">&#x1F957;</div>
+                <div class="brand-icon">
+                    <i class="fas fa-home"></i>
+                </div>
                 <div>
                     <h5 class="mb-0">Inventory MBG</h5>
                     <small>SPPG Sumber Jaya 03</small>
@@ -33,7 +36,6 @@
 
         <div class="nav-scroll">
             <ul class="nav flex-column">
-
                 <li class="nav-item">
                     <a href="{{ route('dashboard') }}"
                         class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
@@ -313,7 +315,10 @@
     </nav>
     <div id="content">
         <nav class="navbar-top d-flex justify-content-between align-items-center">
-            <div>
+            <div class="d-flex align-items-center gap-2">
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle sidebar">
+                    <i class="bi bi-list"></i>
+                </button>
                 <h6 class="mb-0 fw-semibold text-muted">@yield('page_title', 'Dashboard')</h6>
             </div>
             <div class="d-flex align-items-center gap-4 me-2">

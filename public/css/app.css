@@ -239,7 +239,7 @@
             transition: box-shadow 0.2s;
         }
 
-        .card:hover {
+        .card-interactive:hover {
             box-shadow: 0 4px 16px rgba(0,0,0,0.07);
         }
 
@@ -397,6 +397,40 @@
             color: var(--ink);
         }
 
+        .btn-outline-info {
+            color: var(--sky);
+            border-color: var(--sky);
+        }
+
+        .btn-outline-info:hover {
+            background: var(--sky);
+            border-color: var(--sky);
+            color: #fff;
+        }
+
+        .btn-info {
+            background: var(--sky);
+            border-color: var(--sky);
+            color: #fff;
+        }
+
+        .btn-info:hover {
+            background: #3d6a7a;
+            border-color: #3d6a7a;
+            color: #fff;
+        }
+
+        .btn-primary {
+            background: var(--forest);
+            border-color: var(--forest);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #1e4634;
+            border-color: #1e4634;
+        }
+
         .form-label {
             font-size: 0.9rem;
             font-weight: 600;
@@ -479,9 +513,44 @@
                 margin-left: calc(-1 * var(--sidebar-width));
             }
 
+            #sidebar.mobile-open {
+                margin-left: 0;
+            }
+
             #content {
                 margin-left: 0;
             }
+
+            .sidebar-overlay {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.35);
+                z-index: 999;
+            }
+
+            .sidebar-overlay.show {
+                display: block;
+            }
+
+            .mobile-toggle {
+                display: inline-flex !important;
+            }
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--ink);
+            font-size: 1.4rem;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        .mobile-toggle:hover {
+            background: var(--rice-dim);
         }
 
         .pagination {
@@ -571,6 +640,20 @@
 }
 
 .navbar-user-menu .dropdown-item.text-danger:hover{
-    background:var(--danger-tint);
-    color:var(--danger)!important;
-}
+            background:var(--danger-tint);
+            color:var(--danger)!important;
+        }
+
+        #sidebar .collapse {
+            transition: max-height 0.3s ease;
+        }
+
+        #sidebar .collapse:not(.show) {
+            display: block;
+            max-height: 0;
+            overflow: hidden;
+        }
+
+        #sidebar .collapse.show {
+            max-height: 500px;
+        }

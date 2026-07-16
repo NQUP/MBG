@@ -4,7 +4,7 @@
 @section('content')
 <div class="page-header"><h4><i class="bi bi-cart me-2"></i>Laporan Permintaan Pembelian</h4></div>
 
-<div class="card mb-3"><div class="card-body py-2">
+<div class="card mb-3"><div class="card-body py-3">
 <form method="GET" class="row g-2 align-items-end">
     <div class="col-md-3">
         <label class="form-label">Tanggal Mulai</label>

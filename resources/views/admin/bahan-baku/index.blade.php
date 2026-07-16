@@ -11,7 +11,7 @@
 </div>
 
 <div class="card mb-3">
-    <div class="card-body py-2">
+    <div class="card-body py-3">
         <form method="GET" class="row g-2 align-items-end">
             <div class="col-md-5">
                 <input type="text" name="search" class="form-control" placeholder="Cari kode / nama bahan..." value="{{ request('search') }}">
@@ -54,7 +54,9 @@
                     <td><span class="badge {{ $b->is_active ? 'bg-success' : 'bg-secondary' }}">{{ $b->is_active ? 'Aktif' : 'Non-aktif' }}</span></td>
                     <td>
                         <a href="{{ route('admin.bahan-baku.edit', $b) }}" class="btn btn-sm btn-outline-primary btn-action"><i class="bi bi-pencil"></i></a>
-                        <form method="POST" action="{{ route('admin.bahan-baku.destroy', $b) }}" class="d-inline"
+                        <form method="POST" action="{{ route('admin.bahan-baku.destroy', $b) }}" class="d-inline">
+                            @csrf
+                            @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-outline-danger btn-action btn-hapus"><i class="bi bi-trash"></i></button>
                         </form>
                     </td>
