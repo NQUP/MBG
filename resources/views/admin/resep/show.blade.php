@@ -71,7 +71,7 @@
                     @csrf
                     <div class="mb-3">
                         <label class="form-label">Bahan Baku *</label>
-                        <select name="bahan_baku_id" class="form-select @error('bahan_baku_id') is-invalid @enderror" required>
+                        <select name="bahan_baku_id" id="bahanBakuSelect" class="form-select @error('bahan_baku_id') is-invalid @enderror" required>
                             <option value="">-- Pilih Bahan --</option>
                             @foreach($bahanBakus as $b)
                                 <option value="{{ $b->id }}">{{ $b->nama_bahan }} ({{ $b->satuan->singkatan }})</option>
@@ -123,7 +123,12 @@
 </div>
 @endsection
 
+@push('styles')
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.css" rel="stylesheet">
+@endpush
+
 @push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
     <script src="/js/admin-resep.js"></script>
 @endpush
 

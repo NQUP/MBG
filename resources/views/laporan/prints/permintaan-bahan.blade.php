@@ -24,7 +24,7 @@
         @foreach($produksis as $p)
         <tr>
             <td>{{ $p->tanggal_produksi->format('d/m/Y') }}</td><td>{{ $p->menuMakanan->nama_menu ?? '-' }}</td>
-            <td>{{ $p->menuMinuman->nama_menu ?? '-' }}</td><td>{{ $p->menuBuah->nama_menu ?? '-' }}</td>
+            <td>{{ $p->menuMinuman->nama_bahan ?? '-' }}</td><td>{{ $p->menuBuah->nama_bahan ?? '-' }}</td>
             <td>{{ number_format($p->jumlah_siswa) }}</td><td>{{ $p->user->name ?? '-' }}</td>
         </tr>
         @endforeach

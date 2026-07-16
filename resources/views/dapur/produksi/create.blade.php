@@ -33,21 +33,21 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-md-6">
+<div class="col-md-6">
                             <label class="form-label">Minuman *</label>
-                            <select name="menu_minuman_id" id="menuMinuman" class="form-select" required onchange="updatePreview()">
+                            <select name="bahan_minuman_id" id="bahanMinuman" class="form-select" required onchange="updatePreview()">
                                 <option value="">-- Pilih Minuman --</option>
-                                @foreach($menuMinuman as $m)
-                                    <option value="{{ $m->id }}" data-stok="{{ $m->stok_saat_ini }}" data-satuan="{{ $m->satuan->singkatan ?? '' }}" data-nama="{{ $m->nama_menu }}">{{ $m->nama_menu }}</option>
+                                @foreach($bahanMinuman as $b)
+                                    <option value="{{ $b->id }}" data-stok="{{ $b->stok_saat_ini }}" data-satuan="{{ $b->satuan->singkatan ?? '' }}" data-nama="{{ $b->nama_bahan }}">{{ $b->nama_bahan }} ({{ $b->satuan->singkatan ?? '' }})</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Buah *</label>
-                            <select name="menu_buah_id" id="menuBuah" class="form-select" required onchange="updatePreview()">
+                            <select name="bahan_buah_id" id="bahanBuah" class="form-select" required onchange="updatePreview()">
                                 <option value="">-- Pilih Buah --</option>
-                                @foreach($menuBuah as $m)
-                                    <option value="{{ $m->id }}" data-stok="{{ $m->stok_saat_ini }}" data-satuan="{{ $m->satuan->singkatan ?? '' }}" data-nama="{{ $m->nama_menu }}">{{ $m->nama_menu }}</option>
+                                @foreach($bahanBuah as $b)
+                                    <option value="{{ $b->id }}" data-stok="{{ $b->stok_saat_ini }}" data-satuan="{{ $b->satuan->singkatan ?? '' }}" data-nama="{{ $b->nama_bahan }}">{{ $b->nama_bahan }} ({{ $b->satuan->singkatan ?? '' }})</option>
                                 @endforeach
                             </select>
                         </div>
@@ -89,7 +89,15 @@
 </form>
 @endsection
 
+@push('styles')
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.css" rel="stylesheet">
+@endpush
+
 @push('scripts')
+<script>
+    window.produksiResepUrl = '{{ route('dapur.produksi.resep') }}';
+</script>
+<script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
 <script src="/js/produksi-create.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -122,11 +130,12 @@ document.addEventListener('DOMContentLoaded', function() {
         reverseButtons: true,
     }).then(function(result) {
         if (result.isConfirmed) {
-            var items = kekurangan.map(function(item) {
+var items = kekurangan.map(function(item) {
                 return {
                     bahan_baku_id: item.bahan_baku_id,
                     jumlah: item.kekurangan,
-                    satuan_id: item.satuan_id
+                    satuan_id: item.satuan_id,
+                    catatan: item.nama_bahan + ' - Kekurangan stok produksi',
                 };
             });
 

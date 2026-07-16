@@ -413,8 +413,8 @@
                                     @foreach ($data['produksi_hari_ini'] as $p)
                                         <tr>
                                             <td>{{ $p->menuMakanan->nama_menu }}</td>
-                                            <td>{{ $p->menuMinuman->nama_menu }}</td>
-                                            <td>{{ $p->menuBuah->nama_menu }}</td>
+                                            <td>{{ $p->menuMinuman->nama_bahan ?? '-' }}</td>
+                                            <td>{{ $p->menuBuah->nama_bahan ?? '-' }}</td>
                                             <td><strong>{{ number_format($p->jumlah_siswa) }} siswa</strong></td>
                                             <td>
                                                 @if ($p->status === 'dikonfirmasi')

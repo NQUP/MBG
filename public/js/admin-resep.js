@@ -10,4 +10,14 @@
             }.bind(this));
         });
     }
+
+    var selectEl = document.getElementById('bahanBakuSelect');
+    if (selectEl && typeof TomSelect !== 'undefined') {
+        new TomSelect(selectEl, {
+            create: false,
+            sortField: { field: 'text', direction: 'asc' },
+            placeholder: 'Ketik atau pilih bahan...',
+            maxOptions: null,
+        });
+    }
 });

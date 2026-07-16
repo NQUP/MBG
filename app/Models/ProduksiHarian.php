@@ -21,14 +21,14 @@ class ProduksiHarian extends Model
         return $this->belongsTo(Menu::class, 'menu_makanan_id');
     }
 
-    public function menuMinuman()
+public function menuMinuman()
     {
-        return $this->belongsTo(Menu::class, 'menu_minuman_id');
+        return $this->belongsTo(BahanBaku::class, 'menu_minuman_id');
     }
 
     public function menuBuah()
     {
-        return $this->belongsTo(Menu::class, 'menu_buah_id');
+        return $this->belongsTo(BahanBaku::class, 'menu_buah_id');
     }
 
     public function user()

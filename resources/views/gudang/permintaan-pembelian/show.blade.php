@@ -128,7 +128,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($permintaanPembelian->detail as $i => $d)
+@foreach($permintaanPembelian->detail as $i => $d)
                         <tr>
                             <td>{{ $i + 1 }}</td>
                             <td class="fw-semibold">{{ $d->bahanBaku->nama_bahan ?? '-' }}</td>

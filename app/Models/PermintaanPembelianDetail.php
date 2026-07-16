@@ -8,7 +8,7 @@ class PermintaanPembelianDetail extends Model
 {
     protected $table = 'permintaan_pembelian_detail';
 
-    protected $fillable = ['permintaan_pembelian_id', 'bahan_baku_id', 'jumlah', 'satuan_id', 'catatan'];
+    protected $fillable = ['permintaan_pembelian_id', 'bahan_baku_id', 'menu_id', 'jumlah', 'satuan_id', 'catatan'];
 
     protected $casts = ['jumlah' => 'decimal:2'];
 
@@ -20,6 +20,11 @@ class PermintaanPembelianDetail extends Model
     public function bahanBaku()
     {
         return $this->belongsTo(BahanBaku::class);
+    }
+
+    public function menu()
+    {
+        return $this->belongsTo(Menu::class);
     }
 
     public function satuan()

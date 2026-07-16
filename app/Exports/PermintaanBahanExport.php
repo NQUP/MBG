@@ -18,8 +18,8 @@ class PermintaanBahanExport extends BaseExcelExport
         return $this->rows->map(fn ($p) => [
             $p->tanggal_produksi->format('d/m/Y'),
             $p->menuMakanan->nama_menu ?? '-',
-            $p->menuMinuman->nama_menu ?? '-',
-            $p->menuBuah->nama_menu ?? '-',
+            $p->menuMinuman->nama_bahan ?? '-',
+            $p->menuBuah->nama_bahan ?? '-',
             (int) $p->jumlah_siswa,
             $p->user->name ?? '-',
         ])->all();

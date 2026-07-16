@@ -35,7 +35,7 @@
         </div>
 
         <div class="nav-scroll">
-            <ul class="nav flex-column">
+            <ul class="nav flex-column" id="sidebarAccordion">
                 <li class="nav-item">
                     <a href="{{ route('dashboard') }}"
                         class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
@@ -62,7 +62,7 @@
                         </a>
                     </li>
                     <li>
-                        <div class="collapse {{ $masterDataActive ? 'show' : '' }}" id="groupMasterData">
+                        <div class="collapse {{ $masterDataActive ? 'show' : '' }}" id="groupMasterData" data-bs-parent="#sidebarAccordion">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
                                     <a href="{{ route('admin.users.index') }}"
@@ -110,7 +110,7 @@
                         </a>
                     </li>
                     <li>
-                        <div class="collapse {{ $menuResepActive ? 'show' : '' }}" id="groupMenuResep">
+                        <div class="collapse {{ $menuResepActive ? 'show' : '' }}" id="groupMenuResep" data-bs-parent="#sidebarAccordion">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
                                     <a href="{{ route('admin.menu.index') }}"
@@ -147,7 +147,7 @@
                         </a>
                     </li>
                     <li>
-                        <div class="collapse {{ $laporanActive ? 'show' : '' }}" id="groupLaporan">
+                        <div class="collapse {{ $laporanActive ? 'show' : '' }}" id="groupLaporan" data-bs-parent="#sidebarAccordion">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
                                     <a href="{{ route('laporan.dashboard') }}"
@@ -210,7 +210,7 @@
                         </a>
                     </li>
                     <li>
-                        <div class="collapse {{ $gudangActive ? 'show' : '' }}" id="groupGudang">
+                        <div class="collapse {{ $gudangActive ? 'show' : '' }}" id="groupGudang" data-bs-parent="#sidebarAccordion">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
                                     <a href="{{ route('gudang.stok.index') }}"
@@ -260,7 +260,7 @@
                         </a>
                     </li>
                     <li>
-                        <div class="collapse {{ $dapurActive ? 'show' : '' }}" id="groupDapur">
+                        <div class="collapse {{ $dapurActive ? 'show' : '' }}" id="groupDapur" data-bs-parent="#sidebarAccordion">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
                                     <a href="{{ route('dapur.produksi.index') }}"

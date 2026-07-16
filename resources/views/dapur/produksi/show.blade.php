@@ -23,13 +23,13 @@
                             <th>Makanan</th>
                             <td>{{ $produksi->menuMakanan->nama_menu }}</td>
                         </tr>
-                        <tr>
+<tr>
                             <th>Minuman</th>
-                            <td>{{ $produksi->menuMinuman->nama_menu }}</td>
+                            <td>{{ $produksi->menuMinuman->nama_bahan ?? '-' }}</td>
                         </tr>
                         <tr>
                             <th>Buah</th>
-                            <td>{{ $produksi->menuBuah->nama_menu }}</td>
+                            <td>{{ $produksi->menuBuah->nama_bahan ?? '-' }}</td>
                         </tr>
                         <tr>
                             <th>Jumlah Siswa</th>

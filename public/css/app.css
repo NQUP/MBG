@@ -645,15 +645,28 @@
         }
 
         #sidebar .collapse {
-            transition: max-height 0.3s ease;
+            transition: height 0.3s ease;
         }
 
-        #sidebar .collapse:not(.show) {
-            display: block;
-            max-height: 0;
-            overflow: hidden;
+        .searchable-select .dropdown-menu {
+            padding: 0;
+            border: 1px solid var(--sage-line);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            border-radius: 10px;
         }
 
-        #sidebar .collapse.show {
-            max-height: 500px;
+        .searchable-select .dropdown-item {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .searchable-select .dropdown-item:hover {
+            background: var(--leaf-tint);
+        }
+
+        .searchable-select .dropdown-item.active {
+            background: var(--leaf-tint);
+            color: var(--forest);
+            font-weight: 600;
         }
