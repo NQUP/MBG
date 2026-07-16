@@ -38,7 +38,7 @@
             </tbody>
         </table>
     </div>
-    @if($kategoris->hasPages())<div class="card-footer">{{ $kategoris->links() }}</div>@endif
+    
 </div>
 
 {{-- Modal Tambah --}}

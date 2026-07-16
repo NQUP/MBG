@@ -33,7 +33,7 @@
             </tbody>
         </table>
     </div>
-    @if($opnames->hasPages())<div class="card-footer">{{ $opnames->links() }}</div>@endif
+    
 </div>
 @endsection
 

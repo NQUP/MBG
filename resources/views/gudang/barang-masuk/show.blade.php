@@ -16,7 +16,7 @@
         <div class="card">
             <div class="card-header bg-white fw-semibold">Informasi Transaksi</div>
             <div class="card-body">
-                <table class="table table-sm table-borderless mb-0">
+                <table class="table no-datatable table-sm table-borderless mb-0">
                     <tr><th class="text-muted" style="width:40%">Kode</th><td><code>{{ $barangMasuk->kode_transaksi }}</code></td></tr>
                     <tr><th class="text-muted">Tanggal</th><td>{{ $barangMasuk->tanggal_masuk->format('d/m/Y') }}</td></tr>
                     <tr><th class="text-muted">Supplier</th><td>{{ $barangMasuk->supplier->nama_supplier }}</td></tr>
@@ -41,7 +41,7 @@
         <div class="card">
             <div class="card-header bg-white fw-semibold">Detail Bahan Masuk</div>
             <div class="table-responsive">
-                <table class="table table-hover mb-0">
+                <table class="table no-datatable table-hover mb-0">
                     <thead><tr><th>#</th><th>Nama Bahan</th><th>Jumlah</th><th>Satuan</th><th>Harga Satuan</th><th>Subtotal</th></tr></thead>
                     <tbody>
                         @php $total = 0 @endphp

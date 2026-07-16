@@ -76,7 +76,7 @@
                     </div>
                     <div class="card-body p-0">
                         <div class="table-responsive">
-                            <table class="table mb-0" id="tabelDetail">
+                            <table class="table no-datatable mb-0" id="tabelDetail">
                                 <thead>
                                     <tr>
                                         <th>Bahan Baku</th>

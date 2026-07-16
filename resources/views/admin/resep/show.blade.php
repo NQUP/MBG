@@ -21,7 +21,7 @@
                 <span><i class="bi bi-list-ul me-2 text-success"></i>Daftar Bahan ({{ $menu->resep->count() }} bahan)</span>
             </div>
             <div class="table-responsive">
-                <table class="table table-hover mb-0">
+                <table class="table no-datatable table-hover mb-0">
                     <thead><tr><th>#</th><th>Nama Bahan</th><th>Jumlah/Porsi</th><th>Satuan</th><th>Keterangan</th><th>Aksi</th></tr></thead>
                     <tbody>
                         @forelse($menu->resep as $r)

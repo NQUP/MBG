@@ -16,7 +16,7 @@ class PermintaanPembelianController extends Controller
     {
         $data = PermintaanPembelian::with(['user', 'detail.bahanBaku'])
             ->latest()
-            ->paginate(15);
+            ->get();
         return view('gudang.permintaan-pembelian.index', compact('data'));
     }
 

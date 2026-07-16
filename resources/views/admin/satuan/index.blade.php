@@ -38,7 +38,7 @@
             </tbody>
         </table>
     </div>
-    @if($satuans->hasPages())<div class="card-footer">{{ $satuans->links() }}</div>@endif
+    
 </div>
 
 <div class="modal fade" id="modalTambah" tabindex="-1">

@@ -180,7 +180,7 @@ class LaporanController extends Controller
     {
         $dari = $request->get('dari', now()->startOfMonth()->format('Y-m-d'));
         $sampai = $request->get('sampai', now()->format('Y-m-d'));
-        $data = $this->queryPermintaanPembelian($request)->paginate(15)->withQueryString();
+        $data = $this->queryPermintaanPembelian($request)->get();
         $suppliers = \App\Models\Supplier::orderBy('nama_supplier')->get();
         $statuses = ['Draft', 'Diajukan', 'Disetujui', 'Barang Diterima', 'Selesai', 'Ditolak'];
         return view('laporan.permintaan-pembelian', compact('data', 'dari', 'sampai', 'suppliers', 'statuses'));

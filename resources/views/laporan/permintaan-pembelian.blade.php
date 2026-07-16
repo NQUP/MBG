@@ -64,5 +64,5 @@
     </tbody>
 </table>
 </div></div>
-@if(method_exists($data, 'links'))<div class="mt-3">{{ $data->links() }}</div>@endif
+@if(method_exists($data, 'links'))<div class="mt-3"></div>@endif
 @endsection

@@ -77,9 +77,7 @@
                 </tbody>
             </table>
         </div>
-        @if ($menus->hasPages())
-            <div class="card-footer">{{ $menus->links() }}</div>
-        @endif
+        
     </div>
 @endsection
 

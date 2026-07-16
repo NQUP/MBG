@@ -26,7 +26,7 @@ class BahanBakuController extends Controller
             $query->where('kategori_id', $request->kategori);
         }
 
-        $bahanBakus = $query->latest()->paginate(15)->withQueryString();
+        $bahanBakus = $query->latest()->get();
         $kategoris  = KategoriBahan::orderBy('nama_kategori')->get();
 
         return view('admin.bahan-baku.index', compact('bahanBakus', 'kategoris'));

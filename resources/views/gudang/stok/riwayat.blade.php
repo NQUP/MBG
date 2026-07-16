@@ -54,7 +54,7 @@
             </tbody>
         </table>
     </div>
-    @if($riwayat->hasPages())<div class="card-footer">{{ $riwayat->links() }}</div>@endif
+    
 </div>
 @endsection
 

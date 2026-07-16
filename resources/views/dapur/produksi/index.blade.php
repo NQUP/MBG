@@ -45,7 +45,7 @@
             </tbody>
         </table>
     </div>
-    @if($produksis->hasPages())<div class="card-footer">{{ $produksis->links() }}</div>@endif
+    
 </div>
 @endsection
 

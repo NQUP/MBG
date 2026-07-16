@@ -18,7 +18,7 @@
             <div class="card">
                 <div class="card-header"><i class="bi bi-clipboard-data me-2"></i>Ringkasan</div>
                 <div class="card-body">
-                    <table class="table table-sm table-borderless mb-0 summary-table">
+                    <table class="table no-datatable table-sm table-borderless mb-0 summary-table">
                         <tr>
                             <th>Makanan</th>
                             <td>{{ $produksi->menuMakanan->nama_menu }}</td>
@@ -51,7 +51,7 @@
             <div class="card">
                 <div class="card-header"><i class="bi bi-basket3 me-2"></i>Bahan Baku Terpakai</div>
                 <div class="table-responsive">
-                    <table class="table table-hover mb-0">
+                    <table class="table no-datatable table-hover mb-0">
                         <thead>
                             <tr>
                                 <th>#</th>

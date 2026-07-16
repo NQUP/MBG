@@ -59,7 +59,7 @@
             </tbody>
         </table>
     </div>
-    @if($bahanBakus->hasPages())<div class="card-footer">{{ $bahanBakus->links() }}</div>@endif
+    
 </div>
 @endsection
 

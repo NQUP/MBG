@@ -23,7 +23,7 @@ class StokController extends Controller
             $query->whereColumn('stok_saat_ini', '<=', 'stok_minimum');
         }
 
-        $bahanBakus   = $query->orderBy('nama_bahan')->paginate(20)->withQueryString();
+        $bahanBakus   = $query->orderBy('nama_bahan')->get();
         $totalMinimum = BahanBaku::where('is_active', true)->whereColumn('stok_saat_ini', '<=', 'stok_minimum')->count();
 
         return view('gudang.stok.index', compact('bahanBakus', 'totalMinimum'));
@@ -35,7 +35,7 @@ class StokController extends Controller
             ->when($request->filled('tanggal_dari'), fn($q) => $q->whereDate('tanggal', '>=', $request->tanggal_dari))
             ->when($request->filled('tanggal_sampai'), fn($q) => $q->whereDate('tanggal', '<=', $request->tanggal_sampai))
             ->latest()
-            ->paginate(20);
+            ->get();
 
         return view('gudang.stok.riwayat', compact('bahanBaku', 'riwayat'));
     }

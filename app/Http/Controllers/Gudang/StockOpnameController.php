@@ -14,7 +14,7 @@ class StockOpnameController extends Controller
 {
     public function index()
     {
-        $opnames = StockOpname::with('user')->latest()->paginate(15);
+        $opnames = StockOpname::with('user')->latest()->get();
         return view('gudang.stock-opname.index', compact('opnames'));
     }
 

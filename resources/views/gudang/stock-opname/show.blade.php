@@ -31,7 +31,7 @@
             <button type="submit" class="btn btn-sm btn-primary"><i class="bi bi-save me-1"></i>Simpan Stok Fisik</button>
         </div>
         <div class="table-responsive">
-            <table class="table table-hover mb-0">
+            <table class="table no-datatable table-hover mb-0">
                 <thead><tr><th>#</th><th>Nama Bahan</th><th>Satuan</th><th>Stok Sistem</th><th>Stok Fisik *</th><th>Selisih</th></tr></thead>
                 <tbody>
                     @foreach($stockOpname->detail as $i => $d)
@@ -62,7 +62,7 @@
 @else
 <div class="card">
     <div class="table-responsive">
-        <table class="table table-hover mb-0">
+        <table class="table no-datatable table-hover mb-0">
             <thead><tr><th>#</th><th>Nama Bahan</th><th>Satuan</th><th>Stok Sistem</th><th>Stok Fisik</th><th>Selisih</th></tr></thead>
             <tbody>
                 @foreach($stockOpname->detail as $i => $d)

@@ -28,7 +28,7 @@ class ProduksiController extends Controller
             $query->whereDate('tanggal_produksi', '<=', $request->tanggal_sampai);
         }
 
-        $produksis = $query->latest()->paginate(15)->withQueryString();
+        $produksis = $query->latest()->get();
         return view('dapur.produksi.index', compact('produksis'));
     }
 

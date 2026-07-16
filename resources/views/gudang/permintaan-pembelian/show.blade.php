@@ -51,7 +51,7 @@
         <div class="card">
             <div class="card-header bg-white fw-semibold">Informasi PR</div>
             <div class="card-body">
-                <table class="table table-sm table-borderless mb-0">
+                <table class="table no-datatable table-sm table-borderless mb-0">
                     <tr>
                         <th class="text-muted" style="width:40%">Nomor</th>
                         <td><code>{{ $permintaanPembelian->nomor_permintaan }}</code></td>
@@ -114,7 +114,7 @@
                 <i class="bi bi-list-ul me-2 text-success"></i>Daftar Bahan ({{ $permintaanPembelian->detail->count() }} item)
             </div>
             <div class="table-responsive">
-                <table class="table table-hover mb-0">
+                <table class="table no-datatable table-hover mb-0">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -159,7 +159,7 @@
                 <i class="bi bi-arrow-down-circle me-2 text-primary"></i>Barang Masuk Terkait
             </div>
             <div class="table-responsive">
-                <table class="table table-sm mb-0">
+                <table class="table no-datatable table-sm mb-0">
                     <thead>
                         <tr>
                             <th>Kode Transaksi</th>

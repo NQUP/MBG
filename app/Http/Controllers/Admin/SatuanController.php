@@ -10,7 +10,7 @@ class SatuanController extends Controller
 {
     public function index()
     {
-        $satuans = Satuan::withCount('bahanBaku')->latest()->paginate(15);
+        $satuans = Satuan::withCount('bahanBaku')->latest()->get();
         return view('admin.satuan.index', compact('satuans'));
     }
 

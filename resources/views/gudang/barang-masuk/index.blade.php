@@ -41,7 +41,7 @@
             </tbody>
         </table>
     </div>
-    @if($barangMasuks->hasPages())<div class="card-footer">{{ $barangMasuks->links() }}</div>@endif
+    
 </div>
 @endsection
 

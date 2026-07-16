@@ -20,7 +20,7 @@ class BarangMasukController extends Controller
         $query = BarangMasuk::with(['supplier', 'user'])->latest();
         if ($request->filled('tanggal_dari')) $query->whereDate('tanggal_masuk', '>=', $request->tanggal_dari);
         if ($request->filled('tanggal_sampai')) $query->whereDate('tanggal_masuk', '<=', $request->tanggal_sampai);
-        $barangMasuks = $query->paginate(15)->withQueryString();
+        $barangMasuks = $query->get();
         return view('gudang.barang-masuk.index', compact('barangMasuks'));
     }
 

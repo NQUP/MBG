@@ -21,7 +21,7 @@
                 </div>
                 <div class="card-body p-0">
                     <div class="table-responsive">
-                        <table class="table mb-0">
+                        <table class="table no-datatable mb-0">
                             <thead>
                                 <tr>
                                     <th style="min-width:240px;">Bahan Baku</th>
