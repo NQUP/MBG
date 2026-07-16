@@ -75,15 +75,9 @@
 @endsection
 
 @push('scripts')
-<script>
-function editSatuan(s) {
-    document.getElementById('formEdit').action = '/admin/satuan/' + s.id;
-    document.getElementById('edit_nama').value = s.nama_satuan;
-    document.getElementById('edit_sing').value = s.singkatan;
-    new bootstrap.Modal(document.getElementById('modalEdit')).show();
-}
-</script>
+    <script src="/js/admin-crud.js"></script>
 @endpush
+
 
 
 

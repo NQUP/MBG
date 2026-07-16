@@ -472,517 +472,100 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
         rel="stylesheet">
-    <style>
-        :root {
-            --forest: #16382b;
-            --forest-deep: #0d271e;
-            --leaf: #5fa876;
-            --leaf-tint: rgba(95, 168, 118, 0.14);
-            --turmeric: #d9822b;
-            --turmeric-tint: rgba(217, 130, 43, 0.14);
-            --sky: #4a7a8c;
-            --sky-tint: rgba(74, 122, 140, 0.14);
-            --danger: #c0503c;
-            --danger-tint: rgba(192, 80, 60, 0.12);
-            --rice: #faf6ec;
-            --rice-dim: #f0ead8;
-            --ink: #22291f;
-            --muted: #6b7563;
-            --sage-line: #dfe3d2;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            color: var(--ink);
-            background: var(--rice);
-        }
-
-        /* ---- Page header ---- */
-        .page-header {
-            margin-bottom: 24px;
-        }
-
-
-
-        .page-header h4 {
-            font-family: 'Fraunces', serif;
-            font-weight: 600;
-            color: var(--forest);
-            margin-bottom: 2px;
-        }
-
-        .page-header h4 i {
-            color: var(--leaf);
-        }
-
-        /* ---- Stat tiles ---- */
-        .stat-card {
-            border-left: 4px solid var(--forest);
-            border-top: 1px solid var(--sage-line);
-            border-right: 1px solid var(--sage-line);
-            border-bottom: 1px solid var(--sage-line);
-            border-radius: 10px;
-            background: #fff;
-            box-shadow: none;
-        }
-
-        .stat-icon {
-            width: 46px;
-            height: 46px;
-            flex: none;
-            border-radius: 10px;
-            background: var(--leaf-tint);
-            color: var(--forest);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-        }
-
-        .stat-label {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.68rem;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-            color: var(--muted);
-            margin-bottom: 3px;
-        }
-
-        .stat-value {
-            font-family: 'Fraunces', serif;
-            font-weight: 600;
-            font-size: 1.55rem;
-            color: var(--forest);
-        }
-
-        .stat-value.text-danger {
-            color: var(--danger) !important;
-        }
-
-        /* ---- Cards ---- */
-        .card {
-            border: 1px solid var(--sage-line);
-            box-shadow: none;
-            border-radius: 10px;
-        }
-
-        .card-header {
-            background: var(--rice-dim);
-            border-bottom: 1px solid var(--sage-line);
-            border-radius: 10px 10px 0 0 !important;
-            font-weight: 600;
-            font-size: 0.92rem;
-            color: var(--forest);
-            padding: 12px 18px;
-        }
-
-        .card-header.card-header-danger {
-            background: var(--danger);
-            color: #fff;
-            border-bottom: none;
-        }
-
-        .card-alert {
-            border-color: var(--danger);
-        }
-
-        .text-success {
-            color: var(--leaf) !important;
-        }
-
-        .text-primary {
-            color: var(--sky) !important;
-        }
-
-        .text-warning {
-            color: var(--turmeric) !important;
-        }
-
-        .text-danger {
-            color: var(--danger) !important;
-        }
-
-        /* ---- Tables ---- */
-        .table thead th {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.68rem;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            color: var(--muted);
-            font-weight: 600;
-            border-bottom: 1px solid var(--sage-line);
-            background: var(--rice-dim);
-        }
-
-        .table td,
-        .table th {
-            border-color: var(--sage-line);
-            vertical-align: middle;
-        }
-
-        .table-hover tbody tr:hover {
-            background: var(--leaf-tint);
-        }
-
-        code {
-            font-family: 'JetBrains Mono', monospace;
-            background: var(--rice-dim);
-            color: var(--forest);
-            padding: 2px 6px;
-            border-radius: 5px;
-            font-size: 0.82rem;
-        }
-
-        /* ---- Badges ---- */
-        .badge.bg-success {
-            background: var(--leaf) !important;
-        }
-
-        .badge.bg-warning {
-            background: var(--turmeric) !important;
-            color: #fff !important;
-        }
-
-        .badge.bg-danger {
-            background: var(--danger) !important;
-        }
-
-        .badge.bg-primary {
-            background: var(--sky) !important;
-        }
-
-        /* ---- Buttons ---- */
-        .btn-success {
-            background: var(--forest);
-            border-color: var(--forest);
-        }
-
-        .btn-success:hover {
-            background: #1e4634;
-            border-color: #1e4634;
-        }
-
-        .btn-outline-primary {
-            color: var(--forest);
-            border-color: var(--forest);
-        }
-
-        .btn-outline-primary:hover {
-            background: var(--forest);
-            border-color: var(--forest);
-        }
-    </style>
+        <link href="/css/dashboard.css" rel="stylesheet">
 @endpush
 
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="/js/dashboard.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const green = '#16382b';
-            const greenLight = 'rgba(22,56,43,0.14)';
-            const leaf = '#5fa876';
-            const leafLight = 'rgba(95,168,118,0.18)';
-            const orange = '#d9822b';
-            const blue = '#4a7a8c';
-            const red = '#c0503c';
-            const yellow = '#e2a83f';
-
             // ===== ADMIN CHARTS =====
             @if (auth()->user()->isAdmin())
                 // Produksi Bulanan
                 if (document.getElementById('chartProduksiAdmin')) {
-                    new Chart(document.getElementById('chartProduksiAdmin'), {
-                        type: 'bar',
-                        data: {
-                            labels: {!! $data['produksi_bulanan']->pluck('tanggal')->map(fn($t) => \Carbon\Carbon::parse($t)->format('d M'))->toJson() !!},
-                            datasets: [{
-                                label: 'Jumlah Siswa',
-                                data: {!! $data['produksi_bulanan']->pluck('total')->toJson() !!},
-                                backgroundColor: leafLight,
-                                borderColor: leaf,
-                                borderWidth: 1,
-                                borderRadius: 4,
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            plugins: {
-                                legend: {
-                                    display: false
-                                }
-                            },
-                            scales: {
-                                y: {
-                                    beginAtZero: true
-                                }
-                            }
-                        }
-                    });
+                    createBarChart('chartProduksiAdmin',
+                        {!! ['produksi_bulanan']->pluck('tanggal')->map(fn() => \Carbon\Carbon::parse()->format('d M'))->toJson() !!},
+                        [{ label: 'Jumlah Siswa', data: {!! ['produksi_bulanan']->pluck('total')->toJson() !!}, backgroundColor: DASHBOARD_COLORS.leafLight, borderColor: DASHBOARD_COLORS.leaf }],
+                        { plugins: { legend: { display: false } } }
+                    );
                 }
 
                 // PR Status Doughnut
                 if (document.getElementById('chartPrAdmin')) {
-                    new Chart(document.getElementById('chartPrAdmin'), {
-                        type: 'doughnut',
-                        data: {
-                            labels: ['Draft', 'Diajukan', 'Disetujui', 'Selesai', 'Ditolak'],
-                            datasets: [{
-                                data: [{!! json_encode(array_values($data['pr_stats'])) !!}],
-                                backgroundColor: ['#8a9480', yellow, leaf, blue, red],
-                                borderWidth: 0,
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            plugins: {
-                                legend: {
-                                    position: 'bottom',
-                                    labels: {
-                                        boxWidth: 12,
-                                        padding: 10
-                                    }
-                                }
-                            }
-                        }
-                    });
+                    createDoughnutChart('chartPrAdmin',
+                        ['Draft', 'Diajukan', 'Disetujui', 'Selesai', 'Ditolak'],
+                        [{!! json_encode(array_values(['pr_stats'])) !!}],
+                        ['#8a9480', DASHBOARD_COLORS.yellow, DASHBOARD_COLORS.leaf, DASHBOARD_COLORS.blue, DASHBOARD_COLORS.red]
+                    );
                 }
 
                 // Stok vs Minimum
                 if (document.getElementById('chartStokAdmin')) {
-                    new Chart(document.getElementById('chartStokAdmin'), {
-                        type: 'bar',
-                        data: {
-                            labels: {!! $data['stok_chart']->pluck('nama_bahan')->toJson() !!},
-                            datasets: [{
-                                    label: 'Stok Saat Ini',
-                                    data: {!! $data['stok_chart']->pluck('stok_saat_ini')->toJson() !!},
-                                    backgroundColor: leafLight,
-                                    borderColor: leaf,
-                                    borderWidth: 1,
-                                    borderRadius: 4
-                                },
-                                {
-                                    label: 'Stok Minimum',
-                                    data: {!! $data['stok_chart']->pluck('stok_minimum')->toJson() !!},
-                                    backgroundColor: 'rgba(192,80,60,0.14)',
-                                    borderColor: red,
-                                    borderWidth: 1,
-                                    borderRadius: 4
-                                }
-                            ]
-                        },
-                        options: {
-                            indexAxis: 'y',
-                            responsive: true,
-                            plugins: {
-                                legend: {
-                                    position: 'top'
-                                }
-                            },
-                            scales: {
-                                x: {
-                                    beginAtZero: true
-                                }
-                            }
-                        }
-                    });
+                    createBarChart('chartStokAdmin',
+                        {!! ['stok_chart']->pluck('nama_bahan')->toJson() !!},
+                        [
+                            { label: 'Stok Saat Ini', data: {!! ['stok_chart']->pluck('stok_saat_ini')->toJson() !!}, backgroundColor: DASHBOARD_COLORS.leafLight, borderColor: DASHBOARD_COLORS.leaf },
+                            { label: 'Stok Minimum', data: {!! ['stok_chart']->pluck('stok_minimum')->toJson() !!}, backgroundColor: 'rgba(192,80,60,0.14)', borderColor: DASHBOARD_COLORS.red }
+                        ],
+                        { indexAxis: 'y', plugins: { legend: { position: 'top' } } }
+                    );
+                }
+
+                // Riwayat Permintaan Pembelian
+                if (document.getElementById('chartPrRiwayat')) {
+                    createBarChart('chartPrRiwayat',
+                        {!! ['pr_riwayat']->pluck('bulan')->toJson() !!},
+                        [{ label: 'Jumlah PR', data: {!! ['pr_riwayat']->pluck('total')->toJson() !!}, backgroundColor: DASHBOARD_COLORS.greenLight, borderColor: DASHBOARD_COLORS.green }],
+                        { plugins: { legend: { display: false } } }
+                    );
+                }
+
+                // Barang Masuk 7 Hari
+                if (document.getElementById('chartBarangMasuk')) {
+                    createBarChart('chartBarangMasuk',
+                        {!! ['barang_masuk_minggu']->pluck('tanggal')->map(fn() => \Carbon\Carbon::parse()->format('d M'))->toJson() !!},
+                        [{ label: 'Item Masuk', data: {!! ['barang_masuk_minggu']->pluck('total')->toJson() !!}, backgroundColor: DASHBOARD_COLORS.greenLight, borderColor: DASHBOARD_COLORS.green }],
+                        { plugins: { legend: { display: false } } }
+                    );
                 }
             @endif
 
             // ===== GUDANG CHARTS =====
-            @if ($user->isPetugasGudang())
-                // Stok Bahan Baku
-                if (document.getElementById('chartStokGudang')) {
-                    var stokLabels = {!! $data['stok_chart']->pluck('nama_bahan')->toJson() !!};
-                    var stokData = {!! $data['stok_chart']->pluck('stok_saat_ini')->toJson() !!};
-                    var stokMinData = {!! $data['stok_chart']->pluck('stok_minimum')->toJson() !!};
-                    var barColors = stokData.map((v, i) => v <= stokMinData[i] ? red : leaf);
-                    new Chart(document.getElementById('chartStokGudang'), {
-                        type: 'bar',
-                        data: {
-                            labels: stokLabels,
-                            datasets: [{
-                                    label: 'Stok Saat Ini',
-                                    data: stokData,
-                                    backgroundColor: barColors.map(c => c === red ?
-                                        'rgba(192,80,60,0.22)' : leafLight),
-                                    borderColor: barColors,
-                                    borderWidth: 1,
-                                    borderRadius: 4
-                                },
-                                {
-                                    label: 'Batas Minimum',
-                                    data: stokMinData,
-                                    backgroundColor: 'rgba(226,168,63,0.22)',
-                                    borderColor: yellow,
-                                    borderWidth: 1,
-                                    borderRadius: 4
-                                }
-                            ]
-                        },
-                        options: {
-                            indexAxis: 'y',
-                            responsive: true,
-                            plugins: {
-                                legend: {
-                                    position: 'top'
-                                }
-                            },
-                            scales: {
-                                x: {
-                                    beginAtZero: true
-                                }
-                            }
-                        }
-                    });
-                }
-
-                // Barang Masuk Bulanan
-                if (document.getElementById('chartBmGudang')) {
-                    new Chart(document.getElementById('chartBmGudang'), {
-                        type: 'bar',
-                        data: {
-                            labels: {!! $data['barang_masuk_chart']->pluck('bulan')->toJson() !!},
-                            datasets: [{
-                                label: 'Jumlah Transaksi',
-                                data: {!! $data['barang_masuk_chart']->pluck('jumlah')->toJson() !!},
-                                backgroundColor: 'rgba(217,130,43,0.18)',
-                                borderColor: orange,
-                                borderWidth: 1,
-                                borderRadius: 4,
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            plugins: {
-                                legend: {
-                                    display: false
-                                }
-                            },
-                            scales: {
-                                y: {
-                                    beginAtZero: true,
-                                    ticks: {
-                                        stepSize: 1
-                                    }
-                                }
-                            }
-                        }
-                    });
-                }
-
-                // Riwayat Stok
+            @if (->isPetugasGudang())
                 if (document.getElementById('chartRiwayatStok')) {
-                    new Chart(document.getElementById('chartRiwayatStok'), {
-                        type: 'line',
-                        data: {
-                            labels: {!! json_encode($data['riwayat_labels']) !!},
-                            datasets: [{
-                                    label: 'Masuk',
-                                    data: {!! json_encode($data['riwayat_masuk']) !!},
-                                    borderColor: leaf,
-                                    backgroundColor: leafLight,
-                                    fill: true,
-                                    tension: 0.3
-                                },
-                                {
-                                    label: 'Keluar',
-                                    data: {!! json_encode($data['riwayat_keluar']) !!},
-                                    borderColor: red,
-                                    backgroundColor: 'rgba(192,80,60,0.1)',
-                                    fill: true,
-                                    tension: 0.3
-                                }
-                            ]
-                        },
-                        options: {
-                            responsive: true,
-                            plugins: {
-                                legend: {
-                                    position: 'top'
-                                }
-                            },
-                            scales: {
-                                y: {
-                                    beginAtZero: true
-                                }
-                            }
-                        }
-                    });
+                    createLineChart('chartRiwayatStok',
+                        {!! json_encode(['riwayat_labels']) !!},
+                        [
+                            { label: 'Masuk', data: {!! json_encode(['riwayat_masuk']) !!}, borderColor: DASHBOARD_COLORS.leaf, backgroundColor: DASHBOARD_COLORS.leafLight, fill: true, tension: 0.3 },
+                            { label: 'Keluar', data: {!! json_encode(['riwayat_keluar']) !!}, borderColor: DASHBOARD_COLORS.red, backgroundColor: 'rgba(192,80,60,0.1)', fill: true, tension: 0.3 }
+                        ]
+                    );
                 }
             @endif
 
             // ===== DAPUR CHARTS =====
-            @if ($user->isPetugasDapur())
-                // Produksi 7 Hari
+            @if (->isPetugasDapur())
                 if (document.getElementById('chartProduksiDapur')) {
-                    new Chart(document.getElementById('chartProduksiDapur'), {
-                        type: 'bar',
-                        data: {
-                            labels: {!! $data['produksi_mingguan']->pluck('tanggal')->map(fn($t) => \Carbon\Carbon::parse($t)->locale('id')->isoFormat('dddd, D MMM'))->toJson() !!},
-                            datasets: [{
-                                label: 'Jumlah Siswa',
-                                data: {!! $data['produksi_mingguan']->pluck('total')->toJson() !!},
-                                backgroundColor: leafLight,
-                                borderColor: leaf,
-                                borderWidth: 1,
-                                borderRadius: 4,
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            plugins: {
-                                legend: {
-                                    display: false
-                                }
-                            },
-                            scales: {
-                                y: {
-                                    beginAtZero: true
-                                }
-                            }
-                        }
-                    });
+                    createBarChart('chartProduksiDapur',
+                        {!! ['produksi_mingguan']->pluck('tanggal')->map(fn() => \Carbon\Carbon::parse()->locale('id')->isoFormat('dddd, D MMM'))->toJson() !!},
+                        [{ label: 'Jumlah Siswa', data: {!! ['produksi_mingguan']->pluck('total')->toJson() !!}, backgroundColor: DASHBOARD_COLORS.leafLight, borderColor: DASHBOARD_COLORS.leaf }],
+                        { plugins: { legend: { display: false } } }
+                    );
                 }
 
-                // Distribusi Menu
                 if (document.getElementById('chartMenuDapur')) {
-                    var menuLabels = {!! $data['menu_stats']->pluck('menuMakanan.nama_menu')->map(fn($n) => $n ?? 'N/A')->toJson() !!};
-                    var menuData = {!! $data['menu_stats']->pluck('total_siswa')->toJson() !!};
-                    var menuColors = ['#16382b', '#d9822b', '#4a7a8c', '#c0503c', '#e2a83f', '#5fa876', '#7c6a9c',
-                        '#86c99a'
-                    ];
-                    new Chart(document.getElementById('chartMenuDapur'), {
-                        type: 'doughnut',
-                        data: {
-                            labels: menuLabels,
-                            datasets: [{
-                                data: menuData,
-                                backgroundColor: menuColors.slice(0, menuLabels.length),
-                                borderWidth: 0
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            plugins: {
-                                legend: {
-                                    position: 'bottom',
-                                    labels: {
-                                        boxWidth: 12,
-                                        padding: 8,
-                                        font: {
-                                            size: 11
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    });
+                    var menuLabels = {!! ['menu_stats']->pluck('menuMakanan.nama_menu')->map(fn() =>  ?? 'N/A')->toJson() !!};
+                    var menuData = {!! ['menu_stats']->pluck('total_siswa')->toJson() !!};
+                    var menuColors = ['#16382b', '#d9822b', '#4a7a8c', '#c0503c', '#e2a83f', '#5fa876', '#7c6a9c', '#86c99a'];
+                    createDoughnutChart('chartMenuDapur', menuLabels, menuData, menuColors.slice(0, menuLabels.length));
                 }
             @endif
         });
     </script>
 @endpush
+
+
 
 
 

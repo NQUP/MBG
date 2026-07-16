@@ -1,0 +1,198 @@
+:root {
+            --forest: #16382b;
+            --forest-deep: #0d271e;
+            --leaf: #5fa876;
+            --leaf-tint: rgba(95, 168, 118, 0.14);
+            --turmeric: #d9822b;
+            --turmeric-tint: rgba(217, 130, 43, 0.14);
+            --sky: #4a7a8c;
+            --sky-tint: rgba(74, 122, 140, 0.14);
+            --danger: #c0503c;
+            --danger-tint: rgba(192, 80, 60, 0.12);
+            --rice: #faf6ec;
+            --rice-dim: #f0ead8;
+            --ink: #22291f;
+            --muted: #6b7563;
+            --sage-line: #dfe3d2;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--ink);
+            background: var(--rice);
+        }
+
+        /* ---- Page header ---- */
+        .page-header {
+            margin-bottom: 24px;
+        }
+
+
+
+        .page-header h4 {
+            font-family: 'Fraunces', serif;
+            font-weight: 600;
+            color: var(--forest);
+            margin-bottom: 2px;
+        }
+
+        .page-header h4 i {
+            color: var(--leaf);
+        }
+
+        /* ---- Stat tiles ---- */
+        .stat-card {
+            border-left: 4px solid var(--forest);
+            border-top: 1px solid var(--sage-line);
+            border-right: 1px solid var(--sage-line);
+            border-bottom: 1px solid var(--sage-line);
+            border-radius: 10px;
+            background: #fff;
+            box-shadow: none;
+        }
+
+        .stat-icon {
+            width: 46px;
+            height: 46px;
+            flex: none;
+            border-radius: 10px;
+            background: var(--leaf-tint);
+            color: var(--forest);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .stat-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 3px;
+        }
+
+        .stat-value {
+            font-family: 'Fraunces', serif;
+            font-weight: 600;
+            font-size: 1.55rem;
+            color: var(--forest);
+        }
+
+        .stat-value.text-danger {
+            color: var(--danger) !important;
+        }
+
+        /* ---- Cards ---- */
+        .card {
+            border: 1px solid var(--sage-line);
+            box-shadow: none;
+            border-radius: 10px;
+        }
+
+        .card-header {
+            background: var(--rice-dim);
+            border-bottom: 1px solid var(--sage-line);
+            border-radius: 10px 10px 0 0 !important;
+            font-weight: 600;
+            font-size: 0.92rem;
+            color: var(--forest);
+            padding: 12px 18px;
+        }
+
+        .card-header.card-header-danger {
+            background: var(--danger);
+            color: #fff;
+            border-bottom: none;
+        }
+
+        .card-alert {
+            border-color: var(--danger);
+        }
+
+        .text-success {
+            color: var(--leaf) !important;
+        }
+
+        .text-primary {
+            color: var(--sky) !important;
+        }
+
+        .text-warning {
+            color: var(--turmeric) !important;
+        }
+
+        .text-danger {
+            color: var(--danger) !important;
+        }
+
+        /* ---- Tables ---- */
+        .table thead th {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--muted);
+            font-weight: 600;
+            border-bottom: 1px solid var(--sage-line);
+            background: var(--rice-dim);
+        }
+
+        .table td,
+        .table th {
+            border-color: var(--sage-line);
+            vertical-align: middle;
+        }
+
+        .table-hover tbody tr:hover {
+            background: var(--leaf-tint);
+        }
+
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--rice-dim);
+            color: var(--forest);
+            padding: 2px 6px;
+            border-radius: 5px;
+            font-size: 0.82rem;
+        }
+
+        /* ---- Badges ---- */
+        .badge.bg-success {
+            background: var(--leaf) !important;
+        }
+
+        .badge.bg-warning {
+            background: var(--turmeric) !important;
+            color: #fff !important;
+        }
+
+        .badge.bg-danger {
+            background: var(--danger) !important;
+        }
+
+        .badge.bg-primary {
+            background: var(--sky) !important;
+        }
+
+        /* ---- Buttons ---- */
+        .btn-success {
+            background: var(--forest);
+            border-color: var(--forest);
+        }
+
+        .btn-success:hover {
+            background: #1e4634;
+            border-color: #1e4634;
+        }
+
+        .btn-outline-primary {
+            color: var(--forest);
+            border-color: var(--forest);
+        }
+
+        .btn-outline-primary:hover {
+            background: var(--forest);
+            border-color: var(--forest);
+        }

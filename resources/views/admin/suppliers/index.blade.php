@@ -88,18 +88,9 @@
 @endsection
 
 @push('scripts')
-<script>
-function editSupplier(s) {
-    document.getElementById('formEdit').action = '/admin/suppliers/' + s.id;
-    document.getElementById('edit_nama').value = s.nama_supplier;
-    document.getElementById('edit_kontak').value = s.kontak || '';
-    document.getElementById('edit_alamat').value = s.alamat || '';
-    document.getElementById('edit_keterangan').value = s.keterangan || '';
-    document.getElementById('edit_active').checked = s.is_active == 1;
-    new bootstrap.Modal(document.getElementById('modalEdit')).show();
-}
-</script>
+    <script src="/js/admin-crud.js"></script>
 @endpush
+
 
 
 

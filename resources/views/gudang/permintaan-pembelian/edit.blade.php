@@ -103,83 +103,19 @@
 
 @push('scripts')
 <script>
-let barisIndex = {{ $idx }};
-const bahanData = @json($bahanBakus->map(fn($b) => [
-    'id'        => $b->id,
-    'nama'      => $b->nama_bahan,
-    'stok'      => (float) $b->stok_saat_ini,
-    'min'       => (float) $b->stok_minimum,
-    'satuan'    => $b->satuan->singkatan ?? '',
-    'satuan_id' => $b->satuan_id,
-]));
-const satuanData = @json($satuans->map(fn($s) => ['id' => $s->id, 'singkatan' => $s->singkatan]));
-
-function getBahanOpts() {
-    return '<option value="">-- Pilih Bahan --</option>' +
-        bahanData.map(b => `<option value="${b.id}" data-stok="${b.stok}" data-min="${b.min}" data-satuan="${b.satuan}" data-satuan-id="${b.satuan_id}">${b.nama} (${b.satuan})</option>`).join('');
-}
-function getSatuanOpts() {
-    return satuanData.map(s => `<option value="${s.id}">${s.singkatan}</option>`).join('');
-}
-
-function tambahBaris() {
-    const i = barisIndex++;
-    const tr = document.createElement('tr');
-    tr.id = 'baris-' + i;
-    tr.innerHTML = `
-        <td>
-            <input type="hidden" name="items[${i}][id]">
-            <select name="items[${i}][bahan_baku_id]" class="form-select bahan-select" required onchange="pilihBahan(this, ${i})">
-                ${getBahanOpts()}
-            </select>
-            <div id="badge-${i}" class="mt-1"></div>
-        </td>
-        <td><span id="stok-${i}" class="fw-semibold text-muted">-</span></td>
-        <td><span id="min-${i}" class="fw-semibold text-muted">-</span></td>
-        <td><input type="number" name="items[${i}][jumlah]" class="form-control" step="0.01" min="0.01" required></td>
-        <td><select name="items[${i}][satuan_id]" id="satuan-${i}" class="form-select satuan-select" required>${getSatuanOpts()}</select></td>
-        <td><input type="text" name="items[${i}][catatan]" class="form-control"></td>
-        <td><button type="button" class="btn btn-sm btn-outline-danger" onclick="hapusBaris(${i})"><i class="bi bi-trash"></i></button></td>
-    `;
-    document.getElementById('detailBody').appendChild(tr);
-}
-
-function hapusBaris(i) {
-    const el = document.getElementById('baris-' + i);
-    if (el) el.remove();
-}
-
-function pilihBahan(select, i) {
-    const opt     = select.options[select.selectedIndex];
-    const stokEl  = document.getElementById('stok-' + i);
-    const minEl   = document.getElementById('min-' + i);
-    const badgeEl = document.getElementById('badge-' + i);
-    const satuanEl = document.getElementById('satuan-' + i);
-
-    if (!opt || !opt.value) {
-        stokEl.textContent = '-';
-        minEl.textContent  = '-';
-        badgeEl.innerHTML  = '';
-        return;
-    }
-    const stok   = parseFloat(opt.dataset.stok) || 0;
-    const min    = parseFloat(opt.dataset.min)  || 0;
-    const satuan = opt.dataset.satuan || '';
-    const satId  = opt.dataset.satuanId || '';
-
-    stokEl.textContent = stok.toFixed(2) + ' ' + satuan;
-    minEl.textContent  = min.toFixed(2)  + ' ' + satuan;
-    stokEl.className   = stok <= min ? 'fw-semibold text-danger' : 'fw-semibold text-success';
-
-    if (stok <= min) {
-        badgeEl.innerHTML = '<span class="badge bg-danger"><i class="bi bi-exclamation-triangle-fill me-1"></i>Perlu Pembelian</span>';
-    } else {
-        badgeEl.innerHTML = '<span class="badge bg-success"><i class="bi bi-check-circle me-1"></i>Stok Aman</span>';
-    }
-    if (satuanEl && satId) satuanEl.value = satId;
-}
-
-// Trigger info for existing rows on page load
+    window.barisIndex = @json($idx);
+    window.bahanData = @json($bahanBakus->map(fn($b) => [
+        'id' => $b->id,
+        'nama' => $b->nama_bahan,
+        'stok' => (float) $b->stok_saat_ini,
+        'min' => (float) $b->stok_minimum,
+        'satuan' => $b->satuan->singkatan ?? '',
+        'satuan_id' => $b->satuan_id,
+    ]));
+    window.satuanData = @json($satuans->map(fn($s) => ['id' => $s->id, 'singkatan' => $s->singkatan]));
+</script>
+<script src="/js/permintaan-pembelian.js"></script>
+<script>
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.bahan-select').forEach(function(sel) {
         const match = sel.name.match(/items\[(\d+)\]/);

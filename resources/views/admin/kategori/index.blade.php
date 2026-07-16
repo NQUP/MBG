@@ -77,15 +77,9 @@
 @endsection
 
 @push('scripts')
-<script>
-function editKategori(k) {
-    document.getElementById('formEdit').action = '/admin/kategori/' + k.id;
-    document.getElementById('edit_nama').value = k.nama_kategori;
-    document.getElementById('edit_ket').value = k.keterangan || '';
-    new bootstrap.Modal(document.getElementById('modalEdit')).show();
-}
-</script>
+    <script src="/js/admin-crud.js"></script>
 @endpush
+
 
 
 

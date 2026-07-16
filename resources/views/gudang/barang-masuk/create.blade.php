@@ -1,4 +1,4 @@
-﻿@extends('layouts.app')
+@extends('layouts.app')
 @section('title', 'Input Barang Masuk')
 @section('page_title', 'Input Barang Masuk')
 
@@ -37,7 +37,7 @@
                                 <option value="">-- Tanpa PR (Manual) --</option>
                                 @foreach($prList as $pr)
                                     <option value="{{ $pr->id }}" {{ old('permintaan_pembelian_id') == $pr->id ? 'selected' : '' }}>
-                                        {{ $pr->nomor_permintaan }} â€“ {{ $pr->tanggal->format('d/m/Y') }} ({{ $pr->detail->count() }} item)
+                                        {{ $pr->nomor_permintaan }} ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ {{ $pr->tanggal->format('d/m/Y') }} ({{ $pr->detail->count() }} item)
                                     </option>
                                 @endforeach
                             </select>
@@ -133,72 +133,12 @@
 
 @push('scripts')
 <script>
-let barisIndex = 1;
-const bahanOptions = `{!! $bahanBakus->map(fn($b) => '<option value="'.$b->id.'">'.$b->nama_bahan.' ('.$b->satuan->singkatan.')</option>')->implode('') !!}`;
-const satuanData   = @json($satuans->map(fn($s) => ['id' => $s->id, 'singkatan' => $s->singkatan]));
-
-function getSatuanOpts(selectedId = null) {
-    return satuanData.map(s =>
-        `<option value="${s.id}" ${selectedId == s.id ? 'selected' : ''}>${s.singkatan}</option>`
-    ).join('');
-}
-
-function tambahBaris(bahan_baku_id = '', jumlah = '', satuan_id = '', nama = '') {
-    const i = barisIndex++;
-    const bahanOpts = `<option value="">-- Pilih Bahan --</option>${bahanOptions}`;
-    const tr = `<tr id="baris-${i}">
-        <td><select name="items[${i}][bahan_baku_id]" class="form-select bahan-select" required>
-            ${bahanOpts}
-        </select></td>
-        <td><input type="number" name="items[${i}][jumlah]" class="form-control" step="0.01" min="0.01" value="${jumlah}" required></td>
-        <td><select name="items[${i}][satuan_id]" class="form-select" required>${getSatuanOpts(satuan_id)}</select></td>
-        <td><input type="number" name="items[${i}][harga_satuan]" class="form-control" step="0.01" min="0" value="0"></td>
-        <td><button type="button" class="btn btn-sm btn-outline-danger" onclick="hapusBaris(${i})"><i class="bi bi-trash"></i></button></td>
-    </tr>`;
-    document.getElementById('detailBody').insertAdjacentHTML('beforeend', tr);
-    // Set bahan value if provided
-    if (bahan_baku_id) {
-        const row = document.getElementById('baris-' + i);
-        const sel = row.querySelector('.bahan-select');
-        if (sel) sel.value = bahan_baku_id;
-    }
-    updateTotal();
-}
-
-function hapusBaris(i) {
-    const el = document.getElementById('baris-' + i);
-    if (el) el.remove();
-    updateTotal();
-}
-
-function loadPrDetail(id) {
-    const prInfo = document.getElementById('prInfo');
-    if (!id) {
-        prInfo.classList.add('d-none');
-        return;
-    }
-    fetch('/api/barang-masuk/pr-detail/' + id)
-        .then(r => r.json())
-        .then(items => {
-            if (!items.length) return;
-            prInfo.classList.remove('d-none');
-            // Clear existing rows and replace with PR items
-            const body = document.getElementById('detailBody');
-            body.innerHTML = '';
-            barisIndex = 0;
-            items.forEach(item => {
-                tambahBaris(item.bahan_baku_id, item.jumlah, item.satuan_id, item.nama_bahan);
-            });
-        })
-        .catch(() => {
-            Swal.fire({ icon: 'error', title: 'Gagal', text: 'Tidak dapat memuat detail PR.' });
-        });
-}
-
-function updateTotal() {
-    document.getElementById('totalItem').textContent = document.querySelectorAll('#detailBody tr').length;
-}
+    window.barisIndex = 1;
+    window.bahanOptions = `{!! $bahanBakus->map(fn($b) => '<option value="'.$b->id.'">'.$b->nama_bahan.' ('.$b->satuan->singkatan.')</option>')->implode('') !!}`;
+    window.satuanData = @json($satuans->map(fn($s) => ['id' => $s->id, 'singkatan' => $s->singkatan]));
 </script>
+<script src="/js/barang-masuk-create.js"></script>
 @endpush
+
 
 

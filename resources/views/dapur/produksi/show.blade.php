@@ -82,47 +82,9 @@
 @endsection
 
 @push('styles')
-    <style>
-
-
-        .btn-outline-secondary {
-            color: var(--muted);
-            border-color: var(--sage-line);
-        }
-
-        .btn-outline-secondary:hover {
-            background: var(--rice-dim);
-            color: var(--forest);
-            border-color: var(--sage-line);
-        }
-
-        .summary-table th {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.68rem;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-            color: var(--muted);
-            font-weight: 600;
-            white-space: nowrap;
-            width: 40%;
-            padding-top: 8px;
-            padding-bottom: 8px;
-        }
-
-        .summary-table td {
-            color: var(--ink);
-            padding-top: 8px;
-            padding-bottom: 8px;
-        }
-
-        .summary-table .value-strong {
-            font-family: 'Fraunces', serif;
-            font-weight: 600;
-            font-size: 1.15rem;
-            color: var(--forest);
-        }
-    </style>
+        <link href="/css/dapur-produksi-show.css" rel="stylesheet">
 @endpush
+
 
 
 
