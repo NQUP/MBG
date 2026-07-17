@@ -10,7 +10,7 @@
                 {{ $permintaanPembelian->user->name ?? '-' }}</small>
         </div>
         <div class="d-flex gap-2 flex-wrap">
-            @if ($permintaanPembelian->status === 'Draft')
+            @if ($permintaanPembelian->status === 'Draft' && auth()->user()->isPetugasGudang())
                 <form method="POST" action="{{ route('permintaan-pembelian.ubah-status', $permintaanPembelian) }}"
                     data-confirm="Ajukan permintaan ini untuk disetujui?">
                     @csrf
@@ -20,7 +20,7 @@
                 <a href="{{ route('permintaan-pembelian.edit', $permintaanPembelian) }}" class="btn btn-outline-info"><i
                         class="bi bi-pencil me-1"></i>Edit</a>
             @endif
-            @if ($permintaanPembelian->status === 'Diajukan')
+            @if ($permintaanPembelian->status === 'Diajukan' && auth()->user()->isAdmin())
                 <form method="POST" action="{{ route('permintaan-pembelian.ubah-status', $permintaanPembelian) }}"
                     data-confirm="Setujui permintaan pembelian ini?">
                     @csrf
@@ -38,7 +38,7 @@
                 <span class="badge bg-success fs-6 align-self-center"><i class="bi bi-check-circle me-1"></i>Disetujui -
                     Siap Barang Masuk</span>
             @endif
-            @if ($permintaanPembelian->status === 'Ditolak')
+            @if ($permintaanPembelian->status === 'Ditolak' && auth()->user()->isPetugasGudang())
                 <form method="POST" action="{{ route('permintaan-pembelian.ubah-status', $permintaanPembelian) }}"
                     data-confirm="Kembalikan permintaan ini ke status Draft?">
                     @csrf

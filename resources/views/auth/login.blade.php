@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Sistem Inventory MBG</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/logord.png') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link href="/vendor/sweetalert2/theme-bootstrap-4.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,7 +24,7 @@
 
             <div class="brand-mid">
                 <div class="brand-icon">
-                    <i class="bi bi-house-fill"></i>
+                    <img src="{{ asset('images/logo.png') }}" alt="Logo" class="logo-sidebar">
                 </div>
                 <h1>Inventory MBG</h1>
                 <p>Pantau stok bahan pangan, distribusi, dan penerimaan gudang dari satu dapur ke ribuan porsi makan

@@ -5,9 +5,11 @@
 @section('content')
 <div class="page-header d-flex justify-content-between align-items-center">
     <h4><i class="bi bi-cart-plus me-2"></i>Permintaan Pembelian</h4>
+    @if(auth()->user()->isPetugasGudang())
     <a href="{{ route('permintaan-pembelian.create') }}" class="btn btn-success">
         <i class="bi bi-plus-circle me-1"></i>Buat Permintaan
     </a>
+    @endif
 </div>
 
 <div class="card">
@@ -35,12 +37,12 @@
                         <a href="{{ route('permintaan-pembelian.show', $pr) }}" class="btn btn-sm btn-outline-primary btn-action" title="Detail">
                             <i class="bi bi-eye"></i>
                         </a>
-                        @if(in_array($pr->status, ['Draft', 'Ditolak']))
+                        @if(auth()->user()->isPetugasGudang() && in_array($pr->status, ['Draft', 'Ditolak']))
                         <a href="{{ route('permintaan-pembelian.edit', $pr) }}" class="btn btn-sm btn-outline-info btn-action" title="Edit">
                             <i class="bi bi-pencil"></i>
                         </a>
                         @endif
-                        @if($pr->status === 'Draft')
+                        @if(auth()->user()->isPetugasGudang() && $pr->status === 'Draft')
                         <form method="POST" action="{{ route('permintaan-pembelian.destroy', $pr) }}" class="d-inline">
                             @csrf @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-outline-danger btn-action btn-hapus" data-label="PR {{ $pr->nomor_permintaan }}" title="Hapus">
