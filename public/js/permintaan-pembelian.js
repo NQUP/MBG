@@ -28,6 +28,7 @@ function tambahBaris() {
         '<td><input type="text" name="items[' + i + '][catatan]" class="form-control" placeholder="opsional"></td>' +
         '<td><button type="button" class="btn btn-sm btn-outline-danger" onclick="hapusBaris(' + i + ')"><i class="bi bi-trash"></i></button></td>';
     document.getElementById('detailBody').appendChild(tr);
+    if (typeof initSelectSearch === 'function') initSelectSearch(tr);
 }
 
 function hapusBaris(i) {
@@ -63,5 +64,11 @@ function pilihBahan(select, i) {
         badgeEl.innerHTML = '<span class="badge bg-success"><i class="bi bi-check-circle me-1"></i>Stok Aman</span>';
     }
 
-    if (satuanEl && satId) satuanEl.value = satId;
+    if (satuanEl && satId) {
+        if (satuanEl.tomselect) {
+            satuanEl.tomselect.setValue(satId, true);
+        } else {
+            satuanEl.value = satId;
+        }
+    }
 }

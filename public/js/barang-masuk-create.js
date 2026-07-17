@@ -21,11 +21,12 @@ function tambahBaris(bahan_baku_id, jumlah, satuan_id, nama) {
         '<td><button type="button" class="btn btn-sm btn-outline-danger" onclick="hapusBaris(' + i + ')"><i class="bi bi-trash"></i></button></td>' +
         '</tr>';
     document.getElementById('detailBody').insertAdjacentHTML('beforeend', html);
+    var row = document.getElementById('baris-' + i);
     if (bahan_baku_id) {
-        var row = document.getElementById('baris-' + i);
         var sel = row.querySelector('.bahan-select');
         if (sel) sel.value = bahan_baku_id;
     }
+    if (typeof initSelectSearch === 'function') initSelectSearch(row);
     updateTotal();
 }
 

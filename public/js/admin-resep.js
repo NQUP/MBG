@@ -12,7 +12,7 @@
     }
 
     var selectEl = document.getElementById('bahanBakuSelect');
-    if (selectEl && typeof TomSelect !== 'undefined') {
+    if (selectEl && typeof TomSelect !== 'undefined' && !selectEl.tomselect) {
         new TomSelect(selectEl, {
             create: false,
             sortField: { field: 'text', direction: 'asc' },

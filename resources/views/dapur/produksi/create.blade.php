@@ -89,15 +89,10 @@
 </form>
 @endsection
 
-@push('styles')
-    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.css" rel="stylesheet">
-@endpush
-
 @push('scripts')
 <script>
     window.produksiResepUrl = '{{ route('dapur.produksi.resep') }}';
 </script>
-<script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
 <script src="/js/produksi-create.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {

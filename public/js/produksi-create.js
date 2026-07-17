@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (typeof TomSelect !== 'undefined') {
         ['bahanMinuman', 'bahanBuah'].forEach(function(id) {
             var el = document.getElementById(id);
-            if (el) {
+            if (el && !el.tomselect) {
                 new TomSelect(el, {
                     create: false,
                     sortField: { field: 'text', direction: 'asc' },

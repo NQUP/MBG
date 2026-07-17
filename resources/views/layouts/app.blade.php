@@ -18,6 +18,7 @@
         rel="stylesheet">
     <link href="/css/app.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet">
     <style>
         /* Beri jarak untuk kontrol DataTables (search, length menu, info, pagination) di dalam card */
         .dataTables_wrapper .dataTables_length,
@@ -32,6 +33,14 @@
 
         .dataTables_wrapper .dataTables_paginate .pagination {
             margin-bottom: 0;
+        }
+
+        /* Tom Select: pastikan dropdown tampil di atas elemen lain & rapi di dalam tabel */
+        .ts-dropdown {
+            z-index: 1060;
+        }
+        td .ts-wrapper {
+            min-width: 70px;
         }
     </style>
     @stack('styles')
@@ -395,10 +404,30 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
     <script src="/vendor/sweetalert2/sweetalert2.min.js"></script>
     <script src="/vendor/sweetalert2/confetti.min.js"></script>
     <script src="/js/app.js"></script>
     <script>
+        // Select dengan pencarian (Tom Select) untuk semua .form-select,
+        // kecuali yang diberi class 'no-tomselect' atau select bawaan DataTables
+        function initSelectSearch(root) {
+            if (typeof TomSelect === 'undefined') return;
+            var scope = root || document;
+            var selects = scope.querySelectorAll ? scope.querySelectorAll('select.form-select:not(.no-tomselect)') : [];
+            selects.forEach(function(el) {
+                if (el.tomselect) return;
+                if (el.closest('.dataTables_wrapper')) return; // length menu DataTables
+                var placeholderOpt = el.querySelector('option[value=""]');
+                new TomSelect(el, {
+                    create: false,
+                    maxOptions: null,
+                    placeholder: placeholderOpt ? placeholderOpt.textContent.trim() : 'Pilih...',
+                    sortField: [{ field: '$order' }] // pertahankan urutan asli dari server
+                });
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             // Terapkan DataTable ke semua tabel .table kecuali yang diberi class 'no-datatable'
             $('table.table:not(.no-datatable)').each(function() {
@@ -447,6 +476,9 @@
                     }
                 });
             });
+
+            // Inisialisasi select+search di seluruh halaman (setelah DataTables selesai dibuat)
+            initSelectSearch(document);
         });
     </script>
     @stack('scripts')
