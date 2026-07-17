@@ -28,7 +28,7 @@
                 <h1>Inventory MBG</h1>
                 <p>Pantau stok bahan pangan, distribusi, dan penerimaan gudang dari satu dapur ke ribuan porsi makan
                     bergizi.</p>
-                <div class="unit-tag"><i class="bi bi-geo-alt"></i> SPPG Sumber Jaya 03 Â· Tambun Selatan</div>
+                <div class="unit-tag"><i class="bi bi-geo-alt"></i> SPPG Sumber Jaya 03 · Tambun Selatan</div>
             </div>
 
             <div class="stat-row">
@@ -46,7 +46,7 @@
                 </div>
                 <div class="ticket-inner">
                     <div class="eyebrow-row">
-                        <span class="eyebrow">Form Â· Akses-01</span>
+                        <span class="eyebrow">Form · Akses-01</span>
                         <div class="stamp">Akses<br>SPPG</div>
                     </div>
 

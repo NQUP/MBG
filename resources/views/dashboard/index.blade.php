@@ -114,7 +114,7 @@
                         Terbaru</div>
                     <div class="card-body p-0">
                         <div class="table-responsive">
-                            <table class="table table-hover mb-0">
+                            <table class="table no-datatable table-hover mb-0">
                                 <thead>
                                     <tr>
                                         <th>Nomor</th>
@@ -232,7 +232,7 @@
                     </div>
                     <div class="card-body p-0">
                         <div class="table-responsive">
-                            <table class="table table-hover mb-0">
+                            <table class="table no-datatable table-hover mb-0">
                                 <thead>
                                     <tr>
                                         <th>Nomor</th>
@@ -280,7 +280,7 @@
                 <div class="card-header card-header-danger"><i class="bi bi-exclamation-triangle-fill me-2"></i>Bahan Baku
                     Stok Minimum</div>
                 <div class="table-responsive">
-                    <table class="table table-hover mb-0">
+                    <table class="table no-datatable table-hover mb-0">
                         <thead>
                             <tr>
                                 <th>Kode</th>
@@ -399,7 +399,7 @@
                         </div>
                     @else
                         <div class="table-responsive">
-                            <table class="table table-hover mb-0">
+                            <table class="table no-datatable table-hover mb-0">
                                 <thead>
                                     <tr>
                                         <th>Makanan</th>
@@ -436,7 +436,7 @@
                     </div>
                     <div class="card-body p-0">
                         <div class="table-responsive">
-                            <table class="table table-hover mb-0">
+                            <table class="table no-datatable table-hover mb-0">
                                 <thead>
                                     <tr>
                                         <th>Tanggal</th>

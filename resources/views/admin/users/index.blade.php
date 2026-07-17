@@ -1,4 +1,4 @@
-﻿@extends('layouts.app')
+@extends('layouts.app')
 @section('title', 'Kelola User')
 @section('page_title', 'Kelola User')
 
@@ -27,7 +27,7 @@
                 <tbody>
                     @forelse($users as $user)
                         <tr>
-                            <td>{{ $loop->iteration + ($users->currentPage() - 1) * $users->perPage() }}</td>
+                            <td>{{ $loop->iteration }}</td>
                             <td class="fw-semibold">{{ $user->name }}</td>
                             <td><code>{{ $user->username }}</code></td>
                             <td>{{ $user->email }}</td>
@@ -71,9 +71,6 @@
                     @endforelse
                 </tbody>
             </table>
-            <div class="card-footer">
-                {{ $users->links() }}
-            </div>
         </div>
 
     </div>

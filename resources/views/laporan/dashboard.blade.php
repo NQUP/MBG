@@ -66,7 +66,7 @@
         <div class="card"><div class="card-header"><i class="bi bi-trophy me-2 text-success"></i>Bahan Baku Paling Sering Digunakan</div>
         <div class="card-body">
             @if($bahan_terpakai->count())
-            <table class="table table-sm mb-0">
+            <table class="table no-datatable table-sm mb-0">
                 <thead><tr><th>#</th><th>Bahan Baku</th><th>Total Pakai</th></tr></thead>
                 <tbody>
                 @foreach($bahan_terpakai as $i => $b)

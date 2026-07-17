@@ -25,7 +25,7 @@
                     <tr>
                         <th class="text-muted">Berdasarkan PR</th>
                         <td>
-                            <a href="{{ route('gudang.permintaan-pembelian.show', $barangMasuk->permintaanPembelian) }}" class="text-decoration-none">
+                            <a href="{{ route('permintaan-pembelian.show', $barangMasuk->permintaanPembelian) }}" class="text-decoration-none">
                                 <code>{{ $barangMasuk->permintaanPembelian->nomor_permintaan }}</code>
                                 <i class="bi bi-box-arrow-up-right ms-1 small"></i>
                             </a>

@@ -18,7 +18,7 @@
                         <th>Nama Menu</th>
                         <th>Jenis</th>
                         <th>Deskripsi</th>
-                        <th>Stok</th><th>Resep</th>
+                        <th>Resep</th>
                         <th>Status</th>
                         <th>Aksi</th>
                     </tr>

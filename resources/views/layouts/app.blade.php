@@ -17,6 +17,20 @@
         rel="stylesheet">
     <link href="/css/app.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <style>
+        /* Beri jarak untuk kontrol DataTables (search, length menu, info, pagination) di dalam card */
+        .dataTables_wrapper .dataTables_length,
+        .dataTables_wrapper .dataTables_filter {
+            padding: 1rem 1rem 0.5rem;
+        }
+        .dataTables_wrapper .dataTables_info,
+        .dataTables_wrapper .dataTables_paginate {
+            padding: 0.75rem 1rem 1rem;
+        }
+        .dataTables_wrapper .dataTables_paginate .pagination {
+            margin-bottom: 0;
+        }
+    </style>
     @stack('styles')
 </head>
 
@@ -369,37 +383,58 @@
         </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
     <script src="/vendor/sweetalert2/sweetalert2.min.js"></script>
     <script src="/vendor/sweetalert2/confetti.min.js"></script>
     <script src="/js/app.js"></script>
-    @stack('scripts')
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Apply DataTable to any table with the 'table' class that isn't excluded
-            .table:not(.no-datatable).DataTable({
-                "pageLength": 10,
-                "lengthMenu": [[10, 20, 30, 50, -1], [10, 20, 30, 50, "Semua"]],
-                "language": {
-                    "search": "Cari:",
-                    "lengthMenu": "Tampilkan _MENU_ data",
-                    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
-                    "infoEmpty": "Menampilkan 0 sampai 0 dari 0 entri",
-                    "infoFiltered": "(disaring dari _MAX_ total entri)",
-                    "zeroRecords": "Tidak ada data yang cocok ditemukan",
-                    "paginate": {
-                        "first": "Awal",
-                        "last": "Akhir",
-                        "next": "Lanjut",
-                        "previous": "Sebelum"
+            // Terapkan DataTable ke semua tabel .table kecuali yang diberi class 'no-datatable'
+            $('table.table:not(.no-datatable)').each(function() {
+                var $table = $(this);
+
+                // Lewati tabel tanpa thead (bukan tabel data)
+                if ($table.find('thead th').length === 0) return;
+
+                // Lewati tabel kosong (baris placeholder memakai colspan yang membuat DataTables error)
+                if ($table.find('tbody td[colspan]').length > 0) return;
+
+                // Kolom "Aksi" tidak perlu bisa di-sort
+                var columnDefs = [];
+                $table.find('thead th').each(function(index) {
+                    if ($(this).text().trim().toLowerCase() === 'aksi') {
+                        columnDefs.push({ orderable: false, searchable: false, targets: index });
                     }
-                }
+                });
+
+                $table.DataTable({
+                    pageLength: 10,
+                    lengthMenu: [[10, 20, 30], [10, 20, 30]],
+                    order: [],
+                    columnDefs: columnDefs,
+                    language: {
+                        search: "Cari:",
+                        lengthMenu: "Tampilkan _MENU_ data",
+                        info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
+                        infoEmpty: "Menampilkan 0 sampai 0 dari 0 entri",
+                        infoFiltered: "(disaring dari _MAX_ total entri)",
+                        zeroRecords: "Tidak ada data yang cocok ditemukan",
+                        emptyTable: "Tidak ada data",
+                        paginate: {
+                            first: "Awal",
+                            last: "Akhir",
+                            next: "Lanjut",
+                            previous: "Sebelum"
+                        }
+                    }
+                });
             });
         });
     </script>
+    @stack('scripts')
 </body>
 
 </html>
