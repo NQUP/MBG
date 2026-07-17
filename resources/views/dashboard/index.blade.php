@@ -463,6 +463,39 @@
                 </div>
             </div>
         </div>
+        <!-- Modal Pengumuman -->
+        {{-- <div class="modal fade" id="modalPengumuman" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content border-0 shadow-lg">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="bi bi-megaphone-fill text-warning me-2"></i>
+                            Pengumuman
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body text-center">
+                        <img src="{{ asset('images/bahlil.jfif') }}" class="img-fluid rounded shadow-sm"
+                            alt="Pengumuman">
+
+                        <div class="mt-3">
+                            <h5>Selamat Datang</h5>
+                            <p class="text-muted mb-0">
+                                Selamat My Little Bolu Ketan.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-success" data-bs-dismiss="modal">
+                            <i class="bi bi-check-circle me-1"></i>
+                            Mengerti
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div> --}}
     @endif
 
 @endsection
@@ -671,6 +704,11 @@
                         .length));
                 }
             @endif
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = new bootstrap.Modal(document.getElementById('modalPengumuman'));
+            modal.show();
         });
     </script>
 @endpush

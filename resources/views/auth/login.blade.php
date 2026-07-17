@@ -24,7 +24,7 @@
 
             <div class="brand-mid">
                 <div class="brand-icon">
-                    <img src="{{ asset('images/logo.png') }}" alt="Logo" class="logo-sidebar">
+                    <img src="{{ asset('images/logord.png') }}" alt="Logo" class="logo-sidebar">
                 </div>
                 <h1>Inventory MBG</h1>
                 <p>Pantau stok bahan pangan, distribusi, dan penerimaan gudang dari satu dapur ke ribuan porsi makan

@@ -39,6 +39,7 @@
         .ts-dropdown {
             z-index: 1060;
         }
+
         td .ts-wrapper {
             min-width: 70px;
         }
@@ -52,7 +53,7 @@
         <div class="sidebar-brand">
             <div class="d-flex align-items-center gap-2 mb-1">
                 <div class="brand-icon">
-                    <img src="{{ asset('images/logo.png') }}" alt="Logo" class="logo-sidebar">
+                    <img src="{{ asset('images/logord.png') }}" alt="Logo" class="logo-sidebar">
                 </div>
                 <div>
                     <h5 class="mb-0">Inventory MBG</h5>
@@ -379,7 +380,7 @@
                         <li>
                             <form method="POST" action="{{ route('logout') }}" class="m-0">
                                 @csrf
-                                <button type="submit" class="dropdown-item text-danger w-auto">
+                                <button type="submit" class="dropdown-item text-danger px-2 py-1">
                                     <i class="bi bi-box-arrow-right me-2"></i>
                                     Keluar
                                 </button>
@@ -423,7 +424,9 @@
                     create: false,
                     maxOptions: null,
                     placeholder: placeholderOpt ? placeholderOpt.textContent.trim() : 'Pilih...',
-                    sortField: [{ field: '$order' }] // pertahankan urutan asli dari server
+                    sortField: [{
+                        field: '$order'
+                    }] // pertahankan urutan asli dari server
                 });
             });
         }
