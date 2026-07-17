@@ -389,7 +389,7 @@
                 </div>
             </div>
         </nav>
-        <div class="p-4">
+        <main class="app-main">
             @if (session('success'))
                 <div id="flash-data" data-type="success" data-message="{{ session('success') }}"></div>
             @endif
@@ -397,7 +397,7 @@
                 <div id="flash-data" data-type="error" data-message="{{ session('error') }}"></div>
             @endif
             @yield('content')
-        </div>
+        </main>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>

@@ -151,11 +151,18 @@
     </form>
 @endsection
 
+@php
+    $bahanOptions = $bahanBakus
+        ->map(fn($b) => '<option value="' . $b->id . '">' . e($b->nama_bahan) . ' (' . e($b->satuan->singkatan) . ')</option>')
+        ->implode('');
+    $satuanData = $satuans->map(fn($s) => ['id' => $s->id, 'singkatan' => $s->singkatan])->values();
+@endphp
+
 @push('scripts')
     <script>
         window.barisIndex = 1;
-        window.bahanOptions = `{!! $bahanBakus->map(fn($b) => '<option value="' . $b->id . '">' . $b->nama_bahan . ' (' . $b->satuan->singkatan . ')</option>')->implode('') !!}`;
-        window.satuanData = @json($satuans->map(fn($s) => ['id' => $s->id, 'singkatan' => $s->singkatan]));
+        window.bahanOptions = @json($bahanOptions);
+        window.satuanData = @json($satuanData);
     </script>
     <script src="/js/barang-masuk-create.js"></script>
 @endpush

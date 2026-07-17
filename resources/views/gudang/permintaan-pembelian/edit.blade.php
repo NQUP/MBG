@@ -101,18 +101,23 @@
 </form>
 @endsection
 
-@push('scripts')
-<script>
-    window.barisIndex = @json($idx);
-    window.bahanData = @json($bahanBakus->map(fn($b) => [
+@php
+    $bahanData = $bahanBakus->map(fn($b) => [
         'id' => $b->id,
         'nama' => $b->nama_bahan,
         'stok' => (float) $b->stok_saat_ini,
         'min' => (float) $b->stok_minimum,
         'satuan' => $b->satuan->singkatan ?? '',
         'satuan_id' => $b->satuan_id,
-    ]));
-    window.satuanData = @json($satuans->map(fn($s) => ['id' => $s->id, 'singkatan' => $s->singkatan]));
+    ])->values();
+    $satuanData = $satuans->map(fn($s) => ['id' => $s->id, 'singkatan' => $s->singkatan])->values();
+@endphp
+
+@push('scripts')
+<script>
+    window.barisIndex = @json($idx);
+    window.bahanData = @json($bahanData);
+    window.satuanData = @json($satuanData);
 </script>
 <script src="/js/permintaan-pembelian.js"></script>
 <script>

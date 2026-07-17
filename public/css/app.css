@@ -31,9 +31,7 @@
         #sidebar {
             width: var(--sidebar-width);
             min-height: 100vh;
-            background:
-                radial-gradient(circle at 15% 0%, rgba(134, 201, 154, 0.14), transparent 45%),
-                linear-gradient(180deg, var(--forest) 0%, var(--forest-deep) 100%);
+            background: var(--forest-deep);
             position: fixed;
             top: 0;
             left: 0;
@@ -67,7 +65,7 @@
         #sidebar .sidebar-brand .brand-icon {
             width: 46px;
             height: 46px;
-            border-radius: 12px;
+            border-radius: 8px;
             background: rgba(250, 246, 236, 0.08);
             border: 1px solid rgba(250, 246, 236, 0.18);
             display: flex;
@@ -252,7 +250,7 @@
         .card-header {
             background: var(--rice-dim);
             border-bottom: 1px solid var(--sage-line);
-            border-radius: 12px 12px 0 0 !important;
+            border-radius: 8px 8px 0 0 !important;
             font-weight: 600;
             color: var(--forest);
             font-size: 0.95rem;
@@ -266,7 +264,7 @@
         .card-footer {
             background: var(--rice-dim);
             border-top: 1px solid var(--sage-line);
-            border-radius: 0 0 12px 12px !important;
+            border-radius: 0 0 8px 8px !important;
             padding: 12px 20px;
         }
 
@@ -695,4 +693,294 @@ nav[role="navigation"] svg {
     min-width: 60px;
     padding-right: 2rem !important;
     background-position: right .6rem center;
+}
+
+/* ===== Operational application shell ===== */
+.app-main {
+    width: min(100%, 1600px);
+    margin: 0 auto;
+    padding: 28px 32px 40px;
+}
+
+.navbar-top {
+    min-height: 68px;
+    padding: 12px 32px;
+    position: sticky;
+    top: 0;
+    z-index: 990;
+}
+
+.navbar-user {
+    padding: 4px 8px 4px 4px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+}
+
+.navbar-user:hover,
+.navbar-user:focus {
+    background: var(--rice);
+    border-color: var(--sage-line);
+}
+
+.page-header {
+    padding-bottom: 18px;
+    margin-bottom: 22px;
+    border-bottom: 1px solid var(--sage-line);
+}
+
+.page-header h4 {
+    font-size: 1.6rem;
+    line-height: 1.25;
+}
+
+.page-header h4 i {
+    color: var(--leaf);
+}
+
+.card {
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(18, 56, 43, 0.04);
+}
+
+.card-header {
+    background: #fff;
+    min-height: 52px;
+    display: flex;
+    align-items: center;
+}
+
+.card-header.bg-white {
+    background: #fff !important;
+}
+
+.card-header.bg-success {
+    background: var(--forest) !important;
+    border-color: var(--forest);
+}
+
+.card-header.bg-danger,
+.card-header.card-header-danger {
+    background: var(--danger) !important;
+    border-color: var(--danger);
+}
+
+.card-footer {
+    background: #fff;
+}
+
+.table-responsive {
+    scrollbar-color: var(--sage-line) transparent;
+}
+
+.table > :not(caption) > * > * {
+    box-shadow: none;
+}
+
+.table thead th {
+    white-space: nowrap;
+    background: #f6f7f2;
+    border-bottom-width: 1px;
+}
+
+.table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.table td .btn + .btn,
+.table td form + form,
+.table td .d-inline + .d-inline {
+    margin-left: 4px;
+}
+
+.btn {
+    font-weight: 600;
+    line-height: 1.4;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+}
+
+.btn:focus-visible,
+.form-control:focus-visible,
+.form-select:focus-visible,
+.page-link:focus-visible {
+    outline: 3px solid rgba(95, 168, 118, 0.28);
+    outline-offset: 2px;
+    box-shadow: none;
+}
+
+.btn-light {
+    color: var(--ink);
+    background: #fff;
+    border-color: var(--sage-line);
+}
+
+.btn-light:hover {
+    color: var(--forest);
+    background: var(--rice-dim);
+    border-color: #cdd5bc;
+}
+
+.form-control,
+.form-select,
+.ts-control {
+    min-height: 40px;
+    background-color: #fff;
+    transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.input-group-text {
+    color: var(--muted);
+    background: #f6f7f2;
+    border-color: var(--sage-line);
+}
+
+.form-text {
+    color: var(--muted);
+    font-size: .8rem;
+}
+
+.form-check-input {
+    border-color: #b8c4ae;
+}
+
+.form-check-input:checked {
+    background-color: var(--forest);
+    border-color: var(--forest);
+}
+
+.alert {
+    border-width: 1px;
+    border-radius: 8px;
+}
+
+.modal-content {
+    border: 1px solid var(--sage-line);
+    border-radius: 8px;
+    box-shadow: 0 18px 45px rgba(13, 39, 30, .18);
+}
+
+.modal-header,
+.modal-footer {
+    border-color: var(--sage-line);
+}
+
+.dropdown-menu {
+    border: 1px solid var(--sage-line);
+    border-radius: 8px;
+    padding: 6px;
+    box-shadow: 0 10px 24px rgba(13, 39, 30, .12);
+}
+
+.dropdown-item {
+    border-radius: 5px;
+    padding: 8px 10px;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+    background: var(--leaf-tint);
+    color: var(--forest);
+}
+
+.dataTables_wrapper .dataTables_filter input,
+.dataTables_wrapper .dataTables_length select {
+    border: 1px solid var(--sage-line);
+    border-radius: 6px;
+    min-height: 36px;
+    background: #fff;
+}
+
+.dataTables_wrapper .dataTables_filter input:focus,
+.dataTables_wrapper .dataTables_length select:focus {
+    border-color: var(--leaf);
+    box-shadow: 0 0 0 3px var(--leaf-tint);
+    outline: 0;
+}
+
+.dataTables_wrapper .dataTables_info {
+    color: var(--muted);
+    font-size: .84rem;
+}
+
+.page-link {
+    min-width: 36px;
+    min-height: 36px;
+    padding: 6px 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ts-wrapper.single .ts-control,
+.ts-wrapper.multi .ts-control {
+    border-color: var(--sage-line);
+    border-radius: 8px;
+    box-shadow: none;
+}
+
+.ts-wrapper.focus .ts-control {
+    border-color: var(--leaf);
+    box-shadow: 0 0 0 3px var(--leaf-tint);
+}
+
+@media (max-width: 991.98px) {
+    .app-main {
+        padding: 24px;
+    }
+
+    .navbar-top {
+        padding: 10px 24px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .app-main {
+        padding: 20px 16px 32px;
+    }
+
+    .navbar-top {
+        min-height: 60px;
+        padding: 8px 16px;
+    }
+
+    .navbar-top .gap-4 {
+        gap: 8px !important;
+    }
+
+    .navbar-top > div:last-child > span {
+        display: none;
+    }
+
+    .navbar-user > div:last-child {
+        display: none;
+    }
+
+    .page-header {
+        align-items: flex-start !important;
+        gap: 12px;
+    }
+
+    .page-header h4 {
+        font-size: 1.35rem;
+    }
+
+    .page-header .btn {
+        width: 100%;
+    }
+
+    .card-body {
+        padding: 16px;
+    }
+
+    .table th,
+    .table td {
+        padding: 10px 12px;
+    }
+
+    .dataTables_wrapper .dataTables_filter,
+    .dataTables_wrapper .dataTables_length {
+        text-align: left;
+    }
 }
